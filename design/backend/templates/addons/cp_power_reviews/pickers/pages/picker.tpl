@@ -1,13 +1,13 @@
-{assign var="data_id" value=$data_id|default:"pages_list"}
-{math equation="rand()" assign="rnd"}
-{assign var="data_id" value="`$data_id`_`$rnd`"}
-{assign var="view_mode" value=$view_mode|default:"mixed"}
-{assign var="start_pos" value=$start_pos|default:0}
+{$data_id=$data_id|default:"pages_list"}
+{$rnd = rand()}
+{$data_id="`$data_id`_`$rnd`"}
+{$view_mode=$view_mode|default:"mixed"}
+{$start_pos=$start_pos|default:0}
 
 {script src="js/tygh/picker.js"}
 
 {if ($item_ids) && !$item_ids|is_array}
-    {assign var="item_ids" value=","|explode:$item_ids}
+    {$item_ids=","|explode:$item_ids}
 {/if}
 
 <div class="clearfix">
@@ -18,27 +18,27 @@
     {if $view_mode != "list"}
         {capture name="add_buttons"}
             {if $multiple == true}
-                {assign var="display" value="checkbox"}
+                {$display="checkbox"}
             {else}
-                {assign var="display" value="radio"}
+                {$display="radio"}
             {/if}
     
             {if !$extra_url}
-                {assign var="extra_url" value="&get_tree=multi_level"}
+                {$extra_url="&get_tree=multi_level"}
             {/if}
     
             {if $extra_var}
-                {assign var="extra_var" value=$extra_var|escape:url}
+                {$extra_var=$extra_var|escape:url}
             {/if}
             <div>
                 {if !$no_container}<div class="{if !$multiple}choose-icon input-append{else}buttons-container{/if}">{/if}
                     {if $multiple}
-                        {assign var="lang_add_pages" value=__("add_pages")}
-                        {assign var="_but_text" value=$but_text|default:"<i class='icon-plus'></i> `$lang_add_pages`"}
-                        {assign var="_but_role" value="add"}
+                        {$lang_add_pages=__("add_pages")}
+                        {$_but_text=$but_text|default:"<i class='icon-plus'></i> `$lang_add_pages`"}
+                        {$_but_role="add"}
                     {else}
-                        {assign var="_but_text" value="<i class='icon-plus'></i>"}
-                        {assign var="_but_role" value="icon"}
+                        {$_but_text="<i class='icon-plus'></i>"}
+                        {$_but_role="icon"}
                     {/if}
         
                     {include file="buttons/button.tpl" but_id="opener_picker_`$data_id`" but_href="pages.picker?display=`$display`&full_search=true&picker_for=`$picker_for`&extra=`$extra_var`&checkbox_name=`$checkbox_name`&root=`$default_name`&except_id=`$except_id`&data_id=`$data_id``$extra_url`&company_id=`$company_id`"|fn_url but_text=$_but_text but_role=$_but_role but_target_id="content_`$data_id`" but_meta="cm-dialog-opener add-on btn"}

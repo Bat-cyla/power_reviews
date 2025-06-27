@@ -17,6 +17,10 @@
 * email:   sales@cart-power.com                                              *
 ******************************************************************************/
 
+use Tygh\Enum\Addons\Discussion\DiscussionObjectTypes;
+use Tygh\Enum\Addons\Discussion\DiscussionTypes;
+use Tygh\Enum\ObjectStatuses;
+use Tygh\Enum\UserTypes;
 use Tygh\Registry;
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
@@ -201,5 +205,69 @@ if ($mode == 'apply_to_vars') {
     fn_cp_pr_set_vars_from_parent($_REQUEST);
     exit;
 }
+if ($mode == 'premoderation') {
+    if (Registry::get('addons.cp_power_reviews.allow_reply_rev') != 'Y') {
+        return [CONTROLLER_STATUS_DENIED];
+    }
+    
+    $discussion_object_types = fn_cp_power_reviews_reply_get_discussion_objects();
+    $discussion_object_titles = fn_cp_power_reviews_reply_get_discussion_titles();
 
+    $params = array_merge([
+        'object_type' => null,
+        'company_id'  => ''
+    ], $_REQUEST);
 
+    if (!empty($auth) && $auth['user_type'] == UserTypes::VENDOR) {
+        $params['cp_get_reply_moder'] = 'D';
+    } else {
+        $params['cp_get_reply_moder'] = 'R';
+    }
+
+    $runtime_company_id = fn_get_runtime_company_id();
+
+    $discussion_manager_url = fn_query_remove(Registry::get('config.current_url'), 'object_type', 'page');
+
+    foreach ($discussion_object_types as $obj_type => $obj) {
+
+        $params['object_type'] = $params['object_type'] ?: $obj_type;
+        $_name = __($discussion_object_titles[$obj_type]);
+
+        Registry::set('navigation.tabs.' . $obj, [
+            'title' => $_name,
+            'href'  => $discussion_manager_url . '&object_type=' . $obj_type,
+        ]);
+    }
+
+    list($posts, $search) = fn_get_discussions($params, Registry::get('settings.Appearance.admin_elements_per_page'));
+
+    if (!empty($posts)) {
+        foreach ($posts as $k => $v) {
+            $posts[$k]['object_data'] = fn_get_discussion_object_data($v['object_id'], $v['object_type'], DESCR_SL);
+        }
+    }
+
+    Tygh::$app['view']->assign([
+        'company_id'              => $runtime_company_id,
+        'posts'                   => $posts,
+        'search'                  => $search,
+        'discussion_object_type'  => $params['object_type'],
+        'discussion_object_types' => $discussion_object_types,
+        'cp_reply_active'         => 'Y'
+    ]);
+} elseif ($mode == 'premoderation_popup') {
+    if (!empty($_REQUEST['post_id'])) {
+        $view = Tygh::$app['view'];
+    
+        $post = fn_cp_power_reviews_get_reply_post([], $_REQUEST['post_id']);
+
+        $view->assign([
+            'post' => $post,
+            'capture_off' => true,
+            'redirect_url' => $_REQUEST['redirect_url']
+        ]);
+        
+        $view->display('addons/cp_power_reviews/components/popup_reply.tpl');
+    }
+    exit();
+}

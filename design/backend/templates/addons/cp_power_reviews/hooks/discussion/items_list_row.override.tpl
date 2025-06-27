@@ -57,6 +57,38 @@
                     <textarea name="cp_post_data[{$post.post_id}][cp_admin_answ]" cols="80" rows="5" class="input-hidden cm-wysiwyg">{$post.cp_admin_answ}</textarea>
                 </div>
             </div>
+
+            {if (!empty($cp_reply_active) && $cp_reply_active == "Y") && $auth.user_type == "UserTypes::ADMIN"|enum && $post.reply_status == 'R'}
+                {$moder_current_url = $config.current_url|escape:"url"}
+
+                <div class="control-group">
+                    <div class="controls">
+                        {btn type="text"
+                            id="cp_reply_approve_{$post.post_id}"
+                            title=__("cp_power_reviews.approve_reply")
+                            href="discussion.rp_approve?post_id={$post.post_id}&redirect_url={$moder_current_url}"
+                            icon="icon-thumbs-up"
+                            icon_first=true
+                            class="btn"
+                            method="POST"
+                            text=__("cp_power_reviews.approve_reply")
+                        }
+
+                        {btn type="dialog"
+                            id="premoderation_disapprove_{$post.post_id}"
+                            title=__("cp_power_reviews.disapprove_reply")
+                            href="discussion.rp_decline?post_id={$post.post_id}&redirect_url={$moder_current_url}"
+                            icon="icon-thumbs-down"
+                            icon_first=true
+                            class="btn"
+                            target_id="cp_rp_disapproval_reason_{$post.post_id}"
+                            text=__("cp_power_reviews.disapprove_reply")
+                        }
+                    </div>
+                </div>
+
+                {include file="addons/cp_power_reviews/components/disapproval_popup.tpl" post_id=$post.post_id}
+            {/if}
         </div>
     {/if}
 {else}

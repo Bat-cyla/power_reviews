@@ -81,9 +81,7 @@
         {if $discussion.posts}
             <div class="cp-prod-tab-rev-sorting">
                 <span class="cp-pr__total-reviews">
-                    <a class="cp_ty-discussion__review-a cm-external-click" data-ca-scroll="content_discussion" data-ca-external-click-id="discussion">
-                        {$discussion.search.total_items} {__("reviews", [$discussion.search.total_items])}
-                    </a>
+                    {$discussion.search.total_items} {__("reviews", [$discussion.search.total_items])}
                 </span>
                 {include file="addons/cp_power_reviews/components/review_sorting.tpl" res_id="pagination_contents_comments_`$object_id`"}
             </div>

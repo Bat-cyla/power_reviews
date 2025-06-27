@@ -5,15 +5,17 @@
             {if "ULTIMATE"|fn_allowed_for}
                 {$no_hide_input = true}
             {/if}
-
-            {include file="addons/discussion/views/discussion_manager/components/allow_discussion.tpl"
-                prefix="product_data"
-                object_id=$product_data.product_id
-                object_type="Addons\\Discussion\\DiscussionObjectTypes::PRODUCT"|enum
-                title=__("discussion_title_product")
-                no_hide_input=$no_hide_input
-                discussion_default_type=$addons.discussion.product_discussion_type
-            }
+            {if $addons.cp_power_reviews.common_for_variations == "S"}
+                {include file="addons/discussion/views/discussion_manager/components/allow_discussion.tpl"
+                    prefix="product_data"
+                    object_id=$product_data.product_id
+                    object_type="Addons\\Discussion\\DiscussionObjectTypes::PRODUCT"|enum
+                    title=__("discussion_title_product")
+                    no_hide_input=$no_hide_input
+                    discussion_default_type=$addons.discussion.product_discussion_type
+                }
+            {/if}
+         
         </fieldset>
         {include file="addons/cp_power_reviews/components/prod_tab.tpl" only_meta=true}
     </div>

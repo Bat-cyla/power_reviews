@@ -10,11 +10,19 @@ msgstr "Cart-Power: Power Reviews"
 
 msgctxt "Addons::description::cp_power_reviews"
 msgid "Product or site review criteria, images for reviews, additional blocks \"Recommendation for purchase\" and \"Most positive/Most critical\". Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
-msgstr "Product or site review criteria, images for reviews, additional blocks \"Recommendation for purchase\" and \"Most positive/Most critical\". Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
+msgstr "Product or site review criteria, images for reviews, additional blocks \"Recommendation for purchase\" and \"Most positive / Most critical\". Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
 
 msgctxt "Languages::cp_attr_name"
 msgid "Attribute"
 msgstr "Attribute"
+
+msgctxt "Languages::cp_pr_use_as_most_positiv"
+msgid "Show as the most positive"
+msgstr "Show as the most positive"
+
+msgctxt "Languages::cp_pr_set_discussion_type_to_vars"
+msgid "Set discussion type to variations"
+msgstr "Set discussion type to variations"
 
 msgctxt "Languages::cp_pr_apply_vars_info_hint"
 msgid "For all child variations, set the value of the \"Reviews\" setting from the main variation of the product"
@@ -453,8 +461,8 @@ msgid "Middle"
 msgstr "Middle"
 
 msgctxt "Languages::cp_pr_limits_max_txt"
-msgid "Maximun"
-msgstr "Maximun"
+msgid "Maximum"
+msgstr "Maximum"
 
 msgctxt "Languages::cp_pr_default_txt"
 msgid "Default"
@@ -866,23 +874,23 @@ msgstr "General"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_cat"
 msgid "Likes/dislikes for reviews"
-msgstr "Likes/dislikes for reviews"
+msgstr "Likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_page"
 msgid "Likes/dislikes for reviews"
-msgstr "Likes/dislikes for reviews"
+msgstr "Likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_vend"
 msgid "Likes/dislikes for reviews"
-msgstr "Likes/dislikes for reviews"
+msgstr "Likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_test"
 msgid "Likes/dislikes for reviews"
-msgstr "Likes/dislikes for reviews"
+msgstr "Likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_ap"
 msgid "Likes/dislikes for reviews"
-msgstr "Likes/dislikes for reviews"
+msgstr "Likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::adit_images_cat"
 msgid "Images for reviews"
@@ -970,7 +978,7 @@ msgstr "Show most helpful block"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_ap"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Allow likes/dislikes for reviews"
+msgstr "Allow likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::show_ap_message_answer"
 msgid "Show answer to post"
@@ -1074,7 +1082,7 @@ msgstr "General"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes"
 msgid "Likes/dislikes for reviews"
-msgstr "Likes/dislikes for reviews"
+msgstr "Likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::adit_images"
 msgid "Images for reviews"
@@ -1090,23 +1098,23 @@ msgstr "Block \"Most positive/Most critical\""
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Allow likes/dislikes for reviews"
+msgstr "Allow likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_test"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Allow likes/dislikes for reviews"
+msgstr "Allow likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_vend"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Allow likes/dislikes for reviews"
+msgstr "Allow likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_cat"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Allow likes/dislikes for reviews"
+msgstr "Allow likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_page"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Allow likes/dislikes for reviews"
+msgstr "Allow likes / dislikes for reviews"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_recom"
 msgid "Allow to recommend product"
@@ -2696,6 +2704,50 @@ msgctxt "SettingsOptions::cp_power_reviews::orders_for_purchase"
 msgid "Order statuses for verified purchase"
 msgstr "Order statuses for verified purchase"
 
+msgctxt "SettingsOptions::cp_power_reviews::seo_reviews_blank"
+msgid "Generation of product review pages"
+msgstr "Generation of product review pages"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_reply_rev"
+msgid "Allow vendors to respond to reviews"
+msgstr "Allow vendors to respond to reviews"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_reply_rev"
+msgid "If enabled, vendors will be able to add replies to user reviews about their products and the vendor"
+msgstr "If enabled, vendors will be able to add replies to user reviews about their products and the vendor."
+
+msgctxt "SettingsOptions::cp_power_reviews::reply_moderation_vend"
+msgid "Vendor responses moderation"
+msgstr "Vendor responses moderation"
+
+msgctxt "SettingsTooltips::cp_power_reviews::reply_moderation_vend"
+msgid "Set conditions for moderating vendors responses. You can add a vendor to the list of trusted sellers from the vendors profile page"
+msgstr "Set conditions for moderating vendors responses. You can add a vendor to the list of trusted sellers from the vendors profile page."
+
+msgctxt "SettingsOptions::cp_power_reviews::moder_reviews_vend"
+msgid "Vendor responses moderation"
+msgstr "Vendor responses moderation"
+
+msgctxt "SettingsVariants::cp_power_reviews::reply_moderation_vend::NM"
+msgid "Do not moderate"
+msgstr "Do not moderate"
+
+msgctxt "SettingsVariants::cp_power_reviews::reply_moderation_vend::MA"
+msgid "Moderate all"
+msgstr "Moderate all"
+
+msgctxt "SettingsVariants::cp_power_reviews::reply_moderation_vend::NMTV"
+msgid "Do not moderate responses from trusted vendors"
+msgstr "Do not moderate responses from trusted vendors"
+
+msgctxt "SettingsOptions::cp_power_reviews::inherit_attr"
+msgid "Inherit attributes when creating a new category"
+msgstr "Inherit attributes when creating a new category"
+
+msgctxt "SettingsTooltips::cp_power_reviews::inherit_attr"
+msgid "If the new category has a parent category, the review attributes will be inherited from it"
+msgstr "If the new category has a parent category, the review attributes will be inherited from it."
+
 msgctxt "SettingsOptions::cp_power_reviews::adit_images_page"
 msgid "Images for reviews"
 msgstr "Images for reviews"
@@ -2800,6 +2852,10 @@ msgctxt "SettingsOptions::cp_power_reviews::licensekey"
 msgid "License key"
 msgstr "License key"
 
+msgctxt "SettingsTooltips::cp_power_reviews::licensekey"
+msgid "You can find it on your order details page"
+msgstr "You can find it on your order details page"
+
 msgctxt "Languages::cp_your_license_is_not_valid"
 msgid "You should enter valid License Key. Please, contact us (sales@cart-power.com), if you face any issues."
 msgstr "You should enter valid License Key. Please, contact us (sales@cart-power.com), if you face any issues."
@@ -2812,3 +2868,58 @@ msgctxt "Languages::based_on"
 msgid "Average rating based on"
 msgstr "Average rating based on"
 
+msgctxt "Languages::cp_power_reviews.vendor.moderation"
+msgid "Vendor responses moderation"
+msgstr "Vendor responses moderation"
+
+msgctxt "Languages::cp_power_reviews.disapprove_reply"
+msgid "Reject vendor response"
+msgstr "Reject vendor response"
+
+msgctxt "Languages::cp_power_reviews.disapproval_reason"
+msgid "Reason for rejection"
+msgstr "Reason for rejection"
+
+msgctxt "Languages::cp_power_reviews.disapprove"
+msgid "Refuse"
+msgstr "Refuse"
+
+msgctxt "Languages::cp_power_reviews.reason_disapprove_reply"
+msgid "Reason for rejection"
+msgstr "Reason for rejection"
+
+msgctxt "Languages::cp_power_reviews.reply_post_vendor"
+msgid "Reply to feedback"
+msgstr "Reply to feedback"
+
+msgctxt "Languages::cp_power_reviews.approve_reply"
+msgid "Approve response the vendor"
+msgstr "Approve response the vendor"
+
+msgctxt "Languages::cp_power_reviews.reply_moder"
+msgid "Review moderation"
+msgstr "Review moderation"
+
+msgctxt "Languages::cp_power_reviews.dont_permission_add_reply_post"
+msgid "You cannot reply to a review"
+msgstr "You cannot reply to a review"
+
+msgctxt "Languages::cp_power_reviews.success_update_status_reply"
+msgid "Status changed"
+msgstr "Status changed"
+
+msgctxt "Languages::cp_power_reviews.enter_reason_disapproval"
+msgid "Enter a reason for rejection"
+msgstr "Enter a reason for rejection"
+
+msgctxt "Languages::cp_power_reviews.vendor.trust_vendor"
+msgid "Verified vendor"
+msgstr "Verified vendor"
+
+msgctxt "Languages::cp_power_reviews.receil_reply_moder"
+msgid "Rejected responses"
+msgstr "Rejected responses"
+
+msgctxt "Languages::cp_double_character_error"
+msgid "Double character error"
+msgstr "The double character \"#\" is not allowed"

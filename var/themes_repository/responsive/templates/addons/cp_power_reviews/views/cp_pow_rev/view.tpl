@@ -135,37 +135,21 @@
             <div class="cp-pr__review-page_info {if $has_icon}cp-pr__with-img{/if}">
                 {$obj_id=$discussion.object_data.product_id}
                 {include file="common/product_data.tpl" product=$discussion.object_data show_price_values=true show_price=true but_role="big" show_add_to_cart=true but_text=__("add_to_cart")}
-                {*
-                {$form_open="form_open_`$obj_id`"}
-                {$smarty.capture.$form_open nofilter}
-                *}
                 {if $addons.cp_seo_templates.status != "A" || ($addons.cp_seo_templates.status == "A" && $addons.cp_seo_templates.use_custom_h1 != "Y")}
                     <div class="cp-pr__review-page_info_name">
-                        <h1>
+                        <h2>
                             {if $discussion.cp_seo.h1}
                                 {$discussion.cp_seo.h1}
                             {else}
                                 {$discussion.object_data.product}
                             {/if}
-                            {*
-                            <a href="{"products.view?product_id=`$discussion.object_data.product_id`"|fn_url}">
-                            </a>
-                            *}
-                        </h1>
+                        </h2>
                     </div>
                 {/if}
                 <div class="cp-pr__review-page_price">
                     {$price="price_`$obj_id`"}
                     {$smarty.capture.$price nofilter}
                 </div>
-                {*
-                <div class="cp-pr__review-page_atc">
-                    {$add_to_cart="add_to_cart_`$obj_id`"}
-                    {$smarty.capture.$add_to_cart nofilter}
-                </div>
-                {$form_close="form_close_`$obj_id`"}
-                {$smarty.capture.$form_close nofilter}
-                *}
                 <div class="cp-pr__review-page_more">
                     <a href="{"products.view?product_id=`$discussion.object_data.product_id`"|fn_url}">{__("cp_pr_see_descr_and_photo")}</a>
                 </div>

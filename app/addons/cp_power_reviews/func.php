@@ -29,12 +29,22 @@ use Tygh\Storefront\Storefront;
 use Tygh\Enum\YesNo;
 use Tygh\Addons\ProductVariations\ServiceProvider as ProductVariationsServiceProvider;
 use Tygh\Addons\ProductVariations\Product\Group\Group as VariationsGroup;
+use Tygh\Enum\ObjectStatuses;
 
 if (version_compare(PRODUCT_VERSION, '4.11.5', '>')) {
     include_once(Registry::get('config.dir.addons') . 'cp_power_reviews/src/more_classes.php');
 }
 
 if (!defined('BOOTSTRAP')) { die('Access denied'); }
+
+function fn_cp_power_reviews_gather_additional_products_data_pre($products, &$params, $lang_code)
+{
+    if (AREA == 'C') {;
+        if (Registry::get('addons.cp_power_reviews.split_storefronts') == 'Y') {
+            $params['cp_pr_split_stores'] = true;
+        }
+    }
+}
 
 function fn_cp_power_reviews_get_route($req, &$result, $area, $is_allowed_url)
 {
@@ -66,12 +76,13 @@ function fn_cp_power_reviews_gather_additional_product_data_post(&$product, $aut
 {
     if (AREA == 'C' && !empty($product['discussion_type']) && $product['discussion_type'] != 'D' && ((defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'Y') || defined('CP_PR_SHOW_TOTAL_POSTS'))) {
         $key_pre = [
-            'product_id'=> $product['product_id'],
-            'store_id'  => Tygh::$app['storefront']->storefront_id,
-            'var_common'=> (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'Y') ? true : false
+            'cp_pr_split_stores'    => !empty($params['cp_pr_split_stores']) ? true : false,
+            'product_id'            => $product['product_id'],
+            'store_id'              => Tygh::$app['storefront']->storefront_id,
+            'var_common'            => (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'Y') ? true : false
         ];
         $key = 'cp_pr_product_rate_' . md5(implode('|', $key_pre));
-        $cache_tables = ['discussion_rating', 'cp_pow_attr_ratings', 'discussion_posts'];
+        $cache_tables = ['addons','discussion_rating', 'cp_pow_attr_ratings', 'discussion_posts'];
         Registry::registerCache(['cp_power_reviews', $key], $cache_tables, Registry::cacheLevel('static'));
         $all_thread_ids = [!empty($product['discussion_thread_id']) ? $product['discussion_thread_id'] : 0];
         if (Registry::isExist($key)) {
@@ -92,12 +103,9 @@ function fn_cp_power_reviews_gather_additional_product_data_post(&$product, $aut
                 );
                 if (!empty($all_var_thread_ids)) {
                     list($prod_total, $total_posts) = fn_cp_power_reviews_get_total_post_avg_rate($all_var_thread_ids, true);
-                    if (!empty($prod_total)) {
-                        $product['average_rating'] = $prod_total;
-                    }
-                    if (!empty($total_posts)) {
-                        $product['cp_pr_total_posts'] = $total_posts;
-                    }
+                    
+                    $product['average_rating'] = $prod_total;
+                    $product['cp_pr_total_posts'] = $total_posts;
                 }
             } elseif (!empty($product['variation_group_id']) && (!defined('CP_PR_VARIATIONS_TYPE') || (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE != 'S'))) {
                 if (!empty($product['variation_parent_product_id'])) {
@@ -111,29 +119,36 @@ function fn_cp_power_reviews_gather_additional_product_data_post(&$product, $aut
                 );
                 if (!empty($all_var_thread_ids)) {
                     list($prod_total, $total_posts) = fn_cp_power_reviews_get_total_post_avg_rate($all_var_thread_ids, true);
-                    if (!empty($prod_total)) {
-                        $product['average_rating'] = $prod_total;
-                    }
-                    if (!empty($total_posts)) {
-                        $product['cp_pr_total_posts'] = $total_posts;
-                    }
+                    
+                    $product['average_rating'] = $prod_total;
+                    $product['cp_pr_total_posts'] = $total_posts;
                 }
             } elseif (!empty($all_thread_ids) && defined('CP_PR_SHOW_TOTAL_POSTS')) {
                 list($avg_rate, $total_posts) = fn_cp_power_reviews_get_total_post_avg_rate($all_thread_ids, true);
-                if (!empty($avg_rate)) {
-                    $product['average_rating'] = $avg_rate;
-                }
-                if (!empty($total_posts)) {
-                    $product['cp_pr_total_posts'] = $total_posts;
-                }
+                
+                $product['average_rating'] = $avg_rate;
+                $product['cp_pr_total_posts'] = $total_posts;
             }
             Registry::set($key, ['avg' => $prod_total, 'total' => $total_posts]);
         }
     }
 }
 
-function fn_cp_power_reviews_get_discussion_pre($object_id, $object_type, &$get_posts, &$params)
+function fn_cp_power_reviews_get_discussion_pre(&$object_id, $object_type, &$get_posts, &$params)
 {
+    if (Registry::get('addons.cp_power_reviews.common_for_variations') == "S") {
+        $product_id_map = ProductVariationsServiceProvider::getProductIdMap();
+        if ($product_id_map->isChildProduct($object_id)) {
+            $object_id_parent = $product_id_map->getParentProductId($object_id);
+        }
+        if (!empty($object_id_parent) && $object_id_parent != $object_id) {
+            Registry::set('runtime.cp_object_id_parent', $object_id);
+        } 
+        if (!empty(Registry::get('runtime.cp_object_id_parent'))) {
+            $object_id = Registry::get('runtime.cp_object_id_parent');
+        }
+    }
+
     if (AREA == 'C' && !empty($object_id) && $object_type == 'P' && (!defined('CP_PR_VARIATIONS_TYPE') || (defined('CP_PR_VARIATIONS_TYPE') && (in_array(CP_PR_VARIATIONS_TYPE, ['Y','S','NS']) && !empty($params['cp_pr_single_vars']) || !in_array(CP_PR_VARIATIONS_TYPE, ['S']))))) {
         if (!empty($params['from_prod_tab']) && !empty($params['req'])) {
             $params = array_merge($params, $params['req']);
@@ -151,7 +166,7 @@ function fn_cp_power_reviews_get_discussion_pre($object_id, $object_type, &$get_
             $get_posts = false;
         }
     }
-    if (!empty($object_id) && $object_type == 'P' && ((defined('CP_PR_VARIATIONS_TYPE') && in_array(CP_PR_VARIATIONS_TYPE, ['Y','S','NS']) && empty($params['cp_pr_single_vars']) || AREA == 'A'))) {
+    if (!empty($object_id) && $object_type == 'P' && ((defined('CP_PR_VARIATIONS_TYPE') && in_array(CP_PR_VARIATIONS_TYPE, ['Y','S','NS']) && empty($params['cp_pr_single_vars']) || AREA == 'A')) && (AREA == 'A' && !in_array(Registry::get('addons.discussion.product_discussion_type'), ['B', 'C', 'R']))) {
         $params['cp_pr_single_vars'] = true;
         $params['skip_check_child_product'] = true;
     }
@@ -172,7 +187,7 @@ function fn_cp_power_reviews_storefront_repository_delete_post($storefront, $ope
     }
 }
 
-function fn_cp_power_reviews_create_seo_name_pre($object_id, $object_type, $object_name, $index, $dispatch, $company_id, $lang_code, &$params)
+function fn_cp_power_reviews_create_seo_name_pre($object_id, $object_type, &$object_name, $index, $dispatch, $company_id, $lang_code, &$params)
 {
     if (!empty($object_id) && !empty($object_type) && $object_type == 'p') {
         $thread_ids = db_get_fields("SELECT thread_id FROM ?:discussion WHERE object_id = ?i AND object_type = ?s", $object_id, 'P');
@@ -186,6 +201,8 @@ function fn_cp_power_reviews_create_seo_name_pre($object_id, $object_type, $obje
                 }
             }
         }
+    } elseif (!empty($object_id) && !empty($object_type) && $object_type == CP_PR_OBJECT_SEO_KEY && $index == 1) {
+        $object_name .= '-' . $object_id;
     }
 }
 
@@ -213,10 +230,6 @@ function fn_cp_power_reviews_ab__advanced_sitemap_write_links_to_file($object_ty
             if (!empty($reviews_settings['product_reviews_priority']) && $reviews_settings['product_reviews_priority'] != 'do_not_use') {
                 $text .= "<priority>{$reviews_settings['product_reviews_priority']}</priority>\n";
             }
-        }
-        
-        if (\Tygh\Enum\YesNo::toBool($ab_settings['add_lastmod'])) {
-            $text .= '<lastmod>' . date('c', time()) . "</lastmod>\n";
         }
     }
 }
@@ -444,29 +457,33 @@ function fn_cp_power_reviews_url_pre(&$url, $area, $protocol, $lang_code)
             parse_str($parsed_url['query'], $parsed_query);
         }
         if (!empty($parsed_query['thread_id']) && Registry::get('addons.seo.status') == 'A') {
-            $thread_data = fn_discussion_get_object(array('thread_id' => $parsed_query['thread_id']));
-            if (!empty($thread_data) && !empty($thread_data['object_type']) && $thread_data['object_type'] == 'P') {
-                $check_exist = db_get_field("SELECT name FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $parsed_query['thread_id'], $lang_code);
-                if (empty($check_exist)) {
-                    $thread_tables = fn_cp_pr_thread_object_tables();
-                    if (!empty($thread_tables) && !empty($thread_tables[$thread_data['object_type']])) {
-                        $product_id = db_get_field("SELECT object_id FROM ?:discussion WHERE thread_id = ?i AND object_type = ?s", $parsed_query['thread_id'], 'P');
-                        if (!empty($product_id)) {
-                            $object_name = db_get_field("SELECT name FROM ?:seo_names WHERE object_id = ?i AND type = ?s", $product_id, 'p');
-                        } else {
-                            $table_info = $thread_tables[$thread_data['object_type']];
-                            $object_name = db_get_field("SELECT " . $table_info['column'] . " FROM ?:" . $table_info['table'] . " WHERE " . $table_info['id'] . " = ?i AND lang_code = ?s", $thread_data['object_id'], $lang_code);
-                        }
-                        if (!empty($object_name)) {
-                            $put_data = array(
-                                'thread_id' => $thread_data['thread_id'],
-                                'name' => $object_name,
-                                'lang_code' => $lang_code,
-                            );
-                            db_replace_into('cp_pr_for_seo', $put_data);
+            static $thread_action = [];
+            if (!isset($thread_action[$parsed_query['thread_id']])) {
+                $thread_data = fn_discussion_get_object(['thread_id' => $parsed_query['thread_id']]);
+                if (!empty($thread_data) && !empty($thread_data['object_type']) && $thread_data['object_type'] == 'P') {
+                    $check_exist = db_get_field("SELECT name FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $parsed_query['thread_id'], $lang_code);
+                    if (empty($check_exist)) {
+                        $thread_tables = fn_cp_pr_thread_object_tables();
+                        if (!empty($thread_tables) && !empty($thread_tables[$thread_data['object_type']])) {
+                            $product_id = db_get_field("SELECT object_id FROM ?:discussion WHERE thread_id = ?i AND object_type = ?s", $parsed_query['thread_id'], 'P');
+                            if (!empty($product_id)) {
+                                $object_name = db_get_field("SELECT name FROM ?:seo_names WHERE object_id = ?i AND type = ?s", $product_id, 'p');
+                            } else {
+                                $table_info = $thread_tables[$thread_data['object_type']];
+                                $object_name = db_get_field("SELECT " . $table_info['column'] . " FROM ?:" . $table_info['table'] . " WHERE " . $table_info['id'] . " = ?i AND lang_code = ?s", $thread_data['object_id'], $lang_code);
+                            }
+                            if (!empty($object_name)) {
+                                $put_data = [
+                                    'thread_id' => $thread_data['thread_id'],
+                                    'name'      => $object_name,
+                                    'lang_code' => $lang_code,
+                                ];
+                                db_replace_into('cp_pr_for_seo', $put_data);
+                            }
                         }
                     }
                 }
+                $thread_action[$parsed_query['thread_id']] = true;
             }
         }
     }
@@ -952,6 +969,84 @@ function fn_cp_power_reviews_update_category_post($category_data, $category_id, 
                     }
                 }
             }
+
+            if (!empty($category_data['parent_id']) && $category_data['category_id'] == 0 && Registry::get('addons.cp_power_reviews.inherit_attr') == "Y") { // copy attr parent category
+                $parent_attr = db_get_array("SELECT * FROM ?:cp_power_rev_cats as attr_cats". 
+                    " LEFT JOIN ?:cp_power_ext_reviews as ext_rev ON attr_cats.cp_attr_id = ext_rev.cp_attr_id".
+                    " LEFT JOIN ?:cp_pow_attr_descr as attr_desc ON attr_cats.cp_attr_id = attr_desc.cp_attr_id".
+                    " WHERE attr_cats.category_id = ?i", $category_data['parent_id']);
+
+                $skip_attr = array();
+
+                if (!empty($parent_attr)) {
+                    foreach($parent_attr as $p_key => $attr_data) {
+                        if (!isset($skip_attr[$attr_data['cp_attr_id']])) {
+                            $attr_e_name = db_get_array("SELECT * FROM ?:cp_pr_attr_names as attr_e_name". 
+                                " LEFT JOIN ?:cp_pr_attr_name_descriptions as attr_e_name_desc ON attr_e_name.name_id = attr_e_name_desc.name_id".
+                                " WHERE attr_e_name.cp_attr_id = ?i", $attr_data['cp_attr_id']);
+                            
+                            $attr_cats_data = array(
+                                'attr_pos' => $attr_data['attr_pos'],
+                                'category_id' => $category_id
+                            );
+                            
+                            $ext_rev_data = array(
+                                'object_id' => $category_id,
+                                'object_type' => $attr_data['object_type'],
+                                'status' => $attr_data['status'],
+                                'company_id' => $attr_data['company_id'],
+                                'view_type' => $attr_data['view_type'],
+                                'position' => $attr_data['position'],
+                                'required' => $attr_data['required']
+                            );
+                        }
+    
+                        $attr_desc_data = array(
+                            'cp_attr_name' => trim($attr_data['cp_attr_name']),
+                            'lang_code' => $attr_data['lang_code']
+                        );
+                        
+                        if (!isset($skip_attr[$attr_data['cp_attr_id']])) {
+                            $attr_id = db_query("INSERT INTO ?:cp_power_ext_reviews ?e", $ext_rev_data);
+                        }
+                        
+                        $attr_cats_data['cp_attr_id'] = $attr_desc_data['cp_attr_id'] = $attr_id;
+                        if (!isset($skip_attr[$attr_data['cp_attr_id']])) {
+                            db_query("INSERT INTO ?:cp_power_rev_cats ?e", $attr_cats_data);
+
+                            if (!empty($attr_e_name)) {
+                                $attr_e_name_copy = $skip_name_ids = array();
+                                foreach ($attr_e_name as $ex_name) {
+                                    if (!isset($skip_name_ids[$ex_name['name_id']])) {
+                                        $attr_e_name_copy = array(
+                                            'type' => $ex_name['type'],
+                                            'cp_attr_id' => $attr_id
+                                        );
+
+                                        $name_id = db_query("INSERT INTO ?:cp_pr_attr_names ?e", $attr_e_name_copy);
+                                    }
+
+                                    $attr_e_name_desc[] = array(
+                                        'name_id' => $name_id,
+                                        'name' => $ex_name['name'],
+                                        'lang_code' => $ex_name['lang_code']
+                                    );
+
+                                    $skip_name_ids[$ex_name['name_id']] = $ex_name['name_id'];
+                                }
+                                
+                                if (!empty($attr_e_name_desc)) {
+                                    db_query("REPLACE INTO ?:cp_pr_attr_name_descriptions ?m", $attr_e_name_desc);
+                                }
+                            }
+                        }
+
+                        db_query("INSERT INTO ?:cp_pow_attr_descr ?e", $attr_desc_data);
+    
+                        $skip_attr[$attr_data['cp_attr_id']] = $attr_data['cp_attr_id'];
+                    }
+                }
+            }
         }
     }
 }
@@ -1384,6 +1479,10 @@ function fn_cp_power_reviews_get_power_reviews($params, $items_per_page = 0)
             $all_comp_ids[] = 0;
             $condition .= db_quote(" AND ?:discussion.company_id IN (?n)", $all_comp_ids);
         }
+        if (AREA == 'C' && !empty($store_id) && $pr_settings['split_storefronts'] == 'Y') {
+            $join .= " LEFT JOIN ?:cp_pr_reviews_storefronts ON ?:cp_pr_reviews_storefronts.post_id = ?:discussion_posts.post_id";
+            $condition .= db_quote(" AND (?:cp_pr_reviews_storefronts.storefront_id = ?i OR ?:cp_pr_reviews_storefronts.storefront_id IS NULL)", $store_id);
+        }
     } else {
         $condition .= fn_get_discussion_company_condition('?:discussion.company_id');
     }
@@ -1438,12 +1537,22 @@ function fn_cp_power_reviews_get_power_reviews($params, $items_per_page = 0)
         $from_this = time() - $params['cp_last_days']*24*60*60;
         $condition .= db_quote(" AND ?:discussion_posts.timestamp >= ?i", $from_this);
     }
+
+    if ($pr_settings['common_for_variations'] == "N" && !empty($params['cp_pr_with_images']) && $params['cp_pr_with_images'] == 'Y') {
+        $all_images_posts = db_get_fields("SELECT DISTINCT(?:cp_review_images.post_id) FROM ?:cp_review_images 
+            LEFT JOIN ?:discussion_posts ON ?:discussion_posts.post_id = ?:cp_review_images.post_id");
+        if (!empty($all_images_posts)) {
+            $condition .= db_quote(" AND ?:discussion_posts.post_id IN (?n)", $all_images_posts);
+        }
+    }
+
     $limit = '';
     if (!empty($params['items_per_page'])) {
-        $params['total_items'] = db_get_field("SELECT COUNT(*) FROM ?:discussion_posts $join WHERE 1 $condition");
+        $params['total_items'] = db_get_field("SELECT COUNT(DISTINCT(?:discussion_posts.post_id)) FROM ?:discussion_posts $join WHERE 1 $condition");
+        
         $limit = db_paginate($params['page'], $params['items_per_page'], $params['total_items']);
     }
-    $posts = db_get_hash_array("SELECT " . implode(',', $fields) . " FROM ?:discussion_posts $join WHERE 1 $condition $sorting $limit", 'post_id');
+    $posts = db_get_hash_array("SELECT " . implode(',', $fields) . " FROM ?:discussion_posts $join WHERE 1 $condition GROUP BY ?:discussion_posts.post_id $sorting $limit", 'post_id');
     
     if (AREA == 'C') {
         $prod_vars_active = false;
@@ -1470,7 +1579,7 @@ function fn_cp_power_reviews_get_power_reviews($params, $items_per_page = 0)
                     }
                 }
                 if ($pr_settings['allow_most_bl_ap'] == 'Y') {
-                    $most_pos_post = db_get_hash_array("SELECT " . implode(',', $fields) . " FROM ?:discussion_posts $join WHERE 1 $condition AND ?:discussion_rating.rating_value > ?i ORDER BY ?:discussion_rating.rating_value desc LIMIT 1", 'post_id', $post_limit);
+                    $most_pos_post = db_get_hash_array("SELECT " . implode(',', $fields) . " FROM ?:discussion_posts $join WHERE 1 $condition AND ?:discussion_rating.rating_value > ?i ORDER BY ?:discussion_rating.rating_value desc, ?:discussion_posts.timestamp desc LIMIT 1", 'post_id', $post_limit);
                     if (!empty($most_pos_post)) {;
                         if ($pr_settings['show_image_in_post_ap'] == 'Y') {
                             fn_cp_power_reviews_get_more_post_data($most_pos_post, 'ALL', false, true);
@@ -1480,7 +1589,7 @@ function fn_cp_power_reviews_get_power_reviews($params, $items_per_page = 0)
                         $params['for_disc']['most_h_post'] = [];
                         $params['for_disc']['most_h_post'] = reset($most_pos_post);
                     }
-                    $most_neg_post = db_get_hash_array("SELECT " . implode(',', $fields) . " FROM ?:discussion_posts $join WHERE 1 $condition AND ?:discussion_rating.rating_value <= ?i AND ?:discussion_rating.rating_value > ?i ORDER BY ?:discussion_rating.rating_value asc LIMIT 1", 'post_id', $post_limit,0);
+                    $most_neg_post = db_get_hash_array("SELECT " . implode(',', $fields) . " FROM ?:discussion_posts $join WHERE 1 $condition AND ?:discussion_rating.rating_value <= ?i AND ?:discussion_rating.rating_value > ?i ORDER BY ?:discussion_rating.rating_value asc, ?:discussion_posts.timestamp desc LIMIT 1", 'post_id', $post_limit,0);
                     if (!empty($most_neg_post)) {
                         if ($pr_settings['show_image_in_post_ap'] == 'Y') {
                             fn_cp_power_reviews_get_more_post_data($most_neg_post, 'ALL', false, true);
@@ -1489,6 +1598,15 @@ function fn_cp_power_reviews_get_power_reviews($params, $items_per_page = 0)
                         }
                         $params['for_disc']['most_u_post'] = [];
                         $params['for_disc']['most_u_post'] = reset($most_neg_post);
+                    }
+                }
+                foreach($params['for_disc'] as $key => &$mp_data) {
+                    if (in_array($key, ['most_u_post','most_h_post'])) {
+                        $mp_data = fn_cp_pr_get_additional_data_for_object($mp_data, CART_LANGUAGE);
+                    } elseif ($key == 'cp_top_help') {
+                        foreach($mp_data as $mpu_k => &$mpu_d) {
+                            $mpu_d = fn_cp_pr_get_additional_data_for_object($mpu_d, CART_LANGUAGE);
+                        }
                     }
                 }
             }
@@ -1604,6 +1722,13 @@ function fn_cp_power_reviews_get_power_reviews($params, $items_per_page = 0)
             $cp_type = '';
         }
         fn_cp_power_reviews_get_more_post_data($posts, $cp_type, $cp_skip_img, $show_img);
+        if (Registry::get('addons.cp_json_ld.status') == ObjectStatuses::ACTIVE) { 
+            if (empty($params['total_items'])){
+                $params['cp_json_ld_total_items'] = db_get_field("SELECT COUNT(DISTINCT ?:discussion_posts.post_id) FROM ?:discussion_posts $join WHERE 1 $condition"); 
+            } else { 
+                $params['cp_json_ld_total_items'] = $params['total_items']; 
+            } 
+        } 
     }
     return [$posts, $params];
 }
@@ -1715,6 +1840,12 @@ function fn_cp_power_reviews_get_discussions(&$params, $items_per_page, &$fields
             $condition .= db_quote(" AND ?:discussion_posts.post_id IN (?n)", $all_images_posts);
         }
     }
+
+    if (AREA == 'A' && !empty($params['cp_get_reply_moder'])) {
+        $join .= db_quote(" LEFT JOIN ?:cp_pr_reviews_reply ON ?:cp_pr_reviews_reply.post_id = ?:discussion_posts.post_id");
+        $condition .= db_quote(" AND ?:cp_pr_reviews_reply.status = ?s", $params['cp_get_reply_moder']);
+        $fields .= ", ?:cp_pr_reviews_reply.cp_admin_answ, ?:cp_pr_reviews_reply.cp_admin_answ_time, ?:cp_pr_reviews_reply.cp_admin_id, ?:cp_pr_reviews_reply.reason, ?:cp_pr_reviews_reply.status as reply_status";
+    }
 }
 
 function fn_cp_power_reviews_get_discussions_post ($params, $items_per_page, &$posts) {
@@ -1727,117 +1858,137 @@ function fn_cp_power_reviews_get_more_post_data(&$posts, $cp_type = '', $cp_skip
     if (!empty($posts)) {
         $review_settings = Registry::get('addons.cp_power_reviews');
         $object_suffix = fn_cp_pr_get_object_suffixes();
+        static $m_cat_ids = []; 
+        static $exist_posts = [];
         foreach($posts as $key => $post_data) {
-            $get_images = false;
-            $words_limit = 0;
-            if ((!empty($post_data['object_type']) && in_array($post_data['object_type'], array('P','E','M','C','A','B'))) || in_array($cp_type, array('P','E','M','C','A','B','ALL'))) {
-                if (fn_allowed_for('MULTIVENDOR')) {
-                    $posts[$key]['storefront_data'] = db_get_row("SELECT ?:storefronts.name, ?:storefronts.storefront_id FROM ?:storefronts 
-                        LEFT JOIN ?:cp_pr_reviews_storefronts ON ?:cp_pr_reviews_storefronts.storefront_id = ?:storefronts.storefront_id 
-                        WHERE ?:cp_pr_reviews_storefronts.post_id = ?i", $post_data['post_id']);
-                }
-                if (!empty($post_data['object_type']) && $post_data['object_type'] == 'P' || $cp_type == 'P') {
-                    $words_limit = $review_settings['msg_word_limit'];
-                    if ($review_settings['show_image_in_post'] == 'Y') {
-                        $get_images = true;
+            $obj_descr = !empty($post_data['object_data']['description']) ? $post_data['object_data']['description'] : '';
+            $post_key = md5(implode('|', [$post_data['post_id'], $cp_type, $show_img, $obj_descr]));
+            if (!isset($exist_posts[$post_key]) || AREA != 'C') {
+                $get_images = false;
+                $words_limit = 0;
+                if ((!empty($post_data['object_type']) && in_array($post_data['object_type'], ['P','E','M','C','A','B'])) || in_array($cp_type, ['P','E','M','C','A','B','ALL'])) {
+                    if (fn_allowed_for('MULTIVENDOR')) {
+                        $posts[$key]['storefront_data'] = db_get_row("SELECT ?:storefronts.name, ?:storefronts.storefront_id FROM ?:storefronts 
+                            LEFT JOIN ?:cp_pr_reviews_storefronts ON ?:cp_pr_reviews_storefronts.storefront_id = ?:storefronts.storefront_id 
+                            WHERE ?:cp_pr_reviews_storefronts.post_id = ?i", $post_data['post_id']);
                     }
-                    $posts[$key]['cp_attr_ratings'] = db_get_hash_array("SELECT ?:cp_power_ext_reviews.view_type, ?:cp_pow_attr_ratings.*, ?:cp_power_rev_products.attr_pos, ?:cp_pow_attr_descr.cp_attr_name FROM ?:cp_pow_attr_ratings
-                        LEFT JOIN ?:cp_power_rev_products ON ?:cp_power_rev_products.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
-                        LEFT JOIN ?:discussion ON ?:discussion.object_id = ?:cp_power_rev_products.product_id
-                        LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
-                        LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
-                        WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:discussion.thread_id = ?s AND ?:discussion.object_type = ?s ORDER BY ?:cp_power_rev_products.attr_pos", 'cp_attr_id', $post_data['post_id'], DESCR_SL, 'A', $post_data['thread_id'], 'P');
-                        
-                    $prod_main_cat = db_get_field("SELECT ?:products_categories.category_id FROM ?:products_categories 
-                        LEFT JOIN ?:discussion ON ?:discussion.object_id = ?:products_categories.product_id
-                        WHERE ?:discussion.thread_id = ?i AND ?:products_categories.link_type = ?s", $post_data['thread_id'], 'M');
-                    if (!empty($prod_main_cat)) {
-                        if (!empty($posts[$key]['cp_attr_ratings'])) {
-                            $already_get_ids = array_keys($posts[$key]['cp_attr_ratings']);
-                        } else {
-                            $already_get_ids = [];
+                    if (!empty($post_data['object_type']) && $post_data['object_type'] == 'P' || $cp_type == 'P') {
+                        $words_limit = $review_settings['msg_word_limit'];
+                        if ($review_settings['show_image_in_post'] == 'Y') {
+                            $get_images = true;
                         }
-                        
-                        $cat_prod_attr = db_get_hash_array("SELECT ?:cp_power_ext_reviews.view_type, ?:cp_pow_attr_ratings.*, ?:cp_power_rev_cats.attr_pos, ?:cp_pow_attr_descr.cp_attr_name FROM ?:cp_pow_attr_ratings
-                            LEFT JOIN ?:cp_power_rev_cats ON ?:cp_power_rev_cats.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
+                        $posts[$key]['cp_attr_ratings'] = db_get_hash_array("SELECT ?:cp_power_ext_reviews.view_type, ?:cp_pow_attr_ratings.*, ?:cp_power_rev_products.attr_pos, ?:cp_pow_attr_descr.cp_attr_name FROM ?:cp_pow_attr_ratings
+                            LEFT JOIN ?:cp_power_rev_products ON ?:cp_power_rev_products.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
+                            LEFT JOIN ?:discussion ON ?:discussion.object_id = ?:cp_power_rev_products.product_id
                             LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
                             LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
-                            WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:cp_power_ext_reviews.cp_attr_id NOT IN (?n) ORDER BY ?:cp_power_rev_cats.attr_pos", 'cp_attr_id', $post_data['post_id'], DESCR_SL, 'A', $already_get_ids);
-                    }
-                    if (!empty($cat_prod_attr)) {
-                        if (!empty($posts[$key]['cp_attr_ratings'])) {
-                            $posts[$key]['cp_attr_ratings'] = $cat_prod_attr + $posts[$key]['cp_attr_ratings'];
-                            uasort($posts[$key]['cp_attr_ratings'], "fn_cp_power_reviews_sort_reviews_by_pos");
+                            WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:discussion.thread_id = ?s AND ?:discussion.object_type = ?s ORDER BY ?:cp_power_rev_products.attr_pos", 'cp_attr_id', $post_data['post_id'], DESCR_SL, 'A', $post_data['thread_id'], 'P');
+                        if (!isset($m_cat_ids[$post_data['thread_id']])) {
+                            $m_cat_ids[$post_data['thread_id']] = $prod_main_cat = db_get_field("SELECT ?:products_categories.category_id FROM ?:products_categories 
+                                LEFT JOIN ?:discussion ON ?:discussion.object_id = ?:products_categories.product_id
+                                WHERE ?:discussion.thread_id = ?i AND ?:products_categories.link_type = ?s", $post_data['thread_id'], 'M');
+                                
                         } else {
-                            $posts[$key]['cp_attr_ratings'] = $cat_prod_attr;
+                            $prod_main_cat = $m_cat_ids[$post_data['thread_id']];
                         }
-                    }
-                } elseif (!empty($post_data['object_type']) && in_array($post_data['object_type'], array('E', 'M')) || in_array($cp_type, array('E', 'M'))) {
-                    
-                    if ((!empty($post_data['object_type']) && $post_data['object_type'] == 'E') || $cp_type == 'E') {
-                        $words_limit = $review_settings['msg_word_limit_test'];
-                        if ($review_settings['show_image_in_post_test'] == 'Y') {
-                            $get_images = true;
+                        if (!empty($prod_main_cat)) {
+                            if (!empty($posts[$key]['cp_attr_ratings'])) {
+                                $already_get_ids = array_keys($posts[$key]['cp_attr_ratings']);
+                            } else {
+                                $already_get_ids = [];
+                            }
+                            
+                            $cat_prod_attr = db_get_hash_array("SELECT ?:cp_power_ext_reviews.view_type, ?:cp_pow_attr_ratings.*, ?:cp_power_rev_cats.attr_pos, ?:cp_pow_attr_descr.cp_attr_name FROM ?:cp_pow_attr_ratings
+                                LEFT JOIN ?:cp_power_rev_cats ON ?:cp_power_rev_cats.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
+                                LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
+                                LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
+                                WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:cp_power_ext_reviews.cp_attr_id NOT IN (?n) ORDER BY ?:cp_power_rev_cats.attr_pos", 'cp_attr_id', $post_data['post_id'], DESCR_SL, 'A', $already_get_ids);
                         }
-                        $sql_type = 'E';
-                    } elseif ((!empty($post_data['object_type']) && $post_data['object_type'] == 'M') || $cp_type == 'M') {
-                        $words_limit = $review_settings['msg_word_limit_vend'];
-                        if ($review_settings['show_image_in_post_vend'] == 'Y') {
-                            $get_images = true;
+                        if (!empty($cat_prod_attr)) {
+                            if (!empty($posts[$key]['cp_attr_ratings'])) {
+                                $posts[$key]['cp_attr_ratings'] = $cat_prod_attr + $posts[$key]['cp_attr_ratings'];
+                                uasort($posts[$key]['cp_attr_ratings'], "fn_cp_power_reviews_sort_reviews_by_pos");
+                            } else {
+                                $posts[$key]['cp_attr_ratings'] = $cat_prod_attr;
+                            }
                         }
-                        $sql_type = 'M';
-                    }
-                    $posts[$key]['cp_attr_ratings'] = db_get_array("SELECT ?:cp_power_ext_reviews.view_type, ?:cp_pow_attr_ratings.*, ?:cp_pow_attr_descr.cp_attr_name FROM ?:cp_pow_attr_ratings
-                        LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
-                        LEFT JOIN ?:discussion ON ?:discussion.object_type = ?:cp_power_ext_reviews.object_type
-                        LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
-                        WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:discussion.thread_id = ?s AND ?:cp_power_ext_reviews.object_type = ?s", $post_data['post_id'], DESCR_SL, 'A', $post_data['thread_id'], $sql_type);
-                
-                } elseif ((!empty($post_data['object_type']) && $post_data['object_type'] == 'C') || $cp_type == 'C') {
-                    $words_limit = $review_settings['msg_word_limit_cat'];
-                    if ($review_settings['show_image_in_post_cat'] == 'Y') {
-                        $get_images = true;
-                    }
-                } elseif ((!empty($post_data['object_type']) && in_array($post_data['object_type'], array('A','B'))) || in_array($cp_type, array('A','B'))) {
-                    $words_limit = $review_settings['msg_word_limit_page'];
-                    if ($review_settings['show_image_in_post_page'] == 'Y') {
-                        $get_images = true;
-                    }
-                } 
-                if ($cp_type == 'ALL') {
-                    $words_limit = $review_settings['msg_word_limit_ap'];
-                    if ($review_settings['show_image_in_post_ap'] == 'Y') {
-                        $get_images = true;
-                    } else {
-                        $get_images = false;
-                    }
-                }
-                if (!isset($get_images) && !empty($show_img)) {
-                    $get_images = true;
-                }
-                if (!empty($posts[$key]['cp_attr_ratings'])) {
-                    if (!empty($post_data['rating_value']) && (!empty($post_data['object_type']) && in_array($post_data['object_type'], array('P','E','M')) || in_array($cp_type, array('P','E','M')))) {
-                        $posts[$key]['cp_av_rating_post'] = $post_data['rating_value'];
-                    } else {
-                        $posts[$key]['cp_av_rating_post'] = $sred_rate = round(db_get_field("SELECT AVG(?:cp_pow_attr_ratings.rating) FROM ?:cp_pow_attr_ratings  
-                            LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
-                            WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_ratings.rating > ?i AND ?:cp_power_ext_reviews.status = ?s", $post_data['post_id'], 0, 'A'), 1);
+                    } elseif (!empty($post_data['object_type']) && in_array($post_data['object_type'], array('E', 'M')) || in_array($cp_type, array('E', 'M'))) {
                         
-                        if (!empty($sred_rate)) {
-                            $posts[$key]['cp_av_rate_stars'] = fn_cp_power_reviews_discussion_rating($sred_rate);
+                        if ((!empty($post_data['object_type']) && $post_data['object_type'] == 'E') || $cp_type == 'E') {
+                            $words_limit = $review_settings['msg_word_limit_test'];
+                            if ($review_settings['show_image_in_post_test'] == 'Y') {
+                                $get_images = true;
+                            }
+                            $sql_type = 'E';
+                        } elseif ((!empty($post_data['object_type']) && $post_data['object_type'] == 'M') || $cp_type == 'M') {
+                            $words_limit = $review_settings['msg_word_limit_vend'];
+                            if ($review_settings['show_image_in_post_vend'] == 'Y') {
+                                $get_images = true;
+                            }
+                            $sql_type = 'M';
+                        }
+                        $posts[$key]['cp_attr_ratings'] = db_get_array("SELECT ?:cp_power_ext_reviews.view_type, ?:cp_pow_attr_ratings.*, ?:cp_pow_attr_descr.cp_attr_name FROM ?:cp_pow_attr_ratings
+                            LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
+                            LEFT JOIN ?:discussion ON ?:discussion.object_type = ?:cp_power_ext_reviews.object_type
+                            LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id
+                            WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:discussion.thread_id = ?s AND ?:cp_power_ext_reviews.object_type = ?s", $post_data['post_id'], DESCR_SL, 'A', $post_data['thread_id'], $sql_type);
+                    
+                    } elseif ((!empty($post_data['object_type']) && $post_data['object_type'] == 'C') || $cp_type == 'C') {
+                        $words_limit = $review_settings['msg_word_limit_cat'];
+                        if ($review_settings['show_image_in_post_cat'] == 'Y') {
+                            $get_images = true;
+                        }
+                    } elseif ((!empty($post_data['object_type']) && in_array($post_data['object_type'], array('A','B'))) || in_array($cp_type, array('A','B'))) {
+                        $words_limit = $review_settings['msg_word_limit_page'];
+                        if ($review_settings['show_image_in_post_page'] == 'Y') {
+                            $get_images = true;
+                        }
+                    } 
+                    if ($cp_type == 'ALL') {
+                        $words_limit = $review_settings['msg_word_limit_ap'];
+                        if ($review_settings['show_image_in_post_ap'] == 'Y') {
+                            $get_images = true;
+                        } else {
+                            $get_images = false;
                         }
                     }
-                    $posts[$key]['cp_attr_ratings'] = fn_cp_pr_get_view_type_txts($posts[$key]['cp_attr_ratings'], DESCR_SL);
-                } else {
-                    if (!empty($post_data['rating_value'])) {
-                        $posts[$key]['cp_av_rating_post'] = $post_data['rating_value'];
+                    if (!isset($get_images) && !empty($show_img)) {
+                        $get_images = true;
                     }
-                }
-                if (!empty($get_images)) {
-                    $cp_review_pairs = fn_get_image_pairs($post_data['post_id'], 'cp_rev_post', 'A', true, true, CART_LANGUAGE);
-                    if (!empty($cp_review_pairs)) {
-                        $post_images_data = db_get_hash_array("SELECT post_image_id, status FROM ?:cp_review_images WHERE post_id = ?i", 'post_image_id', $post_data['post_id']);
-                        if (!empty($post_images_data)) {
+                    if (!empty($posts[$key]['cp_attr_ratings'])) {
+                        if (!empty($post_data['rating_value']) && (!empty($post_data['object_type']) && in_array($post_data['object_type'], array('P','E','M')) || in_array($cp_type, array('P','E','M')))) {
+                            $posts[$key]['cp_av_rating_post'] = $post_data['rating_value'];
+                        } else {
+                            $posts[$key]['cp_av_rating_post'] = $sred_rate = round(db_get_field("SELECT AVG(?:cp_pow_attr_ratings.rating) FROM ?:cp_pow_attr_ratings  
+                                LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_pow_attr_ratings.cp_attr_id 
+                                WHERE ?:cp_pow_attr_ratings.post_id = ?i AND ?:cp_pow_attr_ratings.rating > ?i AND ?:cp_power_ext_reviews.status = ?s", $post_data['post_id'], 0, 'A'), 1);
+                            
+                            if (!empty($sred_rate)) {
+                                $posts[$key]['cp_av_rate_stars'] = fn_cp_power_reviews_discussion_rating($sred_rate);
+                            }
+                        }
+                        $posts[$key]['cp_attr_ratings'] = fn_cp_pr_get_view_type_txts($posts[$key]['cp_attr_ratings'], DESCR_SL);
+                    } else {
+                        if (!empty($post_data['rating_value'])) {
+                            $posts[$key]['cp_av_rating_post'] = $post_data['rating_value'];
+                        }
+                    }
+                    if (!empty($get_images)) {
+                        static $mpost_imgs = [];
+                        $mpost_key = md5(implode('|', [$post_data['post_id'], CART_LANGUAGE]));
+                        if (!isset($mpost_imgs[$mpost_key]) || AREA != 'C') {
+                            $cp_review_pairs = fn_get_image_pairs($post_data['post_id'], 'cp_rev_post', 'A', true, true, CART_LANGUAGE);
+                            $post_images_data = [];
+                            if (!empty($cp_review_pairs)) {
+                                $post_images_data = db_get_hash_array("SELECT post_image_id, status FROM ?:cp_review_images WHERE post_id = ?i", 'post_image_id', $post_data['post_id']);
+                            }
+                            $mpost_imgs[$mpost_key]['cp_review_pairs'] = $cp_review_pairs;
+                            $mpost_imgs[$mpost_key]['post_images_data'] = $post_images_data;
+                        } else {
+                            $cp_review_pairs = $mpost_imgs[$mpost_key]['cp_review_pairs'];
+                            $post_images_data = $mpost_imgs[$mpost_key]['post_images_data'];
+                        }
+                        if (!empty($post_images_data) && !empty($cp_review_pairs)) {
                             foreach($cp_review_pairs as $pair_id => $img_data) {
                                 if (!empty($post_images_data[$img_data['pair_id']])) {
                                     if ($post_images_data[$img_data['pair_id']]['status'] == 'A' && AREA == 'C') {
@@ -1851,74 +2002,79 @@ function fn_cp_power_reviews_get_more_post_data(&$posts, $cp_type = '', $cp_skip
                             }
                         }
                     }
-                }
-                if (!empty($cp_type)) {
-                    $obj_type = $cp_type;
-                } elseif (!empty($post_data['object_type'])) {
-                    $obj_type = $post_data['object_type'];
-                }
-                if (isset($object_suffix[$obj_type]) && !empty($review_settings['show_videos_in_post' . $object_suffix[$obj_type]]) 
-                    && $review_settings['show_videos_in_post' . $object_suffix[$obj_type]] == 'Y' || AREA == 'A') {
-                    $video_cond = '';
-                    if (AREA == 'C') {
-                        $video_cond .= db_quote(" AND status = ?s", 'A');
+                    if (!empty($cp_type)) {
+                        $obj_type = $cp_type;
+                    } elseif (!empty($post_data['object_type'])) {
+                        $obj_type = $post_data['object_type'];
                     }
-                    $video_data = db_get_row("
-                        SELECT * FROM ?:cp_pr_video_links WHERE post_id = ?i ?p", $post_data['post_id'], $video_cond
-                    );
-                    if (!empty($video_data)) {
-                        $video_data['preview'] = fn_get_image_pairs($video_data['video_id'], 'cp_pr_video_preview', 'M', true, true, CART_LANGUAGE);
-                        if (empty($video_data['preview'])) { // add default preview img
-                            $video_data['preview_def'] = Storage::instance('images')->getUrl('cp_pr_youtube.jpg');
+                    if (isset($object_suffix[$obj_type]) && !empty($review_settings['show_videos_in_post' . $object_suffix[$obj_type]]) 
+                        && $review_settings['show_videos_in_post' . $object_suffix[$obj_type]] == 'Y' || AREA == 'A') {
+                        $video_cond = '';
+                        if (AREA == 'C') {
+                            $video_cond .= db_quote(" AND status = ?s", 'A');
+                        }
+                        static $post_vid_prev = [];
+                        $post_vkey = md5(implode('|', [$post_data['post_id'], $video_cond]));
+                        if (!isset($post_vid_prev[$post_vkey])) {
+                            $video_data = db_get_row("
+                                SELECT * FROM ?:cp_pr_video_links WHERE post_id = ?i ?p", $post_data['post_id'], $video_cond
+                            );
+                            if (!empty($video_data)) {
+                                $video_data['preview'] = fn_get_image_pairs($video_data['video_id'], 'cp_pr_video_preview', 'M', true, true, CART_LANGUAGE);
+                                if (empty($video_data['preview'])) { // add default preview img
+                                    $video_data['preview_def'] = Storage::instance('images')->getUrl('cp_pr_youtube.jpg');
+                                }
+                            }
+                            $post_vid_prev[$post_vkey] = $posts[$key]['video_data'] = $video_data;
+                        } else {
+                            $video_data = $post_vid_prev[$post_vkey];
                         }
                         $posts[$key]['video_data'] = $video_data;
                     }
                 }
-            }
-            if (!empty($post_data['cp_block_trunc_msg'])) {
-                $words_limit = $post_data['cp_block_trunc_msg'];
-            }
-            if (!empty($post_data['message'])) {
-                if (!empty($words_limit)) {
-                    if (!empty($post_data['cp_is_block_run'])) {
-                        $fileds_to_slice = [];
-                    } else {
-                        $fileds_to_slice = array('msg' => 'message','adv' => 'cp_pr_advantages','disadv' => 'cp_pr_disadvantages');
-                    }
-                    foreach($fileds_to_slice as $sl_key => $p_filed) {
-                        if (!empty($post_data[$p_filed])) {
-                            $short = explode(' ', $post_data[$p_filed]);
-                            $count = count($short);
-                            //$posts[$key]['cp_words_amount'] = $count;
-                            if(!empty($short)) {
-                                if ($count > $words_limit) {
-                                    $posts[$key]['short_' . $sl_key] = array_slice($short, 0, $words_limit);
-        //                             $posts[$key]['short_msg_last'] = array_slice($short, $words_limit);
-        //                             $posts[$key]['short_msg_last'] = implode(' ', $posts[$key]['short_msg_last']);
-                                    $posts[$key]['short_' . $sl_key] = implode(' ', $posts[$key]['short_' . $sl_key]);
+                if (!empty($post_data['cp_block_trunc_msg'])) {
+                    $words_limit = $post_data['cp_block_trunc_msg'];
+                }
+                if (!empty($post_data['message'])) {
+                    if (!empty($words_limit)) {
+                        if (!empty($post_data['cp_is_block_run'])) {
+                            $fileds_to_slice = [];
+                        } else {
+                            $fileds_to_slice = array('msg' => 'message','adv' => 'cp_pr_advantages','disadv' => 'cp_pr_disadvantages');
+                        }
+                        foreach($fileds_to_slice as $sl_key => $p_filed) {
+                            if (!empty($post_data[$p_filed])) {
+                                $short = explode(' ', $post_data[$p_filed]);
+                                $count = count($short);
+                                //$posts[$key]['cp_words_amount'] = $count;
+                                if(!empty($short)) {
+                                    if ($count > $words_limit) {
+                                        $posts[$key]['short_' . $sl_key] = array_slice($short, 0, $words_limit);
+            //                             $posts[$key]['short_msg_last'] = array_slice($short, $words_limit);
+            //                             $posts[$key]['short_msg_last'] = implode(' ', $posts[$key]['short_msg_last']);
+                                        $posts[$key]['short_' . $sl_key] = implode(' ', $posts[$key]['short_' . $sl_key]);
+                                    }
                                 }
                             }
                         }
-                    }
-                    if (!empty($post_data['cp_admin_answ']) && !empty($post_data['cp_admin_id'])) {
-                        $anw_short = explode(' ', $post_data['cp_admin_answ']);
-                        $anw_count = count($anw_short);
-                        if(!empty($anw_short)) {
-                            if ($anw_count > $words_limit) {
-                                $posts[$key]['answ_short_msg'] = array_slice($anw_short, 0, $words_limit);
-//                                 $posts[$key]['answ_short_msg_last'] = array_slice($anw_short, $words_limit);
-//                                 $posts[$key]['answ_short_msg_last'] = implode(' ', $posts[$key]['answ_short_msg_last']);
-                                $posts[$key]['answ_short_msg'] = implode(' ', $posts[$key]['answ_short_msg']);
-                            } 
+                        if (!empty($post_data['cp_admin_answ']) && !empty($post_data['cp_admin_id'])) {
+                            $anw_short = explode(' ', $post_data['cp_admin_answ']);
+                            $anw_count = count($anw_short);
+                            if(!empty($anw_short)) {
+                                if ($anw_count > $words_limit) {
+                                    $posts[$key]['answ_short_msg'] = array_slice($anw_short, 0, $words_limit);
+    //                                 $posts[$key]['answ_short_msg_last'] = array_slice($anw_short, $words_limit);
+    //                                 $posts[$key]['answ_short_msg_last'] = implode(' ', $posts[$key]['answ_short_msg_last']);
+                                    $posts[$key]['answ_short_msg'] = implode(' ', $posts[$key]['answ_short_msg']);
+                                } 
+                            }
                         }
                     }
+                    $posts[$key]['total_chars'] = iconv_strlen($post_data['message'], 'UTF-8');
                 }
-                /*else {
-                    $short = explode(' ', $post_data['message']);
-                    $posts[$key]['cp_words_amount'] = count($short);
-                }
-                */
-                $posts[$key]['total_chars'] = iconv_strlen($post_data['message'], 'UTF-8');
+                $exist_posts[$post_key] = $posts[$key];
+            } else {
+                $posts[$key] = $exist_posts[$post_key];
             }
             if (!empty($cp_skip_img) && empty($posts[$key]['cp_review_pairs'])) {
                 unset($posts[$key]);
@@ -1961,8 +2117,9 @@ function fn_cp_power_reviews_replace_placeholders ($text, $order_info, $company_
 
 function fn_cp_power_reviews_update_discussion_posts ($posts) {
     if (!empty($posts) && is_array($posts)) {
-        $threads = db_get_hash_single_array("SELECT post_id, thread_id FROM ?:discussion_posts WHERE post_id IN (?n)", array('post_id', 'thread_id'), array_keys($posts));
+        $threads = db_get_hash_single_array("SELECT post_id, thread_id FROM ?:discussion_posts WHERE post_id IN (?n)", ['post_id', 'thread_id'], array_keys($posts));
         $messages_exist = db_get_fields("SELECT post_id FROM ?:discussion_messages WHERE post_id IN (?n)", array_keys($posts));
+        $reply_exist = db_get_fields("SELECT post_id FROM ?:cp_pr_reviews_reply WHERE post_id IN (?n)", array_keys($posts));
         $rating_exist = db_get_fields("SELECT post_id FROM ?:discussion_rating WHERE post_id IN (?n)", array_keys($posts));
         fn_delete_notification('company_access_denied');
         $answ_name = '';
@@ -1980,9 +2137,17 @@ function fn_cp_power_reviews_update_discussion_posts ($posts) {
                 $answ_name = __('administrator');
             }
         }
+        $most_exists = false;
         foreach ($posts as $p_id => $data) {
+            if (!empty($data['cp_pr_is_pos']) && $data['cp_pr_is_pos'] == 'Y' && !empty($threads[$p_id])) {
+                if (!empty($most_exists)) {
+                    $data['cp_pr_is_pos'] = 'N';
+                } else {
+                    db_query("UPDATE ?:discussion_posts SET cp_pr_is_pos = ?s WHERE thread_id = ?i", 'N', $threads[$p_id]);
+                    $most_exists = true;
+                }
+            }
             unset($data['thread_id'], $data['post_id']);
-
             if (!empty($data['date'])) {
                 if (empty($data['time'])) {
                     $data['time'] = '00:00';
@@ -1995,13 +2160,23 @@ function fn_cp_power_reviews_update_discussion_posts ($posts) {
                 if (!empty($data['cp_admin_answ']) && empty($data['cp_admin_id'])) {
                     $data['cp_admin_id'] = $answ_name;
                 }
-                $check_time = db_get_field("SELECT cp_admin_answ_time FROM ?:discussion_posts WHERE post_id = ?i", $p_id);
+                $check_time = db_get_field("SELECT cp_admin_answ_time FROM ?:cp_pr_reviews_reply WHERE post_id = ?i", $p_id);
                 if (empty($check_time)) {
                     $data['cp_admin_answ_time'] = time();
                 }
             } else {
                 $data['cp_admin_id'] = '';
             }
+
+            if (in_array($p_id, $reply_exist)) {
+                db_query("UPDATE ?:cp_pr_reviews_reply SET ?u WHERE post_id = ?i", $data, $p_id);
+            } else {
+                $data['thread_id'] = $threads[$p_id];
+                $data['post_id'] = $p_id;
+                db_query("INSERT INTO ?:cp_pr_reviews_reply ?e", $data);
+            }
+
+
             // Validate rating value
             if (!empty($data['ratings'])) {
                 $sred_rat = $counter = 0;
@@ -2065,7 +2240,8 @@ function fn_cp_power_reviews_update_discussion_posts ($posts) {
 }
 
 function fn_cp_power_reviews_add_like_to_post ($cp_like, $post_id, $auth, $object_type = '') {
-    $result = false;
+    $show_sign_up = $added = false;
+    $new_values = [];
     if (!empty($object_type) && $object_type == 'ALL' && !empty($post_id)) {
         $object_type = db_get_field("SELECT ?:discussion.object_type FROM ?:discussion
             LEFT JOIN ?:discussion_posts ON ?:discussion_posts.thread_id = ?:discussion.thread_id WHERE ?:discussion_posts.post_id = ?i", $post_id);
@@ -2076,11 +2252,11 @@ function fn_cp_power_reviews_add_like_to_post ($cp_like, $post_id, $auth, $objec
             fn_set_notification('W', __('warning'), __('you_already_rate_this_review'));
         } else {
             db_query("DELETE FROM ?:cp_pow_attr_likes_users WHERE post_id = ?i AND user_id = ?i", $check_post_like, $auth['user_id']);
-            $like_data = array(
-                'post_id' => $post_id,
-                'user_id' => $auth['user_id'],
+            $like_data = [
+                'post_id'   => $post_id,
+                'user_id'   => $auth['user_id'],
                 'rate_type' => $cp_like
-            );
+            ];
             db_query("INSERT INTO ?:cp_pow_attr_likes_users ?e ON DUPLICATE KEY UPDATE ?u", $like_data, $like_data);
             if ($cp_like == 'Y') {
                 if (!empty($check_post_like)) {
@@ -2093,6 +2269,7 @@ function fn_cp_power_reviews_add_like_to_post ($cp_like, $post_id, $auth, $objec
                 }
                 db_query("UPDATE ?:discussion_posts SET cp_neg_post = cp_neg_post + 1 WHERE post_id = ?i", $post_id);
             }
+            $added = true;
         }
     } else {
         if (!empty($object_type) && !empty($post_id)) {
@@ -2120,19 +2297,23 @@ function fn_cp_power_reviews_add_like_to_post ($cp_like, $post_id, $auth, $objec
                     } else {
                         db_query("UPDATE ?:discussion_posts SET cp_neg_post = cp_neg_post + 1 WHERE post_id = ?i", $post_id);
                     }
+                    $added = true;
                 } else {
                     fn_set_notification('W', __('warning'), __('you_already_rate_this_review'));
                 }
             } else {
                 fn_set_notification('E', __('error'), __('error_not_logged'));
-                $result = true;
+                $show_sign_up = true;
             }
         } else {
             fn_set_notification('E', __('error'), __('error_not_logged'));
-            $result = true;
+            $show_sign_up = true;
         }
     }
-    return $result;
+    if (!empty($added)) {
+        $new_values = db_get_row("SELECT cp_pos_post,cp_neg_post FROM ?:discussion_posts WHERE post_id = ?i", $post_id);
+    }
+    return [$show_sign_up, $added, $new_values];
 }
 
 function fn_cp_pr_get_object_suffixes()
@@ -2328,56 +2509,56 @@ function fn_cp_power_reviews_add_prod_ratings ($post_data, $send_notifications =
                 if (AREA == 'C') {
                     $lang_code = Registry::get('settings.Appearance.backend_default_language');
                     //Send to admin
-                    Mailer::sendMail(array(
-                        'to' => 'default_company_orders_department',
-                        'from' => 'default_company_orders_department',
-                        'data' => array(
-                            'url' => fn_url("orders.details?order_id=$object[object_id]", 'A', 'http'),
-                            'object_data' => $object_data,
-                            'post_data' => $post_data,
-                            'object_name' => $object_name,
-                            'subject' => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
-                        ),
+                    Mailer::sendMail([
+                        'to'    => 'default_company_orders_department',
+                        'from'  => 'default_company_orders_department',
+                        'data'  => [
+                            'url'           => fn_url("orders.details?order_id=$object[object_id]", 'A', 'http'),
+                            'object_data'   => $object_data,
+                            'post_data'     => $post_data,
+                            'object_name'   => $object_name,
+                            'subject'       => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
+                        ],
                         'template_code' => 'discussion_notification',
-                        'tpl' => 'addons/discussion/notification.tpl',
-                        'company_id' => $order_info['company_id'],
-                    ), 'A', $lang_code);
+                        'tpl'           => 'addons/discussion/notification.tpl',
+                        'company_id'    => $order_info['company_id'],
+                    ], 'A', $lang_code);
                     // Send to vendor
                     if (!empty($order_info['company_id']) && !empty($discussion_settings[$object_name . '_notify_vendor']) && $discussion_settings[$object_name . '_notify_vendor'] == 'Y') {
                         $lang_code = fn_get_company_language($order_info['company_id']);
-                        Mailer::sendMail(array(
-                            'to' => 'company_orders_department',
-                            'from' => 'company_orders_department',
-                            'data' => array(
-                                'url' => fn_url("orders.details?order_id=$object[object_id]", 'V', 'http'),
-                                'object_data' => $object_data,
-                                'post_data' => $post_data,
-                                'object_name' => $object_name,
-                                'subject' => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
-                            ),
+                        Mailer::sendMail([
+                            'to'    => 'company_orders_department',
+                            'from'  => 'company_orders_department',
+                            'data'  => [
+                                'url'           => fn_url("orders.details?order_id=$object[object_id]", 'V', 'http'),
+                                'object_data'   => $object_data,
+                                'post_data'     => $post_data,
+                                'object_name'   => $object_name,
+                                'subject'       => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
+                            ],
                             'template_code' => 'discussion_notification',
-                            'tpl' => 'addons/discussion/notification.tpl', // this parameter is obsolete and is used for back compatibility
-                            'company_id' => $order_info['company_id'],
-                        ), 'A', $lang_code);
+                            'tpl'           => 'addons/discussion/notification.tpl', // this parameter is obsolete and is used for back compatibility
+                            'company_id'    => $order_info['company_id'],
+                        ], 'A', $lang_code);
                     }
 
                 } elseif (AREA == 'A') {
                     $lang_code = $order_info['lang_code'];
                     
-                    Mailer::sendMail(array(
-                        'to' => $order_info['email'],
-                        'from' => 'company_orders_department',
-                        'data' => array(
-                            'url' => fn_url("orders.details?order_id=$object[object_id]", 'C', 'http'),
-                            'object_data' => $object_data,
-                            'post_data' => $post_data,
-                            'object_name' => $object_name,
-                            'subject' => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
-                        ),
+                    Mailer::sendMail([
+                        'to'    => $order_info['email'],
+                        'from'  => 'company_orders_department',
+                        'data'  => [
+                            'url'           => fn_url("orders.details?order_id=$object[object_id]", 'C', 'http'),
+                            'object_data'   => $object_data,
+                            'post_data'     => $post_data,
+                            'object_name'   => $object_name,
+                            'subject'       => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
+                        ],
                         'template_code' => 'discussion_notification',
-                        'tpl' => 'addons/discussion/notification.tpl', // this parameter is obsolete and is used for back compatibility
-                        'company_id' => $order_info['company_id'],
-                    ), 'C', $lang_code);
+                        'tpl'           => 'addons/discussion/notification.tpl', // this parameter is obsolete and is used for back compatibility
+                        'company_id'    => $order_info['company_id'],
+                    ], 'C', $lang_code);
                 }
             } elseif (!empty($discussion_settings[$object_name . '_notification_email']) || (!empty($discussion_settings[$object_name . '_notify_vendor']) && $discussion_settings[$object_name . '_notify_vendor'] == 'Y')) {
                 $company_id = 0;
@@ -2397,19 +2578,19 @@ function fn_cp_power_reviews_add_prod_ratings ($post_data, $send_notifications =
                 $url = "discussion_manager.manage?object_type=$object[object_type]&post_id=$post_data[post_id]";
                 if (!empty($discussion_settings[$object_name . '_notification_email'])) {
                     $lang_code = Registry::get('settings.Appearance.backend_default_language');
-                    Mailer::sendMail(array(
-                        'to' => $discussion_settings[$object_name . '_notification_email'],
-                        'from' => 'company_site_administrator',
-                        'data' => array(
-                            'url' => fn_url($url, 'A', 'http', null, true),
-                            'object_data' => $object_data,
-                            'post_data' => $post_data,
-                            'object_name' => $object_name,
-                            'subject' => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
-                        ),
-                        'tpl' => 'addons/discussion/notification.tpl',
-                        'company_id' => $company_id,
-                    ), 'A', $lang_code);
+                    Mailer::sendMail([
+                        'to'    => $discussion_settings[$object_name . '_notification_email'],
+                        'from'  => 'company_site_administrator',
+                        'data'  => [
+                            'url'           => fn_url($url, 'A', 'http', null, true),
+                            'object_data'   => $object_data,
+                            'post_data'     => $post_data,
+                            'object_name'   => $object_name,
+                            'subject'       => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
+                        ],
+                        'tpl'       => 'addons/discussion/notification.tpl',
+                        'company_id'=> $company_id,
+                    ], 'A', $lang_code);
                 }
 
                 // Send to vendor
@@ -2420,19 +2601,19 @@ function fn_cp_power_reviews_add_prod_ratings ($post_data, $send_notifications =
                         $object_name . '_id' => $object['object_id'],
                         'selected_section' => 'discussion',
                     ));
-                    Mailer::sendMail(array(
-                        'to' => 'company_site_administrator',
-                        'from' => 'default_company_site_administrator',
-                        'data' => array(
-                            'url' => fn_url($url, 'V', 'http', null, true),
-                            'object_data' => $object_data,
-                            'post_data' => $post_data,
-                            'object_name' => $object_name,
-                            'subject' => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
-                        ),
-                        'tpl' => 'addons/discussion/notification.tpl',
-                        'company_id' => $company_id,
-                    ), 'A', $lang_code);
+                    Mailer::sendMail([
+                        'to'    => 'company_site_administrator',
+                        'from'  => 'default_company_site_administrator',
+                        'data'  => [
+                            'url'           => fn_url($url, 'V', 'http', null, true),
+                            'object_data'   => $object_data,
+                            'post_data'     => $post_data,
+                            'object_name'   => $object_name,
+                            'subject'       => $fn_prepare_subject($discussion_object_types[$object['object_type']], $lang_code),
+                        ],
+                        'tpl'       => 'addons/discussion/notification.tpl',
+                        'company_id'=> $company_id,
+                    ], 'A', $lang_code);
                 }
             }
         }
@@ -2447,8 +2628,8 @@ function fn_cp_pr_video_attach_image($type, $path, $object_type, $object_id, $ic
         return false;
     }
     if ($icon) {
-        $_REQUEST["type_preview_image_icon"] = array($type);
-        $_REQUEST["file_preview_image_icon"] = array($path);
+        $_REQUEST["type_preview_image_icon"] = [$type];
+        $_REQUEST["file_preview_image_icon"] = [$path];
     }
     if ($detailed) {
         $_REQUEST["type_preview_image_detailed"] = array($type);
@@ -2502,23 +2683,41 @@ function fn_cp_power_reviews_get_total_post_avg_rate ($thread_ids, $get_total = 
         }
         $each_join = $each_condition = '';
         $total_posts = 0;
-        if (fn_allowed_for('MULTIVENDOR') && AREA == 'C' && Registry::get('addons.cp_power_reviews.split_storefronts') == 'Y') {
-            $store_id = Tygh::$app['storefront']->storefront_id;
-            if (!empty($store_id)) {
-                $each_join .= " LEFT JOIN ?:cp_pr_reviews_storefronts ON ?:cp_pr_reviews_storefronts.post_id = b.post_id";
-                $each_condition .= db_quote(" AND (?:cp_pr_reviews_storefronts.storefront_id = ?i OR ?:cp_pr_reviews_storefronts.storefront_id IS NULL)", $store_id);
-            }
-        }
+        static $avg_rates = [];
         
-        $rating = db_get_field("SELECT AVG(a.cp_sred_rate) as val FROM ?:discussion_rating as a 
-            LEFT JOIN ?:discussion_posts as b ON a.post_id = b.post_id ?p
-            WHERE a.thread_id IN (?n) AND b.status = 'A' AND a.rating_value > ?i AND b.cp_pr_user_delete = ?s ?p", $each_join, $thread_ids, 0, 'N', $each_condition);
-        $rating = number_format($rating, 1);
-        if (!empty($get_total)) {
-            $total_posts = db_get_field("SELECT COUNT(b.post_id) as val FROM ?:discussion_posts as b ?p
-            WHERE b.thread_id IN (?n) AND b.status = ?s AND b.cp_pr_user_delete = ?s ?p", $each_join, $thread_ids, 'A', 'N', $each_condition);
+        if (fn_allowed_for('MULTIVENDOR') && AREA == 'C' && Registry::get('addons.cp_power_reviews.split_storefronts') == 'Y') {
+            $get_stores = true;
+        } else {
+            $get_stores = false;
         }
-        $avg_rate = intval($rating) == $rating ? intval($rating) : $rating;
+        $avg_st_key = [implode('|', $thread_ids),$get_stores];
+        $st_stars_key = md5(implode('|', $avg_st_key));
+        if (!isset($avg_rates[$st_stars_key]) || AREA != 'C') {
+            if (!empty($get_stores)) {
+                $store_id = Tygh::$app['storefront']->storefront_id;
+                if (!empty($store_id)) {
+                    $each_join .= " LEFT JOIN ?:cp_pr_reviews_storefronts ON ?:cp_pr_reviews_storefronts.post_id = b.post_id";
+                    $each_condition .= db_quote(" AND (?:cp_pr_reviews_storefronts.storefront_id = ?i OR ?:cp_pr_reviews_storefronts.storefront_id IS NULL)", $store_id);
+                }
+            }
+            
+            $rating = db_get_field("SELECT AVG(a.cp_sred_rate) as val FROM ?:discussion_rating as a 
+                LEFT JOIN ?:discussion_posts as b ON a.post_id = b.post_id ?p
+                WHERE a.thread_id IN (?n) AND b.status = 'A' AND a.rating_value > ?i AND b.cp_pr_user_delete = ?s ?p", $each_join, $thread_ids, 0, 'N', $each_condition);
+            $rating = number_format($rating, 1);
+            if (!empty($get_total)) {
+                $total_posts = db_get_field("SELECT COUNT(b.post_id) as val FROM ?:discussion_posts as b ?p
+                WHERE b.thread_id IN (?n) AND b.status = ?s AND b.cp_pr_user_delete = ?s ?p", $each_join, $thread_ids, 'A', 'N', $each_condition);
+            }
+            $avg_rate = intval($rating) == $rating ? intval($rating) : $rating;
+            $avg_rates[$st_stars_key] = [
+                'avg_rate'   => $avg_rate,
+                'total_posts'=> $total_posts
+            ];
+        } else {
+            $avg_rate = $avg_rates[$st_stars_key]['avg_rate'];
+            $total_posts = $avg_rates[$st_stars_key]['total_posts'];
+        }
         return [$avg_rate, $total_posts];
     }
     return false;
@@ -2585,7 +2784,11 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                 if (!empty($parent_product_ids)) {
                     $skip_next_get_posts = true;
                     $parent_ids_array = explode(',',$parent_product_ids);
-                    $all_thread_ids = db_get_fields("SELECT thread_id FROM ?:discussion WHERE object_id IN (?n) AND object_type = ?s AND type != ?s", $parent_ids_array, 'P', 'D');
+                    $var_conditions = ''; 
+                    if (!empty($comp_id) && fn_allowed_for('ULTIMATE')) { 
+                        $var_conditions .= db_quote(' AND company_id = ?s', $comp_id); 
+                    }
+                    $all_thread_ids = db_get_fields("SELECT thread_id FROM ?:discussion WHERE object_id IN (?n) ?p AND object_type = ?s AND type != ?s", $parent_ids_array, $var_conditions, 'P', 'D');
                     $post_params = $params;
                     list($all_posts, $all_post_search) = fn_cp_pr_get_posts_for_diff_variations($params, $parent_product_ids);
                     
@@ -2620,10 +2823,15 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                 }
             } else {
                 if (Registry::get('addons.product_variations.status') == 'A') {
+                    $var_conditions = ''; 
+                    if (!empty($comp_id)) { 
+                        $var_conditions .= db_quote(' AND ?:discussion.company_id = ?s', $comp_id); 
+                    } 
                     $vars_from_main = db_get_fields("SELECT ?:discussion.thread_id FROM ?:product_variation_group_products as pvgp 
-                        LEFT JOIN ?:discussion ON ?:discussion.object_id = pvgp.product_id
-                        WHERE ?:discussion.object_type = ?s AND (pvgp.product_id = ?i OR pvgp.parent_product_id = ?i)", 'P', $object_id, $object_id
+                        LEFT JOIN ?:discussion ON ?:discussion.object_id = pvgp.product_id 
+                        WHERE ?:discussion.object_type = ?s AND (pvgp.product_id = ?i OR pvgp.parent_product_id = ?i) $var_conditions", 'P', $object_id, $object_id 
                     );
+                    
                     if (!empty($vars_from_main)) {
                         $all_thread_ids = $vars_from_main;
                         $parent_product_ids = $parent_ids_array = db_get_fields("SELECT object_id FROM ?:discussion WHERE thread_id IN (?n)", $vars_from_main);
@@ -2642,7 +2850,7 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                 LEFT JOIN ?:cp_power_ext_reviews ON ?:cp_power_ext_reviews.cp_attr_id = ?:cp_power_rev_products.cp_attr_id 
                 LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_power_rev_products.cp_attr_id 
                 WHERE ?:cp_power_rev_products.product_id IN (?n) AND ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s ?p ORDER BY ?:cp_power_rev_products.attr_pos", 'cp_attr_id', $parent_ids_array, DESCR_SL, 'A', $condition);
-            $prod_main_cat = db_get_fields("SELECT category_id FROM ?:products_categories WHERE product_id = ?i AND link_type = ?s", $parent_ids_array, 'M');
+            $prod_main_cat = db_get_fields("SELECT category_id FROM ?:products_categories WHERE product_id IN (?n) AND link_type = ?s", $parent_ids_array, 'M');
             if (!empty($prod_main_cat)) {
                 if (!empty($discussion['cp_all_prod_attrs'])) {
                     $already_get_ids = array_keys($discussion['cp_all_prod_attrs']);
@@ -2650,10 +2858,15 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                     $already_get_ids = [];
                 }
                 if (fn_allowed_for('MULTIVENDOR')) {
-                    $comp_id = db_get_field("SELECT ?:products.company_id FROM ?:products
+                    static $comp_for_thread = [];
+                    if (!isset($comp_for_thread[$discussion['thread_id']])) {
+                    $comp_for_thread[$discussion['thread_id']] = $comp_id = db_get_field("SELECT ?:products.company_id FROM ?:products
                         LEFT JOIN ?:discussion ON ?:discussion.object_id = ?:products.product_id WHERE ?:discussion.thread_id = ?i", $discussion['thread_id']);
+                    } else {
+                        $comp_id = $comp_for_thread[$discussion['thread_id']];
+                    }
                     if (!empty($comp_id)) {
-                        $comps = array($comp_id, 0);
+                        $comps = [$comp_id, 0];
                         $condition = db_quote(" AND ?:cp_power_ext_reviews.company_id IN (?n)", $comps);
                     } else {
                         $condition = '';
@@ -2693,7 +2906,7 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                 }
             }
 //for testimonials
-        } elseif (!empty($object_type) && in_array($object_type, array('E','M')) && !empty($discussion['thread_id'])) {
+        } elseif (!empty($object_type) && in_array($object_type, ['E','M']) && !empty($discussion['thread_id'])) {
             $discussion['cp_all_prod_attrs'] = db_get_hash_array("SELECT ?:cp_pow_attr_descr.cp_attr_name, ?:cp_power_ext_reviews.* FROM ?:cp_power_ext_reviews 
                 LEFT JOIN ?:cp_pow_attr_descr ON ?:cp_pow_attr_descr.cp_attr_id = ?:cp_power_ext_reviews.cp_attr_id 
                 WHERE ?:cp_pow_attr_descr.lang_code = ?s AND ?:cp_power_ext_reviews.status = ?s AND ?:cp_power_ext_reviews.object_type = ?s ?p", 'cp_attr_id', DESCR_SL, 'A', $object_type, $condition);
@@ -2725,7 +2938,7 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
             }
             $stars = array_reverse(fn_cp_pr_get_discussion_ratings_revers(), true);
             $discussion['cp_pr_by_each_star'] = [];
-            $discussion['cp_pr_total_rated'] = 0;
+            $discussion['cp_pr_total_rated'] = $st_store = 0;
             $each_condition = $each_join = '';
             if (!empty($need_mve_sores)) {
                 $store_id = Tygh::$app['storefront']->storefront_id;
@@ -2733,12 +2946,20 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                     $each_join .= " LEFT JOIN ?:cp_pr_reviews_storefronts ON ?:cp_pr_reviews_storefronts.post_id = ?:discussion_posts.post_id";
                     $each_condition .= db_quote(" AND (?:cp_pr_reviews_storefronts.storefront_id = ?i OR ?:cp_pr_reviews_storefronts.storefront_id IS NULL)", $store_id);
                 }
+                $st_store = $store_id;
             }
+            static $store_stars = [];
             foreach($stars as $val => $txt) {
-                $discussion['cp_pr_total_rated'] += $discussion['cp_pr_by_each_star'][$val] = db_get_field("SELECT COUNT(?:discussion_rating.rating_value) FROM ?:discussion_rating 
+                $st_stars_key = md5(implode('|', [$st_store, $val, implode(',', $all_thread_ids)]));
+                if (!isset($store_stars[$st_stars_key])) {
+                    $store_stars[$st_stars_key] = $discussion['cp_pr_by_each_star'][$val] = db_get_field("SELECT COUNT(?:discussion_rating.rating_value) FROM ?:discussion_rating 
                             LEFT JOIN ?:discussion_posts ON ?:discussion_posts.post_id = ?:discussion_rating.post_id ?p
                             WHERE ?:discussion_rating.thread_id IN (?n) AND ?:discussion_rating.rating_value = ?i AND ?:discussion_posts.status = ?s 
                                 AND ?:discussion_posts.cp_pr_user_delete = ?s ?p", $each_join, $all_thread_ids, $val, 'A', 'N', $each_condition);
+                } else {
+                    $discussion['cp_pr_by_each_star'][$val] = $store_stars[$st_stars_key];
+                }
+                $discussion['cp_pr_total_rated'] += $discussion['cp_pr_by_each_star'][$val];
             }
         }
         
@@ -2771,16 +2992,31 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
             $discussion['cp_login_url'] = fn_url('auth.login_form','C');
             
             if (!empty($object_type) && in_array($object_type, ['P','A','B','M']) && !empty($all_thread_ids)) {
-                $cp_recom_total = db_get_field("SELECT COUNT(thread_id) FROM ?:cp_pow_recomends WHERE thread_id IN (?n)", $all_thread_ids);
-                if (empty($cp_recom_total)) {
-                    $cp_recom_total = 0;
-                }
-                $positiv = db_get_field("SELECT COUNT(thread_id) FROM ?:cp_pow_recomends WHERE thread_id IN (?n) AND type = ?s", $all_thread_ids, 'U');
-                if (empty($positiv)) {
-                    $positiv = 0;
-                }
-                if (!empty($positiv) && !empty($cp_recom_total)) {
-                    $cp_recom_proc = round(100*($positiv/$cp_recom_total));
+                static $rec_pos = [];
+                $rec_pos_ley = md5(implode('|', $all_thread_ids));
+                if (!isset($rec_pos[$rec_pos_ley])) {
+                    $cp_recom_total = db_get_field("SELECT COUNT(thread_id) FROM ?:cp_pow_recomends WHERE thread_id IN (?n)", $all_thread_ids);
+                    if (empty($cp_recom_total)) {
+                        $cp_recom_total = 0;
+                    }
+                    $positiv = db_get_field("SELECT COUNT(thread_id) FROM ?:cp_pow_recomends WHERE thread_id IN (?n) AND type = ?s", $all_thread_ids, 'U');
+                    if (empty($positiv)) {
+                        $positiv = 0;
+                    }
+                    if (!empty($positiv) && !empty($cp_recom_total)) {
+                        $cp_recom_proc = round(100*($positiv/$cp_recom_total));
+                    } else {
+                        $cp_recom_proc = 0;
+                    }
+                    $rec_pos[$rec_pos_ley] = [
+                        'cp_recom_total'    => $cp_recom_total,
+                        'positiv'   => $positiv,
+                        'cp_recom_proc'    => $cp_recom_proc
+                    ];
+                } else {
+                    $cp_recom_total = $rec_pos[$rec_pos_ley]['cp_recom_total'];
+                    $positiv = $rec_pos[$rec_pos_ley]['positiv'];
+                    $cp_recom_proc = $rec_pos[$rec_pos_ley]['cp_recom_proc'];
                 }
                 $discussion['cp_recom_total'] = $cp_recom_total;
                 $discussion['cp_recom_proc'] = !empty($cp_recom_proc) ? $cp_recom_proc : 0;
@@ -2841,7 +3077,7 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                 }
                 $all_pos_posts = $all_neg_posts = $most_h_post = $most_u_post = 0;
                 $max_pos_rate = $min_neg_rate = 0;
-                $m_fields = array (
+                $m_fields = [
                     '?:discussion_posts.*',
                     '?:discussion_messages.message',
                     '?:discussion_messages.cp_pr_title',
@@ -2849,7 +3085,7 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                     '?:discussion_messages.cp_pr_disadvantages',
                     '?:discussion_rating.rating_value',
                     '?:discussion.*'
-                );
+                ];
                 $m_join = " INNER JOIN ?:discussion ON ?:discussion.thread_id = ?:discussion_posts.thread_id";
                 $m_join .= " INNER JOIN ?:discussion_messages ON ?:discussion_messages.post_id = ?:discussion_posts.post_id";
                 $m_join .= " INNER JOIN ?:discussion_rating ON ?:discussion_rating.post_id = ?:discussion_posts.post_id";
@@ -2875,7 +3111,13 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                 
                 
                 if (!empty($show_most_help_block) && $show_most_help_block == 'Y') {
-                    $most_h_posts = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_posts.cp_pos_post > ?i ORDER BY ?:discussion_posts.cp_pos_post desc,?:discussion_posts.timestamp desc  LIMIT 2", 'post_id', 0);
+                    static $mh_posts = [];
+                    $mh_key = md5(implode('|', [$m_join, $m_condition]));
+                    if (!isset($mh_posts[$mh_key])) {
+                        $mh_posts[$mh_key] = $most_h_posts = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_posts.cp_pos_post > ?i ORDER BY ?:discussion_posts.cp_pos_post desc,?:discussion_posts.timestamp desc  LIMIT 2", 'post_id', 0);
+                    } else {
+                        $most_h_posts = $mh_posts[$mh_key];
+                    }
                     if (!empty($most_h_posts)) {
                         if ($show_image_in_post == 'Y') {
                             fn_cp_power_reviews_get_more_post_data($most_h_posts, $object_type, false, true);
@@ -2887,7 +3129,12 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                     }
                 }
                 if ($allow_most_bl == 'Y') {
-                    $most_pos_post = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_rating.rating_value >= ?i ORDER BY ?:discussion_rating.rating_value desc LIMIT 1", 'post_id', $post_limit);
+                    $most_pos_post = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join 
+                        WHERE 1 $m_condition AND ?:discussion_posts.cp_pr_is_pos = ?s
+                        ORDER BY ?:discussion_rating.rating_value desc, ?:discussion_posts.timestamp desc LIMIT 1", 'post_id', 'Y', $post_limit);
+                    if (empty($most_pos_post)) {
+                        $most_pos_post = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_rating.rating_value >= ?i ORDER BY ?:discussion_rating.rating_value desc, ?:discussion_posts.timestamp desc LIMIT 1", 'post_id', $post_limit);
+                    }
                     if (!empty($most_pos_post)) {
                         if ($show_image_in_post == 'Y') {
                             fn_cp_power_reviews_get_more_post_data($most_pos_post, $object_type, false, true);
@@ -2898,7 +3145,7 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
                         $discussion['most_h_post'] = reset($most_pos_post);
                         $discussion['all_positive_posts'] = db_get_field("SELECT COUNT(?:discussion_posts.post_id) FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_rating.rating_value >= ?i", $post_limit);
                     }
-                    $most_neg_post = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_rating.rating_value <= ?i AND ?:discussion_rating.rating_value > ?i ORDER BY ?:discussion_rating.rating_value asc LIMIT 1", 'post_id',  $post_limit, 0);
+                    $most_neg_post = db_get_hash_array("SELECT " . implode(',', $m_fields) . " FROM ?:discussion_posts $m_join WHERE 1 $m_condition AND ?:discussion_rating.rating_value <= ?i AND ?:discussion_rating.rating_value > ?i ORDER BY ?:discussion_rating.rating_value asc, ?:discussion_posts.timestamp desc LIMIT 1", 'post_id',  $post_limit, 0);
                     if (!empty($most_neg_post)) {
                         if ($show_image_in_post == 'Y') {
                             fn_cp_power_reviews_get_more_post_data($most_neg_post, $object_type, false, true);
@@ -3014,18 +3261,25 @@ function fn_cp_power_reviews_get_discussion_post ($object_id, $object_type, $get
         }
     }
     if (!empty($discussion['thread_id']) && $object_type == 'P') {
-        $discussion['cp_seo'] = db_get_row("SELECT * FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $discussion['thread_id'],DESCR_SL);
-        if (empty($discussion['cp_seo'])) {
-            $disc_data = array(
-                'thread_id' => $discussion['thread_id'],
-                'object_type' => $object_type,
-                'object_id' => $object_id
-            );
-            fn_cp_pr_update_discussion_seo($disc_data);
-        }
-        $discussion['cp_seo'] = db_get_row("SELECT * FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $discussion['thread_id'],DESCR_SL);
-        if (Registry::get('addons.seo.status') == 'A') {
-            $discussion['cp_seo']['seo_name'] = fn_seo_get_name(CP_PR_OBJECT_SEO_KEY, $discussion['thread_id'], '', null, DESCR_SL);
+        static $thread_seo = [];
+        $st_key = md5(implode('|', [$discussion['thread_id'], DESCR_SL]));
+        if (!isset($thread_seo[$st_key])) {
+            $discussion['cp_seo'] = db_get_row("SELECT * FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $discussion['thread_id'],DESCR_SL);
+            if (empty($discussion['cp_seo'])) {
+                $disc_data = [
+                    'thread_id'     => $discussion['thread_id'],
+                    'object_type'   => $object_type,
+                    'object_id'     => $object_id
+                ];
+                fn_cp_pr_update_discussion_seo($disc_data);
+                $discussion['cp_seo'] = db_get_row("SELECT * FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $discussion['thread_id'],DESCR_SL);
+            }
+            if (Registry::get('addons.seo.status') == 'A') {
+                $discussion['cp_seo']['seo_name'] = fn_seo_get_name(CP_PR_OBJECT_SEO_KEY, $discussion['thread_id'], '', null, DESCR_SL);
+            }
+            $thread_seo[$st_key] = $discussion['cp_seo'];
+        } else {
+            $discussion['cp_seo'] = $thread_seo[$st_key];
         }
     }
 }
@@ -3064,6 +3318,8 @@ function fn_cp_power_reviews_get_discussion_posts_post($params, $items_per_page,
     
 }
 function fn_cp_power_reviews_get_discussion_posts(&$params, $items_per_page, &$fields, &$join, &$condition, &$order_by, &$limit) {
+    $join_reply = '';
+    $settings = Registry::get('addons.cp_power_reviews');
     if (!empty($params['thread_id'])) {
         $obj_type = db_get_field("SELECT type FROM ?:discussion WHERE thread_id = ?i", $params['thread_id']);
     }
@@ -3081,12 +3337,25 @@ function fn_cp_power_reviews_get_discussion_posts(&$params, $items_per_page, &$f
                 $condition .= db_quote(" AND (?:cp_pr_reviews_storefronts.storefront_id = ?i OR ?:cp_pr_reviews_storefronts.storefront_id IS NULL)", $store_id);
             }
         }
-        $params['total_items'] = db_get_field("SELECT COUNT(*) FROM ?:discussion_posts $join WHERE $condition");
-        $limit = db_paginate($params['page'], $params['items_per_page'], $params['total_items']);
         
+        if (fn_allowed_for('MULTIVENDOR')) {
+            if ($settings['allow_reply_rev'] == 'Y' && $settings['reply_moderation_vend'] == 'NM') {
+                $join_reply = '';
+            } else {
+                $join_reply .= db_quote(" AND ?:cp_pr_reviews_reply.status = ?s", 'A');
+            }
+        }
     }
+
+    $fields .= ", ?:cp_pr_reviews_reply.cp_admin_answ, ?:cp_pr_reviews_reply.cp_admin_answ_time, ?:cp_pr_reviews_reply.cp_admin_id, ?:cp_pr_reviews_reply.reason, ?:cp_pr_reviews_reply.status as reply_status";
+    $join .= db_quote(" LEFT JOIN ?:cp_pr_reviews_reply ON ?:cp_pr_reviews_reply.post_id = ?:discussion_posts.post_id ?p", $join_reply);
+
     if ($thread_data['type'] == 'C' || $thread_data['type'] == 'B') {
         $fields .= ", ?:discussion_messages.cp_pr_title, ?:discussion_messages.cp_pr_advantages, ?:discussion_messages.cp_pr_disadvantages";
+    }
+
+    if (empty($params['cp_sort_by']) && !empty($params['cp_pr_with_images']) && $params['cp_pr_with_images'] == 'Y') {
+        $order_by = '?:discussion_posts.timestamp desc';
     }
     if (!empty($params['cp_sort_by'])) {
         if ($params['cp_sort_by'] == 'MH') {
@@ -3117,6 +3386,8 @@ function fn_cp_power_reviews_get_discussion_posts(&$params, $items_per_page, &$f
             $condition .= db_quote(" AND ?:discussion_posts.post_id IN (?n)", $all_images_posts);
         }
     }
+    $params['total_items'] = db_get_field("SELECT COUNT(*) FROM ?:discussion_posts $join WHERE $condition");
+    $limit = db_paginate($params['page'], $params['items_per_page'], $params['total_items']);
     if (!empty($params['cp_fill_type']) && !empty($params['thread_id'])) {
         if ($params['cp_fill_type'] == 'RND') {
             //$params['random'] = 'Y';
@@ -3377,7 +3648,31 @@ function fn_cp_power_reviews_get_product_data_post (&$product_data, $auth, $prev
         }
     }
     if (AREA == 'C' && !empty($product_data['product_id'])) {
-        $thread_id = db_get_field("SELECT thread_id FROM ?:discussion WHERE object_id = ?i AND object_type = ?s AND type IN (?a)", $product_data['product_id'], 'P', array('B','R'));
+        $variation_group = db_get_row('SELECT group_id, parent_product_id FROM ?:product_variation_group_products WHERE product_id = ?i', $product_data['product_id']);
+        if (!empty($variation_group)) {
+            if (!empty($variation_group['group_id']) && defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'Y') {
+                $thread_ids = db_get_fields("SELECT ?:discussion.thread_id FROM ?:product_variation_group_products 
+                    LEFT JOIN ?:discussion ON ?:discussion.object_id = ?:product_variation_group_products.product_id 
+                    WHERE ?:product_variation_group_products.group_id = ?i AND ?:discussion.object_type = ?s", $variation_group['group_id'], 'P'
+                );
+                
+            } elseif (!empty($variation_group['group_id']) && (!defined('CP_PR_VARIATIONS_TYPE') || (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE != 'S'))) {
+                if (!empty($variation_group['parent_product_id'])) {
+                    $use_this_parent = $variation_group['parent_product_id'];
+                } else {
+                    $use_this_parent = $product_data['product_id'];
+                }
+                $thread_ids = db_get_fields("SELECT ?:discussion.thread_id FROM ?:product_variation_group_products as pvgp
+                    LEFT JOIN ?:discussion ON ?:discussion.object_id = pvgp.product_id 
+                    WHERE (pvgp.parent_product_id = ?i OR pvgp.product_id = ?i) AND ?:discussion.object_type = ?s", $use_this_parent, $use_this_parent, 'P'
+                );
+            } else {
+                $thread_ids[] = db_get_field("SELECT thread_id FROM ?:discussion WHERE object_id = ?i AND object_type = ?s AND type IN (?a)", $product_data['product_id'], 'P', array('B','R'));
+            }
+        } else {
+            $thread_ids[] = db_get_field("SELECT thread_id FROM ?:discussion WHERE object_id = ?i AND object_type = ?s AND type IN (?a)", $product_data['product_id'], 'P', array('B','R'));
+        }
+
         $stars = array_reverse(fn_cp_pr_get_discussion_ratings_revers(), true);
         $product_data['cp_pr_by_each_star'] = [];
         $product_data['cp_pr_total_rated'] = 0;
@@ -3393,8 +3688,8 @@ function fn_cp_power_reviews_get_product_data_post (&$product_data, $auth, $prev
         foreach($stars as $val => $txt) {
             $product_data['cp_pr_total_rated'] += $product_data['cp_pr_by_each_star'][$val] = db_get_field("SELECT COUNT(?:discussion_rating.rating_value) FROM ?:discussion_rating 
                         LEFT JOIN ?:discussion_posts ON ?:discussion_posts.post_id = ?:discussion_rating.post_id ?p
-                        WHERE ?:discussion_rating.thread_id = ?i AND ?:discussion_rating.rating_value = ?i 
-                            AND ?:discussion_posts.status = ?s AND ?:discussion_posts.cp_pr_user_delete = ?s ?p", $each_join, $thread_id, $val, 'A', 'N', $each_condition);
+                        WHERE ?:discussion_rating.thread_id IN (?n) AND ?:discussion_rating.rating_value = ?i 
+                            AND ?:discussion_posts.status = ?s AND ?:discussion_posts.cp_pr_user_delete = ?s ?p", $each_join, $thread_ids, $val, 'A', 'N', $each_condition);
         }
     }
 }
@@ -3951,12 +4246,12 @@ function fn_cp_pr_generate_purchase_info()
 
 function fn_settings_variants_addons_cp_power_reviews_objects_for_all()
 {
-    $result = array(
+    $result = [
         'p' => __('products'),
         'c' => __('categories'),
         'a' => __('pages'),
         'e' => __('cp_test_reviews'),
-    );
+    ];
     if (fn_allowed_for('MULTIVENDOR')) {
         $result['m'] = __('vendors');
     }
@@ -4193,7 +4488,7 @@ function fn_cp_pr_get_additional_data_for_object($discussion, $lang_code = CART_
     return $discussion;
 }
 
-function fn_cp_pr_update_discussion_seo($object_data)
+function fn_cp_pr_update_discussion_seo($object_data, $lang_code = DESCR_SL)
 {
     if (!empty($object_data) && !empty($object_data['thread_id']) && !empty($object_data['object_type']) && $object_data['object_type'] == 'P') {
         $thread_tables = fn_cp_pr_thread_object_tables();
@@ -4216,30 +4511,60 @@ function fn_cp_pr_update_discussion_seo($object_data)
                     }
                 }
             }
-            foreach (fn_get_translation_languages() as $object_data['lang_code'] => $_v) {
-                if ($object_data['object_type'] != 'E') {
-                    
-                    $product_id = db_get_field("SELECT object_id FROM ?:discussion WHERE thread_id = ?i AND object_type = ?s", $object_data['thread_id'], 'P');
+            $seo_exists = false;
+            if (Registry::get('addons.seo.status') == 'A') {
+                $seo_exists = true;
+            }
+
+            $_desc_object_data = array();
+
+            if (!empty($object_data['h1'])) {
+                $_desc_object_data['h1'] = $object_data['h1'];
+                unset($object_data['h1']);
+            }
+            if (!empty($object_data['page_title'])) {
+                $_desc_object_data['page_title'] = $object_data['page_title'];
+                unset($object_data['page_title']);
+            }
+            if (!empty($object_data['meta_description'])) {
+                $_desc_object_data['meta_description'] = $object_data['meta_description'];
+                unset($object_data['meta_description']);
+            }
+            if (!empty($object_data['meta_keywords'])) {
+                $_desc_object_data['meta_keywords'] = $object_data['meta_keywords'];
+                unset($object_data['meta_keywords']);
+            }
+            
+            foreach (fn_get_translation_languages() as $lang_code => $_v) {
+                $_object_data = $object_data;
+                $_object_data['lang_code'] = $lang_code;
+
+                if ($lang_code == DESCR_SL) {
+                    $_object_data = array_merge($_object_data, $_desc_object_data);
+                }
+                if ($_object_data['object_type'] != 'E') {
+                    $product_id = db_get_field("SELECT object_id FROM ?:discussion WHERE thread_id = ?i AND object_type = ?s", $_object_data['thread_id'], 'P');
                     if (!empty($product_id)) {
-                        $object_data['name'] = db_get_field("SELECT name FROM ?:seo_names WHERE object_id = ?i AND type = ?s", $product_id, 'p');
+                        $_object_data['name'] = db_get_field("SELECT name FROM ?:seo_names WHERE object_id = ?i AND type = ?s", $product_id, 'p');
                     } else {
-                        $object_data['name'] = db_get_field("SELECT " . $table_info['column'] . " FROM ?:" . $table_info['table'] . " WHERE " . $table_info['id'] . " = ?i AND lang_code = ?s", $object_data['object_id'], $object_data['lang_code']);
+                        $_object_data['name'] = db_get_field("SELECT " . $table_info['column'] . " FROM ?:" . $table_info['table'] . " WHERE " . $table_info['id'] . " = ?i AND lang_code = ?s", $_object_data['object_id'], $_object_data['lang_code']);
                     }
                 } else {
-                    if (empty($object_data['name'])) {
-                        $object_data['name'] = db_get_field("SELECT name FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lng_code = ?s", $object_data['object_id'], $object_data['lang_code']);
-                        if (empty($object_data['name'])) {
-                            $object_data['name'] = 'store-reviews';
+                    if (empty($_object_data['name'])) {
+                        $_object_data['name'] = db_get_field("SELECT name FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $_object_data['object_id'], $_object_data['lang_code']);
+                        if (empty($_object_data['name'])) {
+                            $_object_data['name'] = 'store-reviews';
                         }
                     }
                 }
-                db_replace_into('cp_pr_for_seo', $object_data);
-                if (Registry::get('addons.seo.status') == 'A') {
-                    fn_seo_update_object($object_data, $object_data['thread_id'], CP_PR_OBJECT_SEO_KEY, $object_data['lang_code']);
+
+                db_replace_into('cp_pr_for_seo', $_object_data);
+                if (!empty($seo_exists)) {
+                    fn_seo_update_object($_object_data, $_object_data['thread_id'], CP_PR_OBJECT_SEO_KEY, $_object_data['lang_code']);
                 }
-                if (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'S' && !empty($object_data['cp_pr_replace_for_vars']) && $object_data['cp_pr_replace_for_vars'] == 'Y' && !empty($thread_ids)) {
+                if (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'S' && !empty($_object_data['cp_pr_replace_for_vars']) && $_object_data['cp_pr_replace_for_vars'] == 'Y' && !empty($thread_ids)) {
                     foreach($thread_ids as $v_thread_id) {
-                        $new_var_data = $object_data;
+                        $new_var_data = $_object_data;
                         $new_var_data['thread_id'] = $v_thread_id['thread_id'];
                         
                         db_replace_into('cp_pr_for_seo', $new_var_data);
@@ -4750,6 +5075,12 @@ function fn_cp_pr_update_reviews_page_seo($id, $data, $lang_code = CART_LANGUAGE
             $data['name'] = $trim_name;
             $data['lang_code'] = $lang_code;
             db_replace_into('cp_pr_reviews_seo_descr', $data);
+
+            if (fn_allowed_for('ULTIMATE')) {
+                if (empty(Registry::get('runtime.company_id'))) {
+                    $data['company_id'] = db_get_field('SELECT ?:cp_pr_reviews_seo.company_id from ?:cp_pr_reviews_seo WHERE ?:cp_pr_reviews_seo.id = ?i', $data['id']);
+                }
+            }
             
             if (Registry::get('addons.seo.status') == 'A') {
                 fn_seo_update_object($data, $data['id'], CP_PR_REVIEWS_SEO, $data['lang_code']);
@@ -4766,8 +5097,8 @@ function fn_cp_pr_import_from_pro_reviews_info()
     $prod_reviews = Registry::get('addons.cp_power_reviews');
     if (!empty($prod_reviews)) {
         $site_url = fn_url('cp_pow_rev.inport_from_def', 'A');
-        $hint = '<b>' . __('cp_pr_import_from_default_prod_rev') . ':</b> <a class="btn cm-ajax cm-comet" href="' . $site_url . '">' . __('cp_pr_import_txt') . '</a>';
-        $hint .= '<div class="muted description">' . __('cp_pr_import_reviews_descr') . '</div>';
+        $hint = '<div class="cp-control-setting-wide">' . '<div class="cp-control-setting-wide-text">' .__('cp_pr_import_from_default_prod_rev') . '</div>' . ': &emsp; </b> <a class="btn cm-ajax cm-comet" href="' . $site_url . '">' . __('cp_pr_import_txt') . '</a>' . '</div>';
+        $hint .= '<div class="muted description cp-control-setting-wide-description">' . __('cp_pr_import_reviews_descr') . '</div>';
     }
     
     return $hint;
@@ -4892,8 +5223,8 @@ function fn_cp_pr_import_reviews_from_default()
                     'name'                  => !empty($product_review['name']) ? $product_review['name'] : __('cp_pr_anonym_customer'),
                     'rating_value'          => $product_review['rating_value'],
                     'message'               => $product_review['comment'],
-                    'cp_pr_advantages'      => $product_review['advantages'],
-                    'cp_pr_disadvantages'   => $product_review['disadvantages'],
+                    'cp_pr_advantages'      => !empty($product_review['advantages']) ? $product_review['advantages'] : '',
+                    'cp_pr_disadvantages'   => !empty($product_review['disadvantages']) ? $product_review['disadvantages'] : '',
                     'status'                => $product_review['status'],
                     'ip_address'            => isset($product_review['ip_address']) ? $product_review['ip_address'] : '',
                     'user_id'               => $product_review['user_id'],
@@ -4921,9 +5252,11 @@ function fn_cp_pr_import_reviews_from_default()
                 if (!empty($post_data['post_id'])) {
                     if (!empty($is_update)) {
                         db_query("UPDATE ?:discussion_posts SET ?u WHERE post_id = ?i", $post_data, $post_data['post_id']);
+                        db_query("UPDATE ?:cp_pr_reviews_reply SET ?u WHERE post_id = ?i", $post_data, $post_data['post_id']);
                         db_query("UPDATE ?:discussion_messages SET ?u WHERE post_id = ?i", $post_data, $post_data['post_id']);
                         db_query("UPDATE ?:discussion_rating SET ?u WHERE post_id = ?i", $post_data, $post_data['post_id']);
                     } else {
+                        db_query("REPLACE INTO ?:cp_pr_reviews_reply ?e", $post_data);
                         db_query("REPLACE INTO ?:discussion_messages ?e", $post_data);
                         db_query("REPLACE INTO ?:discussion_rating ?e", $post_data);
                     }
@@ -5131,7 +5464,9 @@ function fn_cp_pr_get_posts_for_diff_variations($params, $parent_product_ids)
         return [[], []];
     }
     $params['not_this_types'] = 'D';
-    $params['status'] = 'A';
+    if (AREA == 'C') {
+        $params['status'] = 'A';
+    }
     $params['object_ids'] = $parent_product_ids;
     $params['object_type'] = 'P';
     
@@ -5177,6 +5512,186 @@ function fn_cp_power_reviews_set_disc_to_vars()
     }
 }
 
+function fn_cp_power_reviews_update_reply($post_data) {
+    if (Registry::get("addons.cp_power_reviews.allow_reply_rev") != "Y") {
+        return;
+    }
+
+    $auth = Tygh::$app['session']['auth'];
+    $addon_settings = Registry::get('addons.cp_power_reviews');
+    $permission_product = true;
+    $answ_name = '';
+    if (!empty($auth) && !empty($auth['user_id']) && AREA == 'A') {
+        if ($auth['user_type'] == 'V') {
+            $post_data['status'] = 'R';
+            $company_id = Registry::get('runtime.company_id');
+            if(!empty($auth['company_id']) && empty($company_id)) {
+                $company_id = $auth['company_id'];
+            }
+            
+            if (!empty($company_id)) {
+                $permission_product = db_get_field("SELECT thread_id FROM ?:discussion WHERE thread_id = ?i AND company_id = ?i", $post_data['thread_id'], $company_id);
+                
+                $trust_status = db_get_field("SELECT cp_trust_status FROM ?:companies WHERE company_id = ?i", $company_id);
+                if ($trust_status == 'Y' && $addon_settings['reply_moderation_vend'] == "NMTV") {
+                    $post_data['status'] = 'A';
+                } elseif ($addon_settings['reply_moderation_vend'] == "NM") {
+                    $post_data['status'] = 'A';
+                }
+            }
+        }
+
+        if (!$permission_product) {
+            fn_set_notification('E', __('error'), __('cp_power_reviews.dont_permission_add_reply_post'));
+            return false;
+        }
+
+        $amd_name = db_get_row("SELECT firstname, lastname FROM ?:users WHERE user_id = ?i", $auth['user_id']);
+        if (!empty($amd_name)) {
+            $answ_name = !empty($amd_name['firstname']) ? $amd_name['firstname'] : '';
+            if (!empty($answ_name)) {
+                $answ_name = !empty($amd_name['lastname']) ? $answ_name . ' ' . $amd_name['lastname'] : $answ_name;
+            } else {
+                $answ_name = !empty($amd_name['lastname']) ? $amd_name['lastname'] : '';
+            }
+        }
+
+        if (empty($answ_name)) {
+            $answ_name = __('administrator');
+        }
+    }
+
+    $check_post = db_get_row("SELECT post_id, cp_admin_answ_time FROM ?:cp_pr_reviews_reply WHERE post_id = ?i AND thread_id = ?i", $post_data['post_id'], $post_data['thread_id']);
+
+    if (!empty($post_data['cp_admin_answ'])) {
+        $post_data['cp_admin_answ'] = trim($post_data['cp_admin_answ']);
+        if (!empty($datpost_dataa['cp_admin_answ']) && empty($post_data['cp_admin_id'])) {
+            $post_data['cp_admin_id'] = $answ_name;
+        }
+
+        if (empty($check_post['cp_admin_answ_time'])) {
+            $post_data['cp_admin_answ_time'] = time();
+        }
+    } else {
+        $post_data['cp_admin_id'] = '';
+    }
+
+    if (!empty($check_post['post_id'])) {
+        db_query("UPDATE ?:cp_pr_reviews_reply SET ?u WHERE post_id = ?i AND thread_id = ?i", $post_data, $post_data['post_id'], $post_data['thread_id']);
+    } else {
+        db_query("INSERT INTO ?:cp_pr_reviews_reply ?e", $post_data);
+    }
+
+}
+
+function fn_cp_power_reviews_approve_reply($post_id) {
+    $update = db_query("UPDATE ?:cp_pr_reviews_reply SET status = ?s, cp_admin_answ_time = ?i, reason = ?s WHERE post_id = ?i", 'A', TIME, '', $post_id);
+
+    if ($update) {
+        fn_set_notification('N', __('notice'), __('cp_power_reviews.success_update_status_reply'));
+    }
+
+    return true;
+}
+
+function fn_cp_power_reviews_disapprove_reply($post_id, $reason) {
+    if (empty($reason[$post_id])) {
+        fn_set_notification('E', __('error'), __('cp_power_reviews.enter_reason_disapproval'));
+        return;
+    }
+
+    $reason = $reason[$post_id]['reason'];
+
+    $update = db_query("UPDATE ?:cp_pr_reviews_reply SET status = ?s, reason = ?s WHERE post_id = ?i", 'D', $reason, $post_id);
+
+    if ($update) {
+        fn_set_notification('N', __('notice'), __('cp_power_reviews.success_update_status_reply'));
+    }
+
+    return true;
+}
+
+function fn_cp_power_reviews_reply_get_discussion_objects() {
+    static $cp_discussion_object_types = array();
+
+    if (Registry::get('addons.cp_power_reviews.allow_reply_rev') == "Y") {
+        $cp_discussion_object_types['P'] = 'product';
+        
+        if (fn_allowed_for('MULTIVENDOR')) {
+            $cp_discussion_object_types['M'] = 'company';
+        }
+    }
+
+
+    fn_set_hook('cp_reply_get_discussion_objects', $cp_discussion_object_types);
+
+    return $cp_discussion_object_types;
+}
+
+function fn_cp_power_reviews_reply_get_discussion_titles() {
+    $cp_discussion_object_titles = array();
+
+    if (Registry::get('addons.cp_power_reviews.allow_reply_rev') == "Y") {
+        $cp_discussion_object_titles['P'] = 'discussion_tab_products';
+        
+        if (fn_allowed_for('MULTIVENDOR')) {
+            $cp_discussion_object_titles['M'] = 'discussion_tab_companies';
+        }
+    }
+
+
+    fn_set_hook('cp_reply_get_discussion_titles', $cp_discussion_object_titles);
+
+    return $cp_discussion_object_titles;
+}
+
+function fn_cp_power_reviews_get_reply_post($params = array(), $post_id) {
+    $condition = $join = '';
+    $fields = array(
+        'reply.post_id',
+        'reply.thread_id',
+        'reply.cp_admin_answ',
+        'reply.cp_admin_answ_time',
+        'reply.cp_admin_id',
+        'reply.status as reply_status',
+        'reply.reason'
+    );
+
+    
+    if (!empty($params['company_id']) && $params['company_id']) {
+        $join .= db_quote(" LEFT JOIN ?:discussion ON reply.thread_id = ?:discussion.thread_id");
+        $fields[] = '?:discussion.company_id';
+    }
+
+    $condition .= db_quote(" AND reply.post_id = ?i", $post_id);
+    
+    $reply = db_get_row("SELECT " . implode(', ', $fields) . " FROM ?:cp_pr_reviews_reply as reply ?p WHERE 1 ?p", $join, $condition);
+
+    if (empty($reply)) {
+        $reply = db_get_row("SELECT post_id, thread_id FROM ?:discussion_posts WHERE post_id = ?i", $post_id);
+    }
+
+    return $reply;
+}
+
+function fn_cp_power_reviews_get_company_id_by_post($post_id) {
+    $companies = db_get_row("SELECT company_id, object_id FROM ?:discussion LEFT JOIN ?:cp_pr_reviews_reply as reply ON reply.thread_id = ?:discussion.thread_id WHERE reply.post_id = ?i AND object_type = ?s", $post_id, 'P');
+
+    return $companies;
+}
+
+function fn_cp_power_reviews_update_trust_post($company_id, $trust_status) {
+    if (Registry::get('addons.cp_power_reviews.allow_reply_rev') != "Y" || Registry::get('addons.cp_power_reviews.reply_moderation_vend') != "NMTV" || $trust_status != "Y") {
+        return;
+    }
+
+    $thread_ids = db_get_fields("SELECT ?:discussion.thread_id FROM ?:discussion INNER JOIN ?:cp_pr_reviews_reply ON ?:cp_pr_reviews_reply.thread_id = ?:discussion.thread_id WHERE ?:discussion.company_id = ?i AND ?:discussion.object_type IN (?a) AND ?:cp_pr_reviews_reply.status IN (?a)", $company_id, ['P', 'M'], ['R', 'D']);
+
+    if (!empty($thread_ids)) {
+        db_query("UPDATE ?:cp_pr_reviews_reply SET status = ?s, reason = ?s WHERE thread_id IN (?n)", 'A', '', $thread_ids);
+    }
+}
+
 function fn_cp_pr_set_vars_from_parent($params = [])
 {
     if (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE != 'N') {
@@ -5192,7 +5707,7 @@ function fn_cp_pr_set_vars_from_parent($params = [])
         if (!empty($all_parents_ids)) {
             fn_set_progress('parts', count($all_parents_ids));
             fn_set_progress('step_scale', 1);
-            fn_set_progress('title', __('cp_pr_import_default_reviews'));
+            fn_set_progress('title', __('cp_pr_set_discussion_type_to_vars'));
             
             foreach($all_parents_ids as $per_data) {
                 fn_set_progress('echo', $per_data['object_id']);

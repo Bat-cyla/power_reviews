@@ -4,7 +4,7 @@
     <label class="ty-control-group__title">{__("cp_pr_reviews_type")}</label>
     <div class="ty-status-info">
         {foreach from=$all_types_full key="obj_type" item="obj_name"}
-            {if $all_types.$obj_type && $all_types.$obj_type == "Y"}
+            {if !$all_types || ($all_types.$obj_type && $all_types.$obj_type == "Y")}
                 <label>
                     <input type="checkbox" id="" name="cp_object_types[]" value="{$obj_type|strtoupper}" columns="4" class="ty-orders-search__options-status" 
                         {if $discussion.search.cp_object_types && in_array($obj_type|strtoupper, $discussion.search.cp_object_types) || ($discussion.search.object_type && in_array($obj_type|strtoupper, $discussion.search.object_type))}checked="checked"{/if}

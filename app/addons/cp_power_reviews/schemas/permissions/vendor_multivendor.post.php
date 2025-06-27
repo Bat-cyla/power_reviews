@@ -46,7 +46,18 @@ $schema['controllers']['cp_pow_rev'] = array (
         'apply_attr_to_categors' => array(
             'permissions' => true
         ),
+        'premoderation' => array(
+            'permissions' => true
+        ),
+        'premoderation_popup' => array(
+            'permissions' => true
+        )
     ),
     'permissions' => false,
 );
+
+$schema['controllers']['discussion']['modes']['cp_reply_vendor'] = array (
+    'permissions' => true
+);
+
 return $schema;

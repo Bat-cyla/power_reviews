@@ -1,17 +1,17 @@
 {** block-description:block_cp_vendor_logo_rating **}
 {if $vendor_info}
     {if $vendor_info.cp_for_product_page}
-        {$cp_comp_Link="companies.products?company_id=`$vendor_info.company_id`"}
+        {$cp_company_link="companies.products?company_id=`$vendor_info.company_id`"}
     {else}
-        {$cp_comp_Link="companies.view?company_id=`$vendor_info.company_id`"}
+        {$cp_company_link="companies.view?company_id=`$vendor_info.company_id`"}
     {/if}
     <div class="logo-container">
-        <a href="{"`$cp_comp_Link`"|fn_url}">
+        <a href="{"`$cp_company_link`"|fn_url}">
             <img src="{$vendor_info.logos.theme.image.image_path}" width="{$vendor_info.logos.theme.image.image_x}" height="{$vendor_info.logos.theme.image.image_y}" alt="{$vendor_info.logos.theme.image.alt}" class="logo">
         </a>
         {if $block.properties.cp_show_vend_name && $block.properties.cp_show_vend_name == "Y"}
             <div class="cp-rev-vend__logo-name">
-                <a href="{"`$cp_comp_Link`"|fn_url}">
+                <a href="{"`$cp_company_link`"|fn_url}">
                     {$vendor_info.company}
                 </a>
             </div>
@@ -51,7 +51,7 @@
         {/if}
         {if $block.properties.cp_show_vend_btn && $block.properties.cp_show_vend_btn == "Y"}
             <div class="cp-rev-vend__logo-btn">
-                <a class="ty-btn" href="{"`$cp_comp_Link`"|fn_url}">{__("cp_visit_store")}</a>
+                <a class="ty-btn" href="{"`$cp_company_link`"|fn_url}">{__("cp_visit_store")}</a>
             </div>
         {/if}
     </div>

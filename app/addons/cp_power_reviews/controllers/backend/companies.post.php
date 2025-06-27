@@ -27,6 +27,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (!empty($_REQUEST['cp_post_data'])) {
             fn_cp_power_reviews_update_discussion_posts($_REQUEST['cp_post_data']);
         }
+
+        if (fn_allowed_for('MULTIVENDOR')) {
+            if (!empty($_REQUEST['company_data']) && !empty($_REQUEST['company_data']['cp_trust_status'])) {
+                fn_cp_power_reviews_update_trust_post($_REQUEST['company_id'], $_REQUEST['company_data']['cp_trust_status']);
+            }
+        }
     }
     return;
 }
@@ -45,6 +51,10 @@ if ($mode == 'update') {
                     Registry::get('view')->assign('cp_pr_recommend', $recommendations);
                 }
             }
+        }
+
+        if (Registry::get('addons.cp_power_reviews.allow_reply_rev') == "Y") {
+            Tygh::$app['view']->assign('cp_reply_active', 'Y');
         }
     }
 }

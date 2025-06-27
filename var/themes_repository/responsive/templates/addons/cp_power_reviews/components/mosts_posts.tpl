@@ -136,6 +136,64 @@
                                     {/if}
                                 </div>
                             {/if}
+                            {if $discussion.object_type == "ALL"}
+                                {$post_link=""}
+                                {if $m_post.object_type == "P"}
+                                    {if $m_post.object_data.extra_var_name}
+                                        {$post_link="products.view&product_id=`$m_post.object_id`"|fn_url}
+                                    {else}
+                                        {$post_link="cp_pow_rev.view&thread_id=`$m_post.thread_id`"|fn_url}
+                                    {/if}
+                                    {$item_name=$m_post.object_data.product}
+                                    {$object_prefix_link=__("cp_pr_product_txt")}
+                                {elseif $m_post.object_type == "M"}
+                                    {$post_link="companies.view&company_id=`$m_post.object_id`"|fn_url}
+                                    {$object_prefix_link=__("cp_pr_vendor_txt")}
+                                    {$item_name=$m_post.object_data.name}
+                                {elseif $m_post.object_type == "A"}
+                                    {$post_link="pages.view&page_id=`$m_post.object_id`"|fn_url}
+                                    {$object_prefix_link=__("cp_pr_page_txt")}
+                                    {$item_name=$m_post.object_data.name}
+                                {elseif $m_post.object_type == "C"}
+                                    {$post_link="categories.view&category_id=`$m_post.object_id`"|fn_url}
+                                    {$object_prefix_link=__("cp_pr_category_txt")}
+                                    {$item_name=$m_post.object_data.name}
+                                {elseif $m_post.object_type == "B"}
+                                    {$post_link="cp_blog.view&post_id=`$m_post.object_id`"|fn_url}
+                                    {$object_prefix_link=__("cp_pr_article_txt")}
+                                    {$item_name=$m_post.object_data.name}
+                                {/if}
+                                {if $item_name}
+                                    <div class="cp-pr__post_object-name-post">
+                                        {if $post_link}
+                                            {if $m_post.object_data.extra_var_name && $cp_ob_type != "ALL"}
+                                            {__("cp_pr_product_variant")}:&nbsp;
+                                            {else}
+                                            {__("cp_pr_review_about")} {$object_prefix_link}:&nbsp;
+                                            {/if}
+                                            <a class="cp-all-post-about-link" href="{$post_link}">
+                                                {if $m_post.object_data.extra_var_name}
+                                                    {if $cp_ob_type == "ALL"}
+                                                        {$m_post.object_data.description|truncate:60|nl2br nofilter}&nbsp;-&nbsp;
+                                                    {/if}
+                                                    {$m_post.object_data.extra_var_name}
+                                                {else}
+                                                    {$item_name|truncate:60|nl2br nofilter}
+                                                {/if}
+                                            </a>
+                                        {else}
+                                            {if $m_post.object_data.extra_var_name}
+                                                {if $cp_ob_type == "ALL"}
+                                                    {$item_name|truncate:60|nl2br nofilter}&nbsp;-&nbsp;
+                                                {/if}
+                                                {$m_post.object_data.extra_var_name}
+                                            {else}
+                                                {$item_name}
+                                            {/if}
+                                        {/if}
+                                    </div>
+                                {/if}
+                            {/if}
                             <div class="cp-pr__post_msg_label">{__("cp_pr_comment_txt")}</div>
                             <div class="cp-pr__msg_advan">
                                 {if $m_post.short_msg}
@@ -160,13 +218,28 @@
                                 <a href="" {if $settings.Security.secure_storefront != "partial"} data-ca-target-id="cp_login_block_{$object_id}" class="cm-dialog-opener cm-dialog-auto-size"{else} class=""{/if} rel="nofollow">{__("sign_in")}</a>
                             </span>
                         {/if}
+                        {if $smarty.request.cp_post_kind}
+                            {$filter_cur_url = $config.current_url|fn_query_remove:"cp_post_kind":"r_limit"}
+                        {else}
+                            {$filter_cur_url = $config.current_url}
+                        {/if}
+                        {$cp_like_url="`$filter_cur_url`&object_id=`$object_id`&m_show_help_bl=`$m_show_help_bl`&m_pos_limit=`$m_pos_limit`&cp_type_for_most=`$cp_type_for_most`&m_show_up_down=`$m_show_up_down`&m_msg_show_date=`$m_msg_show_date`&det_page=`$cp_m_det_page`&object_type=`$discussion.object_type`&post_id=`$m_post.post_id`&cp_sort_by=`$discussion.cp_sort_by`&selected_section=discussion&thread_id=`$discussion.thread_id`"}
+                        {$cp_like_url_p="`$cp_like_url`&cp_like=Y"}
+                        {$most_res_ids="cp_posts_list_{$object_id},cp_prod_most_posts_{$object_id},cp_prod_most_help_posts_{$object_id}"}
                         {if $m_show_up_down == "only_up" || $m_show_up_down == "both"}
-                            <span><a rel="nofollow" class="cm-ajax" data-ca-target-id="cp_posts_list_{$object_id},cp_prod_most_posts_{$object_id},cp_prod_most_help_posts_{$object_id}" 
-                                href="{"discussion.cp_like_post&object_id={$object_id}&m_show_help_bl={$m_show_help_bl}&m_pos_limit={$m_pos_limit}&cp_type_for_most={$cp_type_for_most}&m_show_up_down={$m_show_up_down}&m_msg_show_date={$m_msg_show_date}&det_page={$cp_m_det_page}&object_type={$discussion.object_type}&cp_like=Y&post_id=`$m_post.post_id`&cp_sort_by=`$discussion.cp_sort_by`&selected_section=discussion&thread_id=`$discussion.thread_id`"|fn_url}"><i class="cp-rev-icons-up-down cp_pr-ico-like"></i></a><span class="cp-users-likes">{$m_post.cp_pos_post}</span></span>
+                            <span>
+                                <a onclick="fn_pr_click_likes('{$cp_like_url_p}', '{$most_res_ids}', this, '{$m_post.post_id}');" rel="nofollow">
+                                <i class="cp-rev-icons-up-down cp_pr-ico-like"></i>
+                                </a><span class="cp-users-likes cp_pr_like_in_post_{$m_post.post_id}">{$m_post.cp_pos_post}</span>
+                            </span>
                         {/if}
                         {if $m_show_up_down == "only_down" || $m_show_up_down == "both"}
-                            <span><a rel="nofollow" class="cm-ajax" data-ca-target-id="cp_posts_list_{$object_id},cp_prod_most_posts_{$object_id},cp_prod_most_help_posts_{$object_id}" 
-                                href="{"discussion.cp_like_post&object_id={$object_id}&m_show_help_bl={$m_show_help_bl}&m_pos_limit={$m_pos_limit}&cp_type_for_most={$cp_type_for_most}&m_show_up_down={$m_show_up_down}&m_msg_show_date={$m_msg_show_date}&det_page={$cp_m_det_page}&object_type={$discussion.object_type}&cp_like=N&post_id=`$m_post.post_id`&cp_sort_by=`$discussion.cp_sort_by`&selected_section=discussion&thread_id=`$discussion.thread_id`"|fn_url}"><i class="cp-rev-icons-up-down cp_pr-ico-dislike"></i></a><span class="cp-users-likes">{$m_post.cp_neg_post}</span></span>
+                            {$cp_like_url_n="`$cp_like_url`&cp_like=N"}
+                            <span>
+                                <a onclick="fn_pr_click_likes('{$cp_like_url_n}', '{$most_res_ids}', this, '{$m_post.post_id}');" rel="nofollow">
+                                <i class="cp-rev-icons-up-down cp_pr-ico-dislike"></i>
+                                </a><span class="cp-users-likes cp_pr_dis_in_post_{$m_post.post_id}">{$m_post.cp_neg_post}</span>
+                            </span>
                         {/if}
                     </div>
                 </div>

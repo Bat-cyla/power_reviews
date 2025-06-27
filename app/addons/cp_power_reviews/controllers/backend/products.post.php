@@ -71,4 +71,8 @@ if ($mode == 'update') {
             ]);
         }
     }
+
+    if (Registry::get('addons.cp_power_reviews.allow_reply_rev') == "Y") {
+        Tygh::$app['view']->assign('cp_reply_active', 'Y');
+    }
 }

@@ -17,23 +17,23 @@
 * email:   sales@cart-power.com                                              *
 ******************************************************************************/
 
-$schema['cp_pow_rev']['all_reviews'] = array(
-    'base_url' => 'cp_pow_rev.all_reviews?id=[id]',
-    'request_handlers' => array(
+$schema['cp_pow_rev']['all_reviews'] = [
+    'base_url'          => 'cp_pow_rev.all_reviews?id=[id]',
+    'request_handlers'  => [
         'id' => true
-    ),
+    ],
     'search' => true
-);
-$schema['cp_pow_rev']['store_reviews'] = array(
-    'base_url' => 'cp_pow_rev.store_reviews',
-    'search' => false
-);
-$schema['cp_pow_rev']['view'] = array(
-    'base_url' => 'cp_pow_rev.view?thread_id=[thread_id]',
-    'request_handlers' => array(
+];
+$schema['cp_pow_rev']['store_reviews'] = [
+    'base_url'  => 'cp_pow_rev.store_reviews',
+    'search'    => false
+];
+$schema['cp_pow_rev']['view'] = [
+    'base_url'          => 'cp_pow_rev.view?thread_id=[thread_id]',
+    'request_handlers'  => [
         'thread_id' => true
-    ),
+    ],
     'search' => false
-);
+];
 
 return $schema;

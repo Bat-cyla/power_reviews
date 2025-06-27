@@ -121,7 +121,7 @@
                             </span>
                             <span id="attr_select_glob_{$new_key}" class="hidden">
                                 {if $category_data.cp_other_glob_attr}
-                                    <select class="" name="category_data[cp_rew_attr][{$new_key}][cp_attr_id]" id="selec_attr_glob_{$new_key}" disabled="disabled">
+                                    <select class="cp-select-type-attr" name="category_data[cp_rew_attr][{$new_key}][cp_attr_id]" id="selec_attr_glob_{$new_key}" disabled="disabled">
                                         {foreach from=$category_data.cp_other_glob_attr item="glob"}
                                             <option value="{$glob.cp_attr_id}">{$glob.cp_attr_name}</option>
                                         {/foreach}

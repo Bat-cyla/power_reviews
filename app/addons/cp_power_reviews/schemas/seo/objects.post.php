@@ -16,31 +16,6 @@
 * website: https://store.cart-power.com                                      *
 * email:   sales@cart-power.com                                              *
 ******************************************************************************/
-// if (!defined('CP_PR_OBJECT_SEO_KEY')) {
-//     fn_define('CP_PR_OBJECT_SEO_KEY', 'd');
-// }
-// $schema[CP_PR_OBJECT_SEO_KEY] = array(
-//   
-//     'exist_function' => function ($object_id) {
-//         $query = db_quote ( "SELECT * FROM ?:cp_pr_for_seo WHERE thread_id = ?i", $object_id);
-//         $res = db_get_row( $query );
-//         if (!empty($res)) {
-//             return $res;
-//         } else {
-//             return false;
-//         }
-//     },
-//     'table' => '?:cp_pr_for_seo',
-//     'description' => 'name',
-//     'dispatch' => 'cp_pow_rev.view',
-//     'item' => 'thread_id',
-//     'condition' => '',
-//     'not_shared' => true,
-//     'name' => 'name',
-//     'html_options' => array('cp_pr_review'),
-//     'option' => 'seo_cp_pr_review_type',
-//     'skip_lang_condition' => false,
-// );
 
 if (!defined('CP_PR_REVIEWS_SEO')) {
     fn_define('CP_PR_REVIEWS_SEO', 'r');
@@ -48,29 +23,29 @@ if (!defined('CP_PR_REVIEWS_SEO')) {
 if (!defined('CP_PR_OBJECT_SEO_KEY')) {
     fn_define('CP_PR_OBJECT_SEO_KEY', 'd');
 }
-$schema[CP_PR_REVIEWS_SEO] = array(
-    'tree' => true,
-    'tree_options' => array('cp_pr_reviews','cp_pr_reviews_nohtml'),
+$schema[CP_PR_REVIEWS_SEO] = [
+    'tree'          => true,
+    'tree_options'  => ['cp_pr_reviews','cp_pr_reviews_nohtml'],
     'path_function' => function ($object_id, $company_id = 0) {
         return '';
     },
-    'table' => '?:cp_pr_reviews_seo_descr',
-    'description' => 'name',
-    'dispatch' => 'cp_pow_rev.all_reviews',
-    'item' => 'id',
-    'not_shared' => true,
-    'condition' => '',
-    'name' => 'name',
-    'html_options' => array('cp_pr_reviews'),
-    'option' => 'seo_cp_pr_reviews_page',
-    'pager' => true,
-    'exist_function' => function($id) {
+    'table'         => '?:cp_pr_reviews_seo_descr',
+    'description'   => 'name',
+    'dispatch'      => 'cp_pow_rev.all_reviews',
+    'item'          => 'id',
+    'not_shared'    => true,
+    'condition'     => '',
+    'name'          => 'name',
+    'html_options'  => ['cp_pr_reviews'],
+    'option'        => 'seo_cp_pr_reviews_page',
+    'pager'         => true,
+    'exist_function'=> function($id) {
         return db_get_field('SELECT 1 FROM ?:cp_pr_reviews_seo WHERE id = ?i', $id);
     },
-);
-$schema[CP_PR_OBJECT_SEO_KEY] = array(
-    'tree' => true,
-    'tree_options' => array('cp_pr_review','cp_pr_review_nohtml'),
+];
+$schema[CP_PR_OBJECT_SEO_KEY] = [
+    'tree'          => true,
+    'tree_options'  => ['cp_pr_review','cp_pr_review_nohtml'],
     'path_function' => function ($object_id, $company_id = 0, $lang_code = CART_LANGUAGE ) {
         if (fn_allowed_for('MULTIVENDOR')) {
             $company_id = 0;
@@ -88,16 +63,16 @@ $schema[CP_PR_OBJECT_SEO_KEY] = array(
             return false;
         }
     },
-    'parent_type' => CP_PR_REVIEWS_SEO,
-    'table' => '?:cp_pr_for_seo',
-    'description' => 'name',
-    'dispatch' => 'cp_pow_rev.view',
-    'item' => 'thread_id',
-    'condition' => '',
-    'not_shared' => true,
-    'name' => 'name',
-    'html_options' => array('cp_pr_review'),
-    'option' => 'seo_cp_pr_review_type',
+    'parent_type'   => CP_PR_REVIEWS_SEO,
+    'table'         => '?:cp_pr_for_seo',
+    'description'   => 'name',
+    'dispatch'      => 'cp_pow_rev.view',
+    'item'          => 'thread_id',
+    'condition'     => '',
+    'not_shared'    => true,
+    'name'          => 'name',
+    'html_options'  => ['cp_pr_review'],
+    'option'        => 'seo_cp_pr_review_type',
     'skip_lang_condition' => false,
-);
+];
 return $schema;

@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <addon scheme="3.0">
     <id>cp_power_reviews</id>
-    <version>3.6</version>
+    <version>3.10</version>
     <priority>5100</priority>
     <position>130</position>
     <default_language>en</default_language>
@@ -152,6 +152,10 @@
                         <type>checkbox</type>
                         <default_value>N</default_value>
                     </item>
+                    <item id="seo_reviews_blank">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
                     <item id="orders_for_purchase">
                         <type>multiple select</type>
                         <default_value></default_value>
@@ -300,6 +304,10 @@
                     <item id="adv_disv_required_cat">
                         <type>checkbox</type>
                         <default_value>Y</default_value>
+                    </item>
+                    <item id="inherit_attr">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
                     </item>
                     <item id="likes_dislikes_cat">
                         <type>header</type>
@@ -549,13 +557,13 @@
                         <type>input</type>
                         <default_value>10</default_value>
                     </item>
+                     <item id="image_slider_qty_test">
+                        <type>input</type>
+                        <default_value>5</default_value>
+                    </item>
                     <item id="include_videos_test">
                         <type>checkbox</type>
                         <default_value>Y</default_value>
-                    </item>
-                    <item id="image_slider_qty_test">
-                        <type>input</type>
-                        <default_value>5</default_value>
                     </item>
                     <item id="slider_image_size_test">
                         <type>input</type>
@@ -713,6 +721,27 @@
                         <type>input</type>
                         <default_value>3</default_value>
                     </item>
+                    <item id="moder_reviews_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_reply_rev">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="reply_moderation_vend">
+                        <type>selectbox</type>
+                        <default_value>moder_all</default_value>
+                        <variants>
+                            <!-- 
+                                * NM - Not moderation
+                                * MA - Moderation all
+                                * NMTV - Not moderation trusted vendors
+                            -->
+                            <item id="NM"></item>
+                            <item id="MA"></item>
+                            <item id="NMTV"></item>
+                        </variants>
+                    </item>
                 </items>
             </section>
             <section id="all_reviews">
@@ -825,6 +854,7 @@
         <item>DROP TABLE IF EXISTS ?:cp_pr_attr_names;</item>
         <item>DROP TABLE IF EXISTS ?:cp_pr_attr_name_descriptions;</item>
         <item>DROP TABLE IF EXISTS ?:cp_pr_reviews_storefronts;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_reviews_reply;</item>
         <item>
             CREATE TABLE `?:cp_power_ext_reviews` (
                 `cp_attr_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -961,12 +991,21 @@
                 KEY storefront_id (storefront_id)
             ) Engine=InnoDB DEFAULT CHARSET UTF8;
         </item>
+        <item version="3.9">
+            CREATE TABLE IF NOT EXISTS ?:cp_pr_reviews_reply (
+                post_id int(11) unsigned NOT NULL default '0',
+                thread_id int(11) unsigned NOT NULL default '0',
+                cp_admin_answ mediumtext,
+                cp_admin_answ_time int(11) unsigned NOT NULL DEFAULT 0,
+                cp_admin_id varchar(128) NOT NULL DEFAULT '',
+                reason text NOT NULL DEFAULT '',
+                status char(1) NOT NULL default 'A',
+                PRIMARY KEY  (post_id)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
         
         <item>ALTER TABLE `?:discussion_posts` ADD `cp_pos_post` mediumint(8) unsigned NOT NULL DEFAULT 0;</item>
         <item>ALTER TABLE `?:discussion_posts` ADD `cp_neg_post` mediumint(8) unsigned NOT NULL DEFAULT 0;</item>
-        <item>ALTER TABLE `?:discussion_posts` ADD `cp_admin_answ` mediumtext;</item>
-        <item>ALTER TABLE `?:discussion_posts` ADD `cp_admin_answ_time` int(11) unsigned NOT NULL DEFAULT 0;</item>
-        <item>ALTER TABLE `?:discussion_posts` ADD `cp_admin_id` varchar(128) NOT NULL DEFAULT '';</item>
         <item>ALTER TABLE `?:discussion_rating` ADD `cp_sred_rate` DECIMAL(5,1) unsigned NOT NULL DEFAULT 0;</item>
 
         <item for="install" version="2.6">ALTER TABLE `?:discussion_posts` ADD `cp_pr_verified_purchase` char(1) NOT NULL DEFAULT 'N';</item>
@@ -990,6 +1029,10 @@
         <item for="install" version="3.3">ALTER TABLE ?:discussion_posts ADD cp_product_review_id int(11) unsigned NOT NULL DEFAULT 0;</item>
         <item for="install" version="3.3">ALTER TABLE ?:cp_pr_for_seo ADD cp_st_custom_bc varchar(100) NOT NULL DEFAULT '';</item>
         
+        <item for="install" version="3.8">ALTER TABLE ?:discussion_posts ADD cp_pr_is_pos char(1) NOT NULL DEFAULT 'N';</item>
+        
+        <item for="install" version="3.9" editions="MULTIVENDOR">ALTER TABLE ?:companies ADD cp_trust_status char(1) NOT NULL DEFAULT 'Y';</item>
+        
         <item for="uninstall">DROP TABLE IF EXISTS ?:cp_power_ext_reviews;</item>
         <item for="uninstall">DROP TABLE IF EXISTS ?:cp_power_rev_products;</item>
         <item for="uninstall">DROP TABLE IF EXISTS ?:cp_power_rev_cats;</item>
@@ -1010,20 +1053,20 @@
         
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pos_post;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_neg_post;</item>
-        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_admin_answ;</item>
-        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_admin_answ_time;</item>
-        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_admin_id;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_verified_purchase;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_exp;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_user_delete;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_can_edit;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_product_review_id;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_is_pos;</item>
         
         <item for="uninstall">ALTER TABLE ?:discussion_messages DROP COLUMN cp_pr_title;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_messages DROP COLUMN cp_pr_advantages;</item>
         <item for="uninstall">ALTER TABLE ?:discussion_messages DROP COLUMN cp_pr_disadvantages;</item>
         
         <item for="uninstall">ALTER TABLE ?:discussion_rating DROP COLUMN cp_sred_rate;</item>
+
+        <item for="uninstall" editions="MULTIVENDOR">ALTER TABLE ?:companies DROP COLUMN cp_trust_status;</item>
     </queries>
     <functions>
         <item for="install">fn_cp_power_reviews_install_func</item>

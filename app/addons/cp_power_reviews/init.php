@@ -40,6 +40,7 @@ fn_register_hooks(
     'delete_discussion_pre',
     'delete_languages_post',
     'delete_product_post',
+    'gather_additional_products_data_pre',
     'gather_additional_product_data_post',
     'get_category_data_post',
     'get_discussion_pre',

@@ -1,3 +1,9 @@
+.cp-attach-images .cp-upload-box .icon-remove-sign {
+    font-size: 0;
+    &::before {
+        font-size: 14px;
+    }
+}
 select.cp-select-type-attr {
     width: 135px;
 }
@@ -53,7 +59,7 @@ select.cp-select-type-attr {
     padding-bottom: 12px;
     border-bottom: 1px solid #eee;
     .cp-left-tools-rev {
-        padding: 5px 0px 0px 12px;
+        padding: 0px 0px 0px 12px;
     }
     .post__statuses {
         padding-right: 16px;
@@ -366,7 +372,7 @@ fieldset.cp-pr__line-rating>input:checked~label {
     width: 80px;
 }
 .cp-pr__view-type__selector {
-    padding-bottom: 8px;
+    padding-bottom: 0px;
 }
 .cp-pr__attr-vt {
     padding-bottom: 4px;
@@ -439,4 +445,46 @@ div.cp-add-rev-prod-stars {
 .cp-pr__post-store-name {
     position: relative;
     top: 5px;
+}
+.cp-reply_premoderation {
+    position: relative;
+}
+
+.cp-reply_premoderation:before {
+    font-family: 'FontAwesome';
+    font-size: 10px;
+    content: "\f111";
+
+    color: #73b899;
+
+    position: absolute;
+    right: 0;
+    top: -6px;
+}
+
+.cp-control-setting-wide {
+    display: ruby;
+}
+
+.cp-control-setting-wide-text {
+    width: 290px;
+    text-align: right;
+}
+
+.cp-control-setting-wide-description {
+    width: 290px;
+    text-align: right;
+}
+
+select.cp-select-type-attr  {
+    width: 150px;
+}
+
+.bmicon-cp-prev-power-reviews {
+    background: transparent url('../../../media/images/addons/cp_power_reviews/icon.png') no-repeat 0 0;
+    background-size: contain;
+}
+
+.cm-row-status-d {
+    color: #bfbfbf;
 }

@@ -124,7 +124,7 @@
         {if "cp_pow_rev.add_attr"|fn_check_view_permissions}
             <div class="btn-group">
                 <a class="btn cm-dialog-opener cm-dialog-auto-size"href="{"cp_pow_rev.add_attr"|fn_url}" title="{__("cp_add_attr")}" data-ca-target-id="cp_add_attr">
-                    <i class="icon-plus"></i>
+                    <i class="cs-icon dropdown-icon icon-plus"></i>
                 </a>
             </div>
         {/if}

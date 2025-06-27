@@ -40,7 +40,7 @@
             
             <div class="cp-pr__by-stars_item_bar_o">
                 <div class="cp-pr__by-stars_item_bar_i">
-                    <div class="cp-pr__by-stars_item_bar_i2" style="width: {100*($val_total/$e_stars.cp_pr_total_rated)}%;"></div>
+                    <div class="cp-pr__by-stars_item_bar_i2" {if $e_stars.cp_pr_total_rated > 0}style="width: {100*($val_total/$e_stars.cp_pr_total_rated)}%;"{else}style="width: 0;"{/if}></div>
                 </div>
             </div>
             <div class="cp-pr__by-stars_item_total">{$val_total}</div>

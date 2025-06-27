@@ -24,6 +24,12 @@ if (!defined('BOOTSTRAP')) { die('Access denied'); }
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($mode == 'update_review') {
+
+        if (!empty($_REQUEST['cp_review_post_image_data'])) {
+            foreach ($_REQUEST['cp_review_post_image_data'] as &$cp_review_post_image) {
+                $cp_review_post_image['type'] = 'A';
+            }
+        }
         if (!empty($_REQUEST['post_data']) && !empty($_REQUEST['post_data']['post_id']) && !empty($auth['user_id'])) {
             $check_allows = fn_cp_check_permissions_for_reviews($_REQUEST['post_data']['post_id'], 'E', $auth['user_id']);
             if (!empty($_REQUEST['post_data']['thread_id']) && !empty($check_allows)) {
@@ -137,7 +143,7 @@ if ($mode == 'all_reviews') {
     
 } elseif ($mode == 'view') {
     if (!empty($_REQUEST['thread_id'])) {
-        $params = $_REQUEST;;
+        $params = $_REQUEST;
         $thread_data = fn_discussion_get_object($params);
         $addons = Registry::get('addons');
         if (!empty($thread_data['type']) && $thread_data['type'] == 'D' || !in_array($thread_data['object_type'], ['P'])) {
@@ -153,9 +159,12 @@ if ($mode == 'all_reviews') {
             }
             $get_posts = true;
             if ($thread_data['object_type'] == 'P' && !empty($addons['product_variations']['status']) && $addons['product_variations']['status'] == 'A' && $addons['cp_power_reviews']['common_for_variations'] == 'Y') {
-                $thread_data['from_prod_tab'] = 1;
+                $is_variation = db_get_row("SELECT * FROM ?:product_variation_group_products WHERE product_id = ?i", $thread_data['object_id']);
                 $thread_data['product_id'] = $thread_data['object_id'];
-                $get_posts = false;
+                if (!empty($is_variation)) {
+                    $thread_data['from_prod_tab'] = 1;
+                    $get_posts = false;
+                }
             }
             $discussion = fn_get_discussion($thread_data['object_id'], $thread_data['object_type'], $get_posts, $thread_data);
             
@@ -182,6 +191,12 @@ if ($mode == 'all_reviews') {
                 'meta_description'  => '',
                 'meta_keywords'     => ''
             ];
+            if (!empty($discussion) && Registry::get('addons.seo.status') == 'A' && defined('CP_PR_OBJECT_SEO_KEY')) {
+                $discussion['seo_name'] = fn_seo_get_name(CP_PR_OBJECT_SEO_KEY, $thread_data['thread_id'], '', null, CART_LANGUAGE);
+            }
+            if (!empty($params['thread_id']) && $thread_data['object_type'] == 'P') {
+                $discussion['cp_seo'] = db_get_row("SELECT * FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lang_code = ?s", $params['thread_id'],DESCR_SL);
+            }
             if (!empty($discussion['cp_seo'])) {
                 if (!empty($discussion['cp_seo']['page_title'])) {
                     $meta_data['title'] = $discussion['cp_seo']['page_title'];
@@ -258,7 +273,7 @@ if ($mode == 'all_reviews') {
                 }
             }
             
-            Tygh::$app['view']->assign('search', $discussion['search']);
+            Tygh::$app['view']->assign('search', !empty($discussion['search']) ? $discussion['search'] : []);
             Tygh::$app['view']->assign('discussion', $discussion);
             Tygh::$app['view']->assign('object_type', $thread_data['object_type']);
             Tygh::$app['view']->assign('object_id', $thread_data['object_id']);

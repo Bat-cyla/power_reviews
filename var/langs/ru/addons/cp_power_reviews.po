@@ -7,15 +7,23 @@ msgstr "Project-Id-Version: tygh"
 
 msgctxt "Addons::name::cp_power_reviews"
 msgid "Cart-Power: Power Reviews"
-msgstr "Cart-Power: Создание расширенных отзывов"
+msgstr "Cart-Power: Расширенные отзывы"
 
 msgctxt "Addons::description::cp_power_reviews"
 msgid "Product or site review criteria, images for reviews, additional blocks \"Recommendation for purchase\" and \"Most positive/Most critical\". Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
-msgstr "Критерии оценки товара или сайта, изображения к отзывам, дополнительные блоки \"Рекомендация к покупке\" и \"Самые позитивные/негативные отзывы\". Разработан <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
+msgstr "Критерии оценки товара или сайта, изображения к отзывам, дополнительные блоки \"Рекомендация к покупке\" и \"Самые позитивные / негативные отзывы\". Разработан <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
 
 msgctxt "Languages::cp_attr_name"
 msgid "Attribute"
 msgstr "Атрибут"
+
+msgctxt "Languages::cp_pr_use_as_most_positiv"
+msgid "Show as the most positive"
+msgstr "Показывать как самый позитивный"
+
+msgctxt "Languages::cp_pr_set_discussion_type_to_vars"
+msgid "Set discussion type to variations"
+msgstr "Простановка типа отзывов для вариаций"
 
 msgctxt "Languages::cp_pr_apply_vars_info_hint"
 msgid "For all child variations, set the value of the \"Reviews\" setting from the main variation of the product"
@@ -454,7 +462,7 @@ msgid "Middle"
 msgstr "Среднее"
 
 msgctxt "Languages::cp_pr_limits_max_txt"
-msgid "Maximun"
+msgid "Maximum"
 msgstr "Максимум"
 
 msgctxt "Languages::cp_pr_default_txt"
@@ -867,23 +875,23 @@ msgstr "Общие"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_cat"
 msgid "Likes/dislikes for reviews"
-msgstr "Лайки/дизлайки для комментариев"
+msgstr "Лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_page"
 msgid "Likes/dislikes for reviews"
-msgstr "Лайки/дизлайки для комментариев"
+msgstr "Лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_vend"
 msgid "Likes/dislikes for reviews"
-msgstr "Лайки/дизлайки для комментариев"
+msgstr "Лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_test"
 msgid "Likes/dislikes for reviews"
-msgstr "Лайки/дизлайки для комментариев"
+msgstr "Лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_ap"
 msgid "Likes/dislikes for reviews"
-msgstr "Лайки/дизлайки для комментариев"
+msgstr "Лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::adit_images_cat"
 msgid "Images for reviews"
@@ -971,7 +979,7 @@ msgstr "Показывать блок самых полезных отзывов
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_ap"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Разрешить лайки/дизлайки для комментариев"
+msgstr "Разрешить лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::show_ap_message_answer"
 msgid "Show answer to post"
@@ -1075,7 +1083,7 @@ msgstr "Общие"
 
 msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes"
 msgid "Likes/dislikes for reviews"
-msgstr "Лайки/дизлайки для комментариев"
+msgstr "Лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::adit_images"
 msgid "Images for reviews"
@@ -1091,23 +1099,23 @@ msgstr "Блок \"Самые позитивные/негативные отзы
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Разрешить лайки/дизлайки для комментариев"
+msgstr "Разрешить лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_test"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Разрешить лайки/дизлайки для комментариев"
+msgstr "Разрешить лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_vend"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Разрешить лайки/дизлайки для комментариев"
+msgstr "Разрешить лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_cat"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Разрешить лайки/дизлайки для комментариев"
+msgstr "Разрешить лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_ld_page"
 msgid "Allow likes/dislikes for reviews"
-msgstr "Разрешить лайки/дизлайки для комментариев"
+msgstr "Разрешить лайки / дизлайки для комментариев"
 
 msgctxt "SettingsOptions::cp_power_reviews::allow_recom"
 msgid "Allow to recommend product"
@@ -2693,6 +2701,50 @@ msgctxt "SettingsOptions::cp_power_reviews::show_purchase_label"
 msgid "Show verified/not verified purchase"
 msgstr "Показывать статус подтверждения покупки"
 
+msgctxt "SettingsOptions::cp_power_reviews::seo_reviews_blank"
+msgid "Generation of product review pages"
+msgstr "Генерировать отдельную страницу отзывов для товара"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_reply_rev"
+msgid "Allow vendors to respond to reviews"
+msgstr "Разрешить продавцам отвечать на отзывы"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_reply_rev"
+msgid "If enabled, vendors will be able to add replies to user reviews about their products and the vendor"
+msgstr "Если включено, продавцы смогут добавлять ответы отзывам пользователей о их товарах и о самом продавце."
+
+msgctxt "SettingsOptions::cp_power_reviews::reply_moderation_vend"
+msgid "Vendor responses moderation"
+msgstr "Модерация ответов продавцов"
+
+msgctxt "SettingsTooltips::cp_power_reviews::reply_moderation_vend"
+msgid "Set conditions for moderating vendors responses. You can add a vendor to the list of trusted sellers from the vendors profile page"
+msgstr "Задайте условия модерации ответов продавцов. Добавить продавца в список проверенных можно на странице профиля продавца."
+
+msgctxt "SettingsOptions::cp_power_reviews::moder_reviews_vend"
+msgid "Vendor responses moderation"
+msgstr "Модерация ответов продавцов"
+
+msgctxt "SettingsVariants::cp_power_reviews::reply_moderation_vend::NM"
+msgid "Do not moderate"
+msgstr "Не модерировать"
+
+msgctxt "SettingsVariants::cp_power_reviews::reply_moderation_vend::MA"
+msgid "Moderate all"
+msgstr "Модерировать все"
+
+msgctxt "SettingsVariants::cp_power_reviews::reply_moderation_vend::NMTV"
+msgid "Do not moderate responses from trusted vendors"
+msgstr "Не модерировать ответы проверенных продавцов"
+
+msgctxt "SettingsOptions::cp_power_reviews::inherit_attr"
+msgid "Inherit attributes when creating a new category"
+msgstr "Наследовать атрибуты при создании новой категории"
+
+msgctxt "SettingsTooltips::cp_power_reviews::inherit_attr"
+msgid "If the new category has a parent category, the review attributes will be inherited from it"
+msgstr "Если у новой категории есть родительская категория, атрибуты отзывов будут унаследованы с нее."
+
 msgctxt "SettingsOptions::cp_power_reviews::orders_for_purchase"
 msgid "Order statuses for verified purchase"
 msgstr "Статусы заказа для подтвержденной покупки"
@@ -2805,6 +2857,10 @@ msgctxt "SettingsOptions::cp_power_reviews::licensekey"
 msgid "License key"
 msgstr "Номер лицензии"
 
+msgctxt "SettingsTooltips::cp_power_reviews::licensekey"
+msgid "You can find it on your order details page"
+msgstr "Смотрите на детальной странице заказа"
+
 msgctxt "Languages::cp_your_license_is_not_valid"
 msgid "You should enter valid License Key. Please, contact us (sales@cart-power.com), if you face any issues."
 msgstr "Необходимо ввести номер лицензии. Свяжитесь с нами (sales@cart-power.com), если у вас возникли какие-либо проблемы"
@@ -2817,4 +2873,58 @@ msgctxt "Languages::based_on"
 msgid "Average rating based on"
 msgstr "Средняя оценка на основе"
 
+msgctxt "Languages::cp_power_reviews.vendor.moderation"
+msgid "Vendor responses moderation"
+msgstr "Модерация ответов на отзывы"
 
+msgctxt "Languages::cp_power_reviews.disapprove_reply"
+msgid "Reject vendor response"
+msgstr "Отклонить ответ продавца"
+
+msgctxt "Languages::cp_power_reviews.disapproval_reason"
+msgid "Reason for rejection"
+msgstr "Причина отклонения"
+
+msgctxt "Languages::cp_power_reviews.disapprove"
+msgid "Refuse"
+msgstr "Отказать"
+
+msgctxt "Languages::cp_power_reviews.reason_disapprove_reply"
+msgid "Reason for rejection"
+msgstr "Причина отклонения"
+
+msgctxt "Languages::cp_power_reviews.reply_post_vendor"
+msgid "Reply to feedback"
+msgstr "Ответ на отзыв"
+
+msgctxt "Languages::cp_power_reviews.approve_reply"
+msgid "Approve response the vendor"
+msgstr "Одобрить ответ продавца"
+
+msgctxt "Languages::cp_power_reviews.reply_moder"
+msgid "Review moderation"
+msgstr "Модерация отзывов"
+
+msgctxt "Languages::cp_power_reviews.dont_permission_add_reply_post"
+msgid "You cannot reply to a review"
+msgstr "Вы не можете оставить ответ на отзыв"
+
+msgctxt "Languages::cp_power_reviews.success_update_status_reply"
+msgid "Status changed"
+msgstr "Статус изменен"
+
+msgctxt "Languages::cp_power_reviews.enter_reason_disapproval"
+msgid "Enter a reason for rejection"
+msgstr "Введите причину отказа"
+
+msgctxt "Languages::cp_power_reviews.vendor.trust_vendor"
+msgid "Verified vendor"
+msgstr "Проверенный продавец"
+
+msgctxt "Languages::cp_power_reviews.receil_reply_moder"
+msgid "Rejected responses"
+msgstr "Отклоненные ответы"
+
+msgctxt "Languages::cp_double_character_error"
+msgid "Double character error"
+msgstr "Двойной символ \"#\" не допустим"

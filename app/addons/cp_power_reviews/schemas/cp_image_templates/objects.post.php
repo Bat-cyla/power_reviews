@@ -21,15 +21,16 @@
 $is_vendor = fn_allowed_for('MULTIVENDOR') && !empty(Tygh\Registry::get('runtime.company_id')) ? true : false;
 
 if (!$is_vendor) {
-    $schema['R'] = array(
-        'name' => 'reviews',
-        'title' => __('cp_pr_reviews_txt'),
-        'conditions' => array('R'),
-        'get_function' => 'fn_cp_pr_get_alt_reviews',
-        'update_function' => 'fn_cp_ait_update_image_pairs',
-        'fields' => array('title' => true, 'alt' => true, 'img_name' => true),
-        'img_type' => 'detailed'
-    );
+    $schema['R'] = [
+        'name'              => 'reviews',
+        'title'             => AREA != 'C' ? __('cp_pr_reviews_txt') : '',
+        'conditions'        => ['R'],
+        'get_function'      => 'fn_cp_pr_get_alt_reviews',
+        'update_function'   => 'fn_cp_ait_update_image_pairs',
+        'fields'            => ['title' => true, 'alt' => true, 'img_name' => true],
+        'img_type'          => 'detailed',
+        'object_type'       => ['cp_rev_post'],
+    ];
 }
 
 return $schema;

@@ -238,7 +238,7 @@
                     file="addons/cp_power_reviews/components/form_file_uploader.tpl"
                     existing_pairs=$r_post.cp_review_pairs|default:[]
                     file_name="file"
-                    image_pair_types=['N' => 'cp_review_post_add_image', 'A' => 'cp_review_post_image']
+                    image_pair_types=['N' => 'cp_review_post_add_image', 'M' => 'cp_review_post_image', 'A' => 'cp_review_post_image']
                     allow_update_files=!$is_form_readonly
                 }
             </div>
@@ -273,14 +273,14 @@
                         <label class="ty-control-group__title" for="elm_video_code" title="">{__("cp_pr_youtube_id")}{include file="common/tooltip.tpl" tooltip=__("cp_pr_youtube_id_tooltip")}:</label>
                         <div class="input-prepend input-prepend--mobile-fullwidth">
                             <span class="cm-field-prefix add-on">http://youtube.com?v=</span>
-                            <input type="text" class="input-medium" value="" name="post_data[youtube_id]" id="elm_video_code"/>
+                <input type="text" {if $addons.cp_power_reviews.allow_review_e == "N"}disabled="disabled"{/if} class="input-medium" value="" name="post_data[youtube_id]" id="elm_video_code"/>
                         </div>
                     </div>
                     <div class="ty-control-group">
                         <label class="ty-control-group__title">{__("cp_pr_preview_txt")}</label>
                         <label class="checkbox inline">
                         <input type="hidden" name="post_data[upload_from_youtube]" value="N" />
-                        <input type="checkbox" name="post_data[upload_from_youtube]" value="Y" checked="checked" onclick="Tygh.$('#attach_image_video_box').toggle();">{__("cp_pr_get_youtube_preview")}{include file="common/tooltip.tpl" tooltip=__("cp_pr_upload_preview_text")}</label>
+                        <input type="checkbox" {if $addons.cp_power_reviews.allow_review_e == "N"}disabled="disabled"{/if} name="post_data[upload_from_youtube]" value="Y" checked="checked" onclick="Tygh.$('#attach_image_video_box').toggle();">{__("cp_pr_get_youtube_preview")}{include file="common/tooltip.tpl" tooltip=__("cp_pr_upload_preview_text")}</label>
                             
                         <div id="attach_image_video_box" class="cp-add-rev-post-img hidden">
                             {include file="addons/cp_power_reviews/components/attach_images.tpl" image_name="cp_pr_video_preview" image_object_type="cp_pr_video_preview" image_object_id="0" image_type="M" no_thumbnail=true hide_images=true hide_alt=true}
@@ -314,7 +314,7 @@
                 {include file="buttons/button.tpl" but_text=__("save") but_meta="ty-btn__secondary" but_role="submit" but_name="dispatch[cp_pow_rev.update_review]"}
             {/if}
             {if $addons.cp_power_reviews.allow_review_d == "Y" && !$r_post.cp_admin_id}
-                <a class="cp-pr__my-rev_delete cm-tooltip cm-post cm-confirm ty-btn" title="{__("delete")}" href="{"cp_pow_rev.delete_review?post_id=`$r_post.post_id`"|fn_url}"><i class="ty-icon-trashcan"></i></a>
+                <a class="cp-pr__my-rev_delete cm-tooltip cm-post cm-confirm ty-btn" title="{__("delete")}" href="{"cp_pow_rev.delete_review?post_id=`$r_post.post_id`"|fn_url}"><i class="ty-icon-trashcan cp-pr__my-rev_delete-icon"></i></a>
             {/if}
         </div>
     <!--cp_my_reviews_item_{$r_post.post_id}--></div>

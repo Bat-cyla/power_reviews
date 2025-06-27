@@ -1,66 +1,68 @@
-{include file="common/subheader.tpl" title=__("cp_pr_seo_for_reviews") target="#reviews_seo_section"}
-<div id="reviews_seo_section" class="collapsed in">
-    {include file="addons/cp_power_reviews/addons/seo/common/review_seo_name_field.tpl" 
-        hide_title=true 
-        object_data=$discussion.cp_seo 
-        object_name="cp_object_seo" 
-        object_id=$discussion.thread_id 
-        object_type=$smarty.const.CP_PR_OBJECT_SEO_KEY 
-        share_dont_hide=true
-        preview_link="cp_pow_rev.view?thread_id=`$discussion.thread_id`"|fn_url:"C"
-    }
-    <div id="cp_pr_seo_meta" class="collapse in">
-        <input type="hidden" name="cp_object_seo[object_type]" value="{$discussion.object_type}" />
-        <input type="hidden" name="cp_object_seo[object_id]" value="{$discussion.object_id}" />
-        <input type="hidden" name="cp_object_seo[thread_id]" value="{$discussion.thread_id}" />
-        
-        {if $cp_pf_avail_placeholders}
-            <div class="control-group">
-                <label class="control-label" for="elm_disc_h1">{__("cp_avail_placeholders")}:</label>
-                <div class="controls">
-                    {foreach from=$cp_pf_avail_placeholders key="pr_pl" item="pr_holder"}
-                        <strong><code>{$pr_holder.pl_body}</code></strong>&nbsp;-&nbsp;{__($pr_holder.description)}<br />
-                    {/foreach}
-                </div>
-            </div>
-        {/if}
-        <div class="control-group">
-            <label class="control-label" for="elm_disc_h1">{__("cp_pr_h1_title")}:</label>
-            <div class="controls">
-                <input type="text" name="cp_object_seo[h1]" id="elm_disc_h1" size="55" value="{$discussion.cp_seo.h1}" class="input-large" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="elm_disc_page_title">{__("page_title")}:</label>
-            <div class="controls">
-                <input type="text" name="cp_object_seo[page_title]" id="elm_disc_page_title" size="55" value="{$discussion.cp_seo.page_title}" class="input-large" />
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="elm_disc_meta_descr">{__("meta_description")}:</label>
-            <div class="controls">
-                <textarea name="cp_object_seo[meta_description]" id="elm_disc_meta_descr" cols="55" rows="2" class="input-large">{$discussion.cp_seo.meta_description}</textarea>
-            </div>
-        </div>
-        <div class="control-group">
-            <label class="control-label" for="elm_disc_meta_keywords">{__("meta_keywords")}:</label>
-            <div class="controls">
-                <textarea name="cp_object_seo[meta_keywords]" id="elm_disc_meta_keywords" cols="55" rows="2" class="input-large">{$discussion.cp_seo.meta_keywords}</textarea>
-            </div>
-        </div>
-        {if $addons.cp_seo_templates.status == "A"}
-            {include file="common/subheader.tpl" title=__("cp_seo_subheader") target="#acc_custom_pr_bc_`$discussion.object_id`"}
-            <div id="acc_custom_pr_bc_{$discussion.object_id}" class="collapse in">
+{if $addons.cp_power_reviews.seo_reviews_blank == "Y"}
+    {include file="common/subheader.tpl" title=__("cp_pr_seo_for_reviews") target="#reviews_seo_section"}
+    <div id="reviews_seo_section" class="collapsed in">
+        {include file="addons/cp_power_reviews/addons/seo/common/review_seo_name_field.tpl" 
+            hide_title=true 
+            object_data=$discussion.cp_seo 
+            object_name="cp_object_seo" 
+            object_id=$discussion.thread_id 
+            object_type=$smarty.const.CP_PR_OBJECT_SEO_KEY 
+            share_dont_hide=true
+            preview_link="cp_pow_rev.view?thread_id=`$discussion.thread_id`"|fn_url:"C"
+        }
+        <div id="cp_pr_seo_meta" class="collapse in">
+            <input type="hidden" name="cp_object_seo[object_type]" value="{$discussion.object_type}" />
+            <input type="hidden" name="cp_object_seo[object_id]" value="{$discussion.object_id}" />
+            <input type="hidden" name="cp_object_seo[thread_id]" value="{$discussion.thread_id}" />
+            
+            {if $cp_pf_avail_placeholders}
                 <div class="control-group">
-                    <label class="control-label" for="elm_pr_disc_cust_bc">{__("cp_seo_custom_breadcrumb")}:</label>
+                    <label class="control-label" for="elm_disc_h1">{__("cp_avail_placeholders")}:</label>
                     <div class="controls">
-                        <input type="text" name="cp_object_seo[cp_st_custom_bc]" id="elm_pr_disc_cust_bc" size="55" value="{$discussion.cp_seo.cp_st_custom_bc}" class="input-large" />
+                        {foreach from=$cp_pf_avail_placeholders key="pr_pl" item="pr_holder"}
+                            <strong><code>{$pr_holder.pl_body}</code></strong>&nbsp;-&nbsp;{__($pr_holder.description)}<br />
+                        {/foreach}
                     </div>
                 </div>
+            {/if}
+            <div class="control-group">
+                <label class="control-label" for="elm_disc_h1">{__("cp_pr_h1_title")}:</label>
+                <div class="controls">
+                    <input type="text" name="cp_object_seo[h1]" id="elm_disc_h1" size="55" value="{$discussion.cp_seo.h1}" class="input-large" />
+                </div>
             </div>
-        {/if}
+            <div class="control-group">
+                <label class="control-label" for="elm_disc_page_title">{__("page_title")}:</label>
+                <div class="controls">
+                    <input type="text" name="cp_object_seo[page_title]" id="elm_disc_page_title" size="55" value="{$discussion.cp_seo.page_title}" class="input-large" />
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="elm_disc_meta_descr">{__("meta_description")}:</label>
+                <div class="controls">
+                    <textarea name="cp_object_seo[meta_description]" id="elm_disc_meta_descr" cols="55" rows="2" class="input-large">{$discussion.cp_seo.meta_description}</textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="elm_disc_meta_keywords">{__("meta_keywords")}:</label>
+                <div class="controls">
+                    <textarea name="cp_object_seo[meta_keywords]" id="elm_disc_meta_keywords" cols="55" rows="2" class="input-large">{$discussion.cp_seo.meta_keywords}</textarea>
+                </div>
+            </div>
+            {if $addons.cp_seo_templates.status == "A"}
+                {include file="common/subheader.tpl" title=__("cp_seo_subheader") target="#acc_custom_pr_bc_`$discussion.object_id`"}
+                <div id="acc_custom_pr_bc_{$discussion.object_id}" class="collapse in">
+                    <div class="control-group">
+                        <label class="control-label" for="elm_pr_disc_cust_bc">{__("cp_seo_custom_breadcrumb")}:</label>
+                        <div class="controls">
+                            <input type="text" name="cp_object_seo[cp_st_custom_bc]" id="elm_pr_disc_cust_bc" size="55" value="{$discussion.cp_seo.cp_st_custom_bc}" class="input-large" />
+                        </div>
+                    </div>
+                </div>
+            {/if}
+        </div>
     </div>
-</div>
+{/if}
 {if !$only_meta}
 {include file="common/subheader.tpl" title=__("cp_reviews_attrs") target="#reviews_attr_section"}
 <div class="table-responsive-wrapper" id="reviews_attr_section" class="collapsed in">
@@ -147,7 +149,12 @@
                     <td width="30%" class="{$no_hide_input_if_shared_product}" data-th="{__("name")}">
                     
                         {if $attr.object_type == "G"}
-                            {$attr.cp_attr_name}
+                            <a href="{"cp_pow_rev.attr_manage"|fn_url}">
+                                {$attr.cp_attr_name}
+                            </a>
+                            <div class="cp-pr__mandat-main">
+                                {__("cp_pr_is_mandatory")}: {if $attr.required == "Y"} {__("yes")} {else} {__("no")} {/if}
+                            </div>
                         {else}
                             <input type="text" name="product_data[cp_rew_attr][{$_key}][cp_attr_name]" value="{$attr.cp_attr_name}" class="input-large" />
                             <div class="cp-pr__mandat-main">

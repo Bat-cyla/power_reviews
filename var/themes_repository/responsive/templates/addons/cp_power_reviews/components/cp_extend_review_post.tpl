@@ -162,10 +162,14 @@
             {if ($cp_ob_type == "ALL" || ($smarty.const.CP_PR_VARIATIONS_TYPE && in_array($smarty.const.CP_PR_VARIATIONS_TYPE, array("Y","NS")) && $cp_ob_type == "P")) && $post.object_data && $post.object_data.description}
                 {$post_link=""}
                 {if $post.object_type == "P"}
-                    {if $post.object_data.extra_var_name}
-                        {$post_link="products.view&product_id=`$post.object_id`"|fn_url}
-                    {else}
+                    {if $cp_ob_type == "ALL"}
                         {$post_link="cp_pow_rev.view&thread_id=`$post.thread_id`"|fn_url}
+                    {else}
+                        {if $post.object_data.extra_var_name}
+                            {$post_link="products.view&product_id=`$post.object_id`"|fn_url}
+                        {else}
+                            {$post_link="cp_pow_rev.view&thread_id=`$post.thread_id`"|fn_url}
+                        {/if}
                     {/if}
                     {$object_prefix_link=__("cp_pr_product_txt")}
                 {elseif $post.object_type == "M"}
@@ -338,10 +342,24 @@
                     </span>
                 {/if}
                 {if $show_up_down == "only_up" || $show_up_down == "both"}
-                    <span><a rel="nofollow" class="cm-ajax" data-ca-target-id="cp_posts_list_{$object_id}" href="{"discussion.cp_like_post&object_id={$object_id}&det_page={$cp_is_det_page}&object_type={$discussion.object_type}&cp_like=Y&post_id=`$post.post_id`&cp_sort_by=`$discussion.cp_sort_by`&selected_section=discussion&thread_id=`$discussion.thread_id`"|fn_url}"><i class="cp-rev-icons-up-down cp_pr-ico-like"></i></a><span class="cp-users-likes">{$post.cp_pos_post}</span></span>
+                    {if $smarty.request.cp_post_kind}
+                        {$filter_cur_url = $config.current_url|fn_query_remove:"cp_post_kind":"r_limit"}
+                    {else}
+                        {$filter_cur_url = $config.current_url}
+                    {/if}
+                    {$cp_like_url="`$filter_cur_url`&object_id=`$object_id`&det_page=`$cp_is_det_page`&object_type=`$discussion.object_type`&cp_like=Y&post_id=`$post.post_id`&cp_sort_by=`$discussion.cp_sort_by`&selected_section=discussion&thread_id=`$discussion.thread_id`"}
+                    {$cp_like_url_p="`$cp_like_url`&cp_like=Y"}
+                    <span>
+                    <a onclick="fn_pr_click_likes('{$cp_like_url_p}', '{$cur_result_id}', this, '{$post.post_id}');" rel="nofollow">
+                    <i class="cp-rev-icons-up-down cp_pr-ico-like"></i></a><span class="cp-users-likes cp_pr_like_in_post_{$post.post_id}">{$post.cp_pos_post}</span>
+                    </span>
                 {/if}
                 {if $show_up_down == "only_down" || $show_up_down == "both"}
-                    <span><a rel="nofollow" class="cm-ajax" data-ca-target-id="cp_posts_list_{$object_id}" href="{"discussion.cp_like_post&object_id={$object_id}&det_page={$cp_is_det_page}&object_type={$discussion.object_type}&cp_like=N&post_id=`$post.post_id`&cp_sort_by=`$discussion.cp_sort_by`&selected_section=discussion&thread_id=`$discussion.thread_id`"|fn_url}"><i class="cp-rev-icons-up-down cp_pr-ico-dislike"></i></a><span class="cp-users-likes">{$post.cp_neg_post}</span></span>
+                    {$cp_like_url_n="`$cp_like_url`&cp_like=N"}
+                    <span>
+                    <a onclick="fn_pr_click_likes('{$cp_like_url_n}', '{$cur_result_id}', this, '{$post.post_id}');" rel="nofollow">
+                    <i class="cp-rev-icons-up-down cp_pr-ico-dislike"></i></a><span class="cp-users-likes cp_pr_dis_in_post_{$post.post_id}">{$post.cp_neg_post}</span>
+                    </span>
                 {/if}
             </div>
         {/if}

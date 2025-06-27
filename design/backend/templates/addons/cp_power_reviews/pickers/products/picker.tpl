@@ -1,15 +1,15 @@
-{math equation="rand()" assign="rnd"}
-{assign var="data_id" value="`$data_id`_`$rnd`"}
-{assign var="view_mode" value=$view_mode|default:"mixed"}
-{assign var="start_pos" value=$start_pos|default:0}
+{$rnd = rand()}
+{$data_id="`$data_id`_`$rnd`"}
+{$view_mode=$view_mode|default:"mixed"}
+{$start_pos=$start_pos|default:0}
 {script src="js/tygh/picker.js"}
 
 {if !$type}
-  {assign var="type" value="links"}
+  {$type="links"}
 {/if}
 
 {if $item_ids && !$item_ids|is_array && $type != "table"}
-        {assign var="item_ids" value=","|explode:$item_ids}
+    {$item_ids=","|explode:$item_ids}
 {/if}
 
 {if $view_mode != "list"}
@@ -65,7 +65,7 @@
     {/if}
 {elseif $type == "table"}
     {if !isset($display)}
-        {assign var="display" value="options"}
+        {$display="options"}
     {/if}
     <table class="table table-middle">
     <thead>
@@ -83,7 +83,7 @@
     {foreach from=$item_ids item="product" key="product_id"}
         {if $display}
             {capture name="product_options"}
-                {assign var="prod_opts" value=$product.product_id|fn_get_product_options}
+                {$prod_opts=$product.product_id|fn_get_product_options}
                 {if $prod_opts && !$product.product_options}
                     <span>{__("options")}: </span>&nbsp;{__("any_option_combinations")}
                 {elseif $product.product_options}
@@ -96,9 +96,9 @@
             {/capture}
         {/if}
         {if $product.product}
-            {assign var="product_name" value=$product.product}
+            {$product_name=$product.product}
         {else}
-            {assign var="product_name" value=$product.product_id|fn_get_product_name|default:__("deleted_product")}
+            {$product_name=$product.product_id|fn_get_product_name|default:__("deleted_product")}
         {/if}
         {include file="pickers/products/js.tpl" product=$product_name root_id=$data_id delete_id=$product_id input_name="`$input_name`[`$product_id`]" amount=$product.amount amount_input="text" type="options" options=$smarty.capture.product_options options_array=$product.product_options product_id=$product.product_id product_info=$product}
     {/foreach}
@@ -125,7 +125,7 @@
 {if $view_mode != "list"}
     <div class="hidden">
         {if $extra_var}
-            {assign var="extra_var" value=$extra_var|escape:url}
+            {$extra_var=$extra_var|escape:url}
         {/if}
         {if !$no_container}<div class="buttons-container">{/if}{if $picker_view}[{/if}
             {include file="buttons/button.tpl" but_id="opener_picker_`$data_id`" but_href="products.picker?display=`$display`&company_id=`$company_id`&company_ids=`$company_ids`&picker_for=`$picker_for`&extra=`$extra_var`&checkbox_name=`$checkbox_name`&aoc=`$aoc`&data_id=`$data_id`"|fn_url but_text=$but_text|default:__("add_products") but_role="add" but_target_id="content_`$data_id`" but_meta="cm-dialog-opener"}

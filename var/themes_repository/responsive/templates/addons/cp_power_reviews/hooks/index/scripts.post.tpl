@@ -1,5 +1,7 @@
 {script src="js/addons/cp_power_reviews/mCustomScrollbar.min.js"}
-<script src="//www.youtube.com/iframe_api"></script>
+{if $cp_pr_need_yt_script}
+    <script src="//www.youtube.com/iframe_api"></script>
+{/if}
 <script type="text/javascript">
     (function(_, $) {
         $(document).on('click', '.content-discussion .ab-smc-more', function() {
@@ -173,6 +175,34 @@ function fn_pr_change_sorting (href, res_ids) {
             result_ids: res_ids,
             hidden: false,
             full_render: true,
+        });
+    }
+}
+function fn_pr_click_likes (href, res_ids, elm, post_id) {
+    if (href && post_id) {
+        $.ceAjax('request', fn_url(href), {
+            result_ids: res_ids,
+            hidden: false,
+            save_history: false,
+            full_render: true,
+            callback: function callback(response) {
+                var pos_elm = $('.cp_pr_like_in_post_' + post_id);
+                var neg_elm = $('.cp_pr_dis_in_post_' + post_id);
+                if (response.cp_is_like_added) {
+                    if (response.cp_is_like_values.cp_neg_post && neg_elm && neg_elm.length > 0) {
+                        neg_elm.html(response.cp_is_like_values.cp_neg_post);
+                    }
+                    if (response.cp_is_like_values.cp_pos_post && pos_elm && pos_elm.length > 0) {
+                        pos_elm.html(response.cp_is_like_values.cp_pos_post);
+                    }
+                }
+                if (response.cp_pr_show_reg_link) {
+                    var reg_links = $('.cp-rev-sign-link');
+                    if (reg_links && reg_links.length > 0) {
+                        reg_links.show();
+                    }
+                }
+            }
         });
     }
 }

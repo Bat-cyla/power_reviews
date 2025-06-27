@@ -69,13 +69,26 @@
             {/if}
         </div>
         <span class="muted">
-            {include file="common/calendar.tpl" date_id="elm_date_holder_`$post.post_id`" date_name="cp_post_data[`$post.post_id`][date]" date_val=$post.timestamp|default:$smarty.const.TIME start_year=$settings.Company.company_start_year date_meta="post-date" show_time=true time_name="cp_post_data[`$post.post_id`][time]"}
+            {include file="common/calendar.tpl" date_id="elm_date_holder_`$post.post_id`" date_name="cp_post_data[`$post.post_id`][date]" date_val=$post.timestamp|default:$smarty.const.TIME start_year=$settings.Company.company_start_year date_meta="post-date" show_time=true meta_class="review-date" time_name="cp_post_data[`$post.post_id`][time]"}
 
             /
             {__("ip_address")}:&nbsp;{$post.ip_address}
         </span>
         {if $post.cp_pr_user_delete && $post.cp_pr_user_delete == "Y"}
             <div class="cp-pr__top-tools_deleted">{__("cp_pr_review_was_deleted_by_user")}</div>
+        {/if}
+        {if (!empty($cp_reply_active) && $cp_reply_active == "Y") && $auth.user_type === "UserTypes::VENDOR"|enum && $runtime.controller != "discussion_manager"}
+            <div class="cp-pr__top-tools_reply">
+                {* {include file="addons/cp_power_reviews/components/popup_reply.tpl" post=$post discussion=$discussion} *}
+
+                {$link_class = ""}
+                {if $auth.user_type == "UserTypes::VENDOR"|enum && $post.reply_status == 'D'}
+                    {$link_class = "cp-reply_premoderation"}
+                {/if}
+                {$redirect_url = $config.current_url|fn_link_attach:"selected_section=discussion"|urlencode}
+
+                {include file="common/popupbox.tpl" href="cp_pow_rev.premoderation_popup?post_id=`$post.post_id`&redirect_url=`$redirect_url`"|fn_url link_class=$link_class text=__("cp_power_reviews.reply_post_vendor") id="reply_post_`$post.post_id`" act="general" icon="icon-share"}
+            </div>
         {/if}
     </div>
 </div>
@@ -110,6 +123,16 @@
                         <input type="hidden" name="cp_post_data[{$post.post_id}][cp_pr_verified_purchase]" value="N" />
                         <input type="checkbox" name="cp_post_data[{$post.post_id}][cp_pr_verified_purchase]" 
                             class="cm-ite cp-left-tools-rev-checkbox" value="Y" {if $post.cp_pr_verified_purchase == "Y"}checked="checked"{/if}>
+                    </div>
+                </div>
+            {/if}
+            {if $runtime.controller != "discussion_manager"}
+                <div class="control-group">
+                    <label class="control-label">{__("cp_pr_use_as_most_positiv")}:</label>
+                    <div class="controls">
+                        <input type="hidden" name="cp_post_data[{$post.post_id}][cp_pr_is_pos]" value="N" />
+                        <input type="checkbox" name="cp_post_data[{$post.post_id}][cp_pr_is_pos]" 
+                            class="cm-ite cp-left-tools-rev-checkbox" value="Y" {if $post.cp_pr_is_pos == "Y"}checked="checked"{/if}>
                     </div>
                 </div>
             {/if}
