@@ -4216,33 +4216,36 @@ function fn_cp_pr_update_discussion_seo($object_data)
                     }
                 }
             }
-            foreach (fn_get_translation_languages() as $object_data['lang_code'] => $_v) {
-                if ($object_data['object_type'] != 'E') {
-                    
-                    $product_id = db_get_field("SELECT object_id FROM ?:discussion WHERE thread_id = ?i AND object_type = ?s", $object_data['thread_id'], 'P');
-                    if (!empty($product_id)) {
-                        $object_data['name'] = db_get_field("SELECT name FROM ?:seo_names WHERE object_id = ?i AND type = ?s", $product_id, 'p');
+            foreach (Languages::getAll() as $object_data['lang_code'] => $_v) {
+                if ($object_data['lang_code'] == DESCR_SL) {
+                    if ($object_data['object_type'] != 'E') {
+                        
+                        $product_id = db_get_field("SELECT object_id FROM ?:discussion WHERE thread_id = ?i AND object_type = ?s", $object_data['thread_id'], 'P');
+                        if (!empty($product_id)) {
+                            $object_data['name'] = db_get_field("SELECT name FROM ?:seo_names WHERE object_id = ?i AND type = ?s", $product_id, 'p');
+                        } else {
+                            $object_data['name'] = db_get_field("SELECT " . $table_info['column'] . " FROM ?:" . $table_info['table'] . " WHERE " . $table_info['id'] . " = ?i AND lang_code = ?s", $object_data['object_id'], $object_data['lang_code']);
+                        }
                     } else {
-                        $object_data['name'] = db_get_field("SELECT " . $table_info['column'] . " FROM ?:" . $table_info['table'] . " WHERE " . $table_info['id'] . " = ?i AND lang_code = ?s", $object_data['object_id'], $object_data['lang_code']);
-                    }
-                } else {
-                    if (empty($object_data['name'])) {
-                        $object_data['name'] = db_get_field("SELECT name FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lng_code = ?s", $object_data['object_id'], $object_data['lang_code']);
                         if (empty($object_data['name'])) {
-                            $object_data['name'] = 'store-reviews';
+                            $object_data['name'] = db_get_field("SELECT name FROM ?:cp_pr_for_seo WHERE thread_id = ?i AND lng_code = ?s", $object_data['object_id'], $object_data['lang_code']);
+                            if (empty($object_data['name'])) {
+                                $object_data['name'] = 'store-reviews';
+                            }
                         }
                     }
-                }
-                db_replace_into('cp_pr_for_seo', $object_data);
-                if (Registry::get('addons.seo.status') == 'A') {
-                    fn_seo_update_object($object_data, $object_data['thread_id'], CP_PR_OBJECT_SEO_KEY, $object_data['lang_code']);
-                }
-                if (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'S' && !empty($object_data['cp_pr_replace_for_vars']) && $object_data['cp_pr_replace_for_vars'] == 'Y' && !empty($thread_ids)) {
-                    foreach($thread_ids as $v_thread_id) {
-                        $new_var_data = $object_data;
-                        $new_var_data['thread_id'] = $v_thread_id['thread_id'];
-                        
-                        db_replace_into('cp_pr_for_seo', $new_var_data);
+
+                    db_replace_into('cp_pr_for_seo', $object_data);
+                    if (Registry::get('addons.seo.status') == 'A') {
+                        fn_seo_update_object($object_data, $object_data['thread_id'], CP_PR_OBJECT_SEO_KEY, $object_data['lang_code']);
+                    }
+                    if (defined('CP_PR_VARIATIONS_TYPE') && CP_PR_VARIATIONS_TYPE == 'S' && !empty($object_data['cp_pr_replace_for_vars']) && $object_data['cp_pr_replace_for_vars'] == 'Y' && !empty($thread_ids)) {
+                        foreach($thread_ids as $v_thread_id) {
+                            $new_var_data = $object_data;
+                            $new_var_data['thread_id'] = $v_thread_id['thread_id'];
+                            
+                            db_replace_into('cp_pr_for_seo', $new_var_data);
+                        }
                     }
                 }
             }
