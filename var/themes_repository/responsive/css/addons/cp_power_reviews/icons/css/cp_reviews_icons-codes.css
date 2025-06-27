@@ -1,0 +1,11 @@
+
+.cp_pr-ico-comment:before { content: '\e800'; } /* '' */
+.cp_pr-ico-dislike:before { content: '\e802'; } /* '' */
+.cp_pr-ico-plus:before { content: '\e807'; } /* '' */
+.cp_pr-ico-like:before { content: '\e808'; } /* '' */
+.cp_pr-ico-minus:before { content: '\e809'; } /* '' */
+.cp_pr-ico-camera:before { content: '\e80a'; } /* '' */
+.cp_pr-ico-cancel-circled:before { content: '\e80b'; } /* '' */
+.cp_pr-ico-ok-circled:before { content: '\e810'; } /* '' */
+.cp_pr-ico-smile:before { content: '\f118'; } /* '' */
+.cp_pr-ico-frown:before { content: '\f119'; } /* '' */

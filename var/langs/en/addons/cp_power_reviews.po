@@ -1,0 +1,2814 @@
+msgid ""
+msgstr "Project-Id-Version: tygh"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: English\n"
+"Language: en_US\n"
+
+msgctxt "Addons::name::cp_power_reviews"
+msgid "Cart-Power: Power Reviews"
+msgstr "Cart-Power: Power Reviews"
+
+msgctxt "Addons::description::cp_power_reviews"
+msgid "Product or site review criteria, images for reviews, additional blocks \"Recommendation for purchase\" and \"Most positive/Most critical\". Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
+msgstr "Product or site review criteria, images for reviews, additional blocks \"Recommendation for purchase\" and \"Most positive/Most critical\". Developed by <a target=\"_blank\" href=\"http://cart-power.com/\">Cart-Power</a>"
+
+msgctxt "Languages::cp_attr_name"
+msgid "Attribute"
+msgstr "Attribute"
+
+msgctxt "Languages::cp_pr_apply_vars_info_hint"
+msgid "For all child variations, set the value of the \"Reviews\" setting from the main variation of the product"
+msgstr "For all child variations, set the value of the \"Reviews\" setting from the main variation of the product"
+
+msgctxt "Languages::cp_pr_select_store"
+msgid "To display select a storefront"
+msgstr "To display select a storefront"
+
+msgctxt "Languages::cp_pr_product_variant"
+msgid "Product variant"
+msgstr "Product variant"
+
+msgctxt "Languages::cp_pr_replace_meta_attr_for_vars"
+msgid "Replace meta data and reviews type for child variations"
+msgstr "Replace meta data and reviews type for child variations"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_total_posts"
+msgid "Show total reviews on product lists"
+msgstr "Show total reviews on product lists"
+
+msgctxt "SettingsOptions::cp_power_reviews::common_for_variations"
+msgid "Reviews for variations"
+msgstr "Reviews for variations"
+
+msgctxt "SettingsVariants::cp_power_reviews::common_for_variations::N"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "SettingsVariants::cp_power_reviews::common_for_variations::Y"
+msgid "Common reviews for all variations"
+msgstr "Common reviews for all variations"
+
+msgctxt "SettingsVariants::cp_power_reviews::common_for_variations::S"
+msgid "Separate reviews for each variation"
+msgstr "Separate reviews for each variation"
+
+msgctxt "SettingsVariants::cp_power_reviews::common_for_variations::NS"
+msgid "Default with the link to variation"
+msgstr "Default with the link to variation"
+
+msgctxt "Languages::cp_pr_default_product_reviews_disabled"
+msgid "Attention: The default \"Product Reviews\" add-on has been disabled as it is not compatible with the \"Cart-Power: Power reviews\" add-on"
+msgstr "Attention: The default \"Product Reviews\" add-on has been disabled as it is not compatible with the \"Cart-Power: Power reviews\" add-on"
+
+msgctxt "Languages::cp_pr_object_name_txt"
+msgid "Object name"
+msgstr "Object name"
+
+msgctxt "SettingsOptions::cp_power_reviews::split_storefronts"
+msgid "Split reviews by storefront"
+msgstr "Split reviews by storefront"
+
+msgctxt "Languages::cp_pr_storefront_txt"
+msgid "Storefront"
+msgstr "Storefront"
+
+msgctxt "Languages::cp_pr_n_reviews"
+msgid "[n] review|[n] reviews"
+msgstr "[n] review|[n] reviews"
+
+msgctxt "Languages::cp_pl_object_reviews_name"
+msgid "Object reviews name"
+msgstr "Object reviews name"
+
+msgctxt "Languages::cp_pl_reviews_total_count"
+msgid "Total reviews count"
+msgstr "Total reviews count"
+
+msgctxt "Languages::cp_pr_import_reviews_descr"
+msgid "Only reviews created after installing the add-on \"Product reviews\" will be imported"
+msgstr "Only reviews created after installing the add-on \"Product reviews\" will be imported"
+
+msgctxt "Languages::cp_pr_reviews_was_inported"
+msgid "Reviews were successfully imported"
+msgstr "Reviews were successfully imported"
+
+msgctxt "Languages::cp_pr_import_default_reviews"
+msgid "Importing from \"Product reviews\""
+msgstr "Importing from \"Product reviews\""
+
+msgctxt "Languages::cp_pr_import_txt"
+msgid "Import"
+msgstr "Import"
+
+msgctxt "Languages::cp_pr_import_from_default_prod_rev"
+msgid "Import reviews from add-on \"Product reviews\", the add-on should be installed"
+msgstr "Import reviews from add-on \"Product reviews\", the add-on should be installed"
+
+msgctxt "Languages::cp_pr_reviews_type"
+msgid "Reviews about"
+msgstr "Reviews about"
+
+msgctxt "Languages::cp_reviews_page_seo"
+msgid "All reviews page SEO"
+msgstr "All reviews page SEO"
+
+msgctxt "Languages::cp_pr_seo_reviews_page"
+msgid "All reviews page SEO URL format"
+msgstr "All reviews page SEO URL format"
+
+msgctxt "Languages::cp_pr_review_was_deleted_by_user"
+msgid "This review was deleted by the user"
+msgstr "This review was deleted by the user"
+
+msgctxt "Languages::cp_pr_you_cand_edit_this_review"
+msgid "You don\'t have permissions to do this"
+msgstr "You don\'t have permissions to do this"
+
+msgctxt "SettingsOptions::cp_power_reviews::editing"
+msgid "Reviews editing"
+msgstr "Reviews editing"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_review_e"
+msgid "Allow editing reviews"
+msgstr "Allow editing reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_review_d"
+msgid "Allow to delete reviews"
+msgstr "Allow to delete reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::minutes_for_editing"
+msgid "Time to edit reviews (minutes)"
+msgstr "Time to edit reviews (minutes)"
+
+msgctxt "SettingsTooltips::cp_power_reviews::minutes_for_editing"
+msgid "Users can edit their reviews till the administrator approves the review if the editing time is not up. Set 0 not to limit the editing time"
+msgstr "Users can edit their reviews till the administrator approves the review if the editing time is not up. Set 0 not to limit the editing time"
+
+msgctxt "Languages::cp_pr_this_image_will_be_deleted"
+msgid "This photo will be deleted"
+msgstr "This photo will be deleted"
+
+msgctxt "Languages::cp_pr_review_about"
+msgid "Review about"
+msgstr "Review about"
+
+msgctxt "Languages::cp_pr_my_reviews"
+msgid "My reviews"
+msgstr "My reviews"
+
+msgctxt "Languages::cp_pr_with_photos"
+msgid "With photos"
+msgstr "With photos"
+
+msgctxt "SettingsOptions::cp_power_reviews::required_title"
+msgid "Post title is mandatory field"
+msgstr "Post title is mandatory field"
+
+msgctxt "SettingsOptions::cp_power_reviews::required_title_cat"
+msgid "Post title is mandatory field"
+msgstr "Post title is mandatory field"
+
+msgctxt "SettingsOptions::cp_power_reviews::required_title_page"
+msgid "Post title is mandatory field"
+msgstr "Post title is mandatory field"
+
+msgctxt "SettingsOptions::cp_power_reviews::required_title_test"
+msgid "Post title is mandatory field"
+msgstr "Post title is mandatory field"
+
+msgctxt "SettingsOptions::cp_power_reviews::required_title_vend"
+msgid "Post title is mandatory field"
+msgstr "Post title is mandatory field"
+
+msgctxt "SettingsOptions::cp_power_reviews::adv_disv_required"
+msgid "Advantages and disadvantages are mandatory fields"
+msgstr "Advantages and disadvantages are mandatory fields"
+
+msgctxt "SettingsOptions::cp_power_reviews::adv_disv_required_cat"
+msgid "Advantages and disadvantages are mandatory fields"
+msgstr "Advantages and disadvantages are mandatory fields"
+
+msgctxt "SettingsOptions::cp_power_reviews::adv_disv_required_page"
+msgid "Advantages and disadvantages are mandatory fields"
+msgstr "Advantages and disadvantages are mandatory fields"
+
+msgctxt "SettingsOptions::cp_power_reviews::adv_disv_required_test"
+msgid "Advantages and disadvantages are mandatory fields"
+msgstr "Advantages and disadvantages are mandatory fields"
+
+msgctxt "SettingsOptions::cp_power_reviews::adv_disv_required_vend"
+msgid "Advantages and disadvantages are mandatory fields"
+msgstr "Advantages and disadvantages are mandatory fields"
+
+msgctxt "Languages::cp_pr_not_selected"
+msgid "Not selected"
+msgstr "Not selected"
+
+msgctxt "Languages::cp_pr_anonym_customer"
+msgid "Anonymous customer"
+msgstr "Anonymous customer"
+
+msgctxt "Languages::cp_pr_view_reviews"
+msgid "View reviews"
+msgstr "View reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allo_anonymous"
+msgid "Allow anonymous reviews"
+msgstr "Allow anonymous reviews"
+
+msgctxt "Languages::cp_pr_see_descr_and_photo"
+msgid "Description and photos"
+msgstr "Description and photos"
+
+msgctxt "Languages::cp_pr_read_full"
+msgid "Read more"
+msgstr "Read more"
+
+msgctxt "Languages::cp_pr_use_this_other"
+msgid "Want to Share Your Impressions?"
+msgstr "Want to Share Your Impressions?"
+
+msgctxt "Languages::cp_pr_before_review_btn_other"
+msgid "We will be grateful if you leave a review, it may be useful to other users of our site"
+msgstr "We will be grateful if you leave a review, it may be useful to other users of our site"
+
+msgctxt "Languages::cp_pr_use_this_blog"
+msgid "Do you like the article?"
+msgstr "Do you like the article?"
+
+msgctxt "Languages::cp_pr_before_review_btn_blog"
+msgid "Share your impressions with other readers"
+msgstr "Share your impressions with other readers"
+
+msgctxt "Languages::cp_pr_use_this_test"
+msgid "Are you already our client?"
+msgstr "Are you already our client?"
+
+msgctxt "Languages::cp_pr_before_review_btn_test"
+msgid "We would be grateful if you share your impressions of our work, it will help us to get better"
+msgstr "We would be grateful if you share your impressions of our work, it will help us to get better"
+
+msgctxt "Languages::cp_pr_before_review_btn_vend"
+msgid "Share your experience and impression, it will help others to make the right choice"
+msgstr "Share your experience and impression, it will help others to make the right choice"
+
+msgctxt "Languages::cp_pr_use_this_vendor"
+msgid "Ordered anything from this vendor?"
+msgstr "Ordered anything from this vendor?"
+
+msgctxt "Languages::cp_pr_show_all"
+msgid "Show all"
+msgstr "Show all"
+
+msgctxt "Languages::cp_pr_this_product"
+msgid "this product"
+msgstr "this product"
+
+msgctxt "Languages::cp_pr_this_vendor"
+msgid "this vendor"
+msgstr "this vendor"
+
+msgctxt "Languages::cp_pr_nobody_recommended_yet"
+msgid "Nobody recommended yet"
+msgstr "Nobody recommended yet"
+
+msgctxt "Languages::cp_pr_n_customers"
+msgid "Rated by [n] customer|Rated by [n] customers"
+msgstr "Rated by [n] customer|Rated by [n] customers"
+
+msgctxt "Languages::cp_pr_use_this_product"
+msgid "Any Experience With This product?"
+msgstr "Any Experience With This product?"
+
+msgctxt "Languages::cp_pr_before_review_btn"
+msgid "Share it with others to help them make the right choice"
+msgstr "Share it with others to help them make the right choice"
+
+msgctxt "Languages::cp_pr_n_stars"
+msgid "[n] star|[n] stars"
+msgstr "[n] star|[n] stars"
+
+msgctxt "Languages::cp_prod_reviews"
+msgid "Products reviews"
+msgstr "Products reviews"
+
+msgctxt "Languages::cp_test_reviews"
+msgid "Testimonials"
+msgstr "Testimonials"
+
+msgctxt "Languages::cp_all_reviews"
+msgid "All reviews page"
+msgstr "All reviews page"
+
+msgctxt "SettingsOptions::cp_power_reviews::product_sitemap_setting"
+msgid "Sitemap settings (for Google Sitemap XML)"
+msgstr "Sitemap settings (for Google Sitemap XML)"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_product_reviews"
+msgid "Include in sitemap"
+msgstr "Include in sitemap"
+
+msgctxt "SettingsOptions::cp_power_reviews::product_reviews_change"
+msgid "Update frequency"
+msgstr "Update frequency"
+
+msgctxt "SettingsOptions::cp_power_reviews::product_reviews_priority"
+msgid "Priority"
+msgstr "Priority"
+
+msgctxt "SettingsOptions::cp_power_reviews::test_sitemap_setting"
+msgid "Sitemap settings (for Google Sitemap XML)"
+msgstr "Sitemap settings (for Google Sitemap XML)"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_test_reviews"
+msgid "Include in sitemap"
+msgstr "Include in sitemap"
+
+msgctxt "SettingsOptions::cp_power_reviews::test_reviews_change"
+msgid "Update frequency"
+msgstr "Update frequency"
+
+msgctxt "SettingsOptions::cp_power_reviews::test_reviews_priority"
+msgid "Priority"
+msgstr "Priority"
+
+msgctxt "SettingsOptions::cp_power_reviews::all_sitemap_setting"
+msgid "Sitemap settings (for Google Sitemap XML)"
+msgstr "Sitemap settings (for Google Sitemap XML)"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_all_reviews"
+msgid "Include in sitemap"
+msgstr "Include in sitemap"
+
+msgctxt "SettingsOptions::cp_power_reviews::all_reviews_change"
+msgid "Update frequency"
+msgstr "Update frequency"
+
+msgctxt "SettingsOptions::cp_power_reviews::all_reviews_priority"
+msgid "Priority"
+msgstr "Priority"
+
+msgctxt "Languages::cp_pr_store_review_cp"
+msgid "CP: Store reviews"
+msgstr "CP: Store reviews"
+
+msgctxt "Languages::cp_pr_h1_title"
+msgid "H1 tag"
+msgstr "H1 tag"
+
+msgctxt "Languages::cp_pr_below_mid"
+msgid "Below the average"
+msgstr "Below the average"
+
+msgctxt "Languages::cp_pr_above_mid"
+msgid "Above the average"
+msgstr "Above the average"
+
+msgctxt "Languages::cp_pr_seo_for_reviews"
+msgid "SEO for reviews"
+msgstr "SEO for reviews"
+
+msgctxt "Languages::cp_pr_reviews_settings"
+msgid "CP: Reviews settings"
+msgstr "CP: Reviews settings"
+
+msgctxt "Languages::cp_pr_review_answer"
+msgid "The answer on a review"
+msgstr "The answer on a review"
+
+msgctxt "Languages::cp_pr_reply_to_review"
+msgid "Reply to review"
+msgstr "Reply to review"
+
+msgctxt "Languages::cp_pr_review_video"
+msgid "Review video"
+msgstr "Review video"
+
+msgctxt "Languages::cp_pr_add_review"
+msgid "Add a review"
+msgstr "Add a review"
+
+msgctxt "Languages::cp_pr_video_preview"
+msgid "Video preview image"
+msgstr "Video preview image"
+
+msgctxt "Languages::cp_pr_photo_video"
+msgid "Photo and video materials"
+msgstr "Photo and video materials"
+
+msgctxt "Languages::cp_pr_photo_mats"
+msgid "Photo materials"
+msgstr "Photo materials"
+
+msgctxt "Languages::cp_pr_video_mats"
+msgid "Video materials"
+msgstr "Video materials"
+
+msgctxt "Languages::cp_pr_is_mandatory"
+msgid "Mandatory"
+msgstr "Mandatory"
+
+msgctxt "Languages::cp_pr_common_rating"
+msgid "Overall rating"
+msgstr "Overall rating"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_usage"
+msgid "Allow selecting usage experience"
+msgstr "Allow selecting usage experience"
+
+msgctxt "Languages::cp_pr_experience"
+msgid "Usage experience"
+msgstr "Usage experience"
+
+msgctxt "Languages::cp_pr_experience_w"
+msgid "Less than month"
+msgstr "Less than month"
+
+msgctxt "Languages::cp_pr_experience_m"
+msgid "Few months"
+msgstr "Few months"
+
+msgctxt "Languages::cp_pr_experience_y"
+msgid "More than year"
+msgstr "More than year"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_more"
+msgid "Type for \"Show more\""
+msgstr "Type for \"Show more\""
+
+msgctxt "SettingsVariants::cp_power_reviews::show_more::btn"
+msgid "Button"
+msgstr "Button"
+
+msgctxt "SettingsVariants::cp_power_reviews::show_more::txt"
+msgid "Text"
+msgstr "Text"
+
+msgctxt "Languages::cp_pr_limits_min_txt"
+msgid "Minimum"
+msgstr "Minimum"
+
+msgctxt "Languages::cp_pr_limits_mid_txt"
+msgid "Middle"
+msgstr "Middle"
+
+msgctxt "Languages::cp_pr_limits_max_txt"
+msgid "Maximun"
+msgstr "Maximun"
+
+msgctxt "Languages::cp_pr_default_txt"
+msgid "Default"
+msgstr "Default"
+
+msgctxt "Languages::cp_pr_extremum_txt"
+msgid "Extremum"
+msgstr "Extremum"
+
+msgctxt "Languages::cp_pr_view_type"
+msgid "Attribute display style"
+msgstr "Attribute display style"
+
+msgctxt "Languages::cp_pr_seo_review_type"
+msgid "Reviews page SEO URL format"
+msgstr "Reviews page SEO URL format"
+
+msgctxt "Languages::cp_pr_seo_tab"
+msgid "Cart-Power: Power Reviews"
+msgstr "Cart-Power: Power Reviews"
+
+msgctxt "Languages::cp_show_view_all_btn"
+msgid "Show \"All reviews\" button"
+msgstr "Show \"All reviews\" button"
+
+msgctxt "Languages::cp_take_from_cur_vendor"
+msgid "Reviews from the current vendor"
+msgstr "Reviews from the current vendor"
+
+msgctxt "Languages::cp_pr_show_review_btn"
+msgid "Show button \"Write a review\""
+msgstr "Show button \"Write a review\""
+
+msgctxt "Languages::cp_from_cur_oject_type"
+msgid "Object for reviews"
+msgstr "Object for reviews"
+
+msgctxt "Languages::cp_pr_power_blog"
+msgid "Reviews from CP: Power Blog"
+msgstr "Reviews from CP: Power Blog"
+
+msgctxt "Languages::cp_pr_filter_by_articles"
+msgid "Filter by articles"
+msgstr "Filter by articles"
+
+msgctxt "Languages::cp_take_from_cur_page"
+msgid "Reviews from the current page/article"
+msgstr "Reviews from the current page/article"
+
+msgctxt "Languages::prod_reviews_from_current_object"
+msgid "Product reviews from the current object"
+msgstr "Product reviews from the current object"
+
+msgctxt "Languages::cp_pr_recommend_qu"
+msgid "Recommend?"
+msgstr "Recommend?"
+
+msgctxt "Languages::cp_pr_action_txt"
+msgid "Action"
+msgstr "Action"
+
+msgctxt "Languages::cp_pr_recommends_manage"
+msgid "CP: Recommendations for purchase"
+msgstr "CP: Recommendations for purchase"
+
+msgctxt "Languages::cp_pr_customer_images"
+msgid "Images from customers"
+msgstr "Images from customers"
+
+msgctxt "Languages::cp_pr_lang_for_sitemap"
+msgid "CP: Power Reviews"
+msgstr "CP: Power Reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::slider_image_size"
+msgid "Image size in slider"
+msgstr "Image size in slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::slider_image_size_cat"
+msgid "Image size in slider"
+msgstr "Image size in slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::slider_image_size_page"
+msgid "Image size in slider"
+msgstr "Image size in slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::slider_image_size_test"
+msgid "Image size in slider"
+msgstr "Image size in slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::slider_image_size_vend"
+msgid "Image size in slider"
+msgstr "Image size in slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_videos"
+msgid "Include videos to slider"
+msgstr "Include videos to slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_videos_cat"
+msgid "Include videos to slider"
+msgstr "Include videos to slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_videos_page"
+msgid "Include videos to slider"
+msgstr "Include videos to slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_videos_test"
+msgid "Include videos to slider"
+msgstr "Include videos to slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::include_videos_vend"
+msgid "Include videos to slider"
+msgstr "Include videos to slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_slider"
+msgid "Show slider for images"
+msgstr "Show slider for images"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_limit"
+msgid "Images for slider"
+msgstr "Images for slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_qty"
+msgid "Slider item quantity"
+msgstr "Slider item quantity"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_slider_cat"
+msgid "Show slider for images"
+msgstr "Show slider for images"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_limit_cat"
+msgid "Images for slider"
+msgstr "Images for slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_qty_cat"
+msgid "Slider item quantity"
+msgstr "Slider item quantity"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_slider_page"
+msgid "Show slider for images"
+msgstr "Show slider for images"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_limit_page"
+msgid "Images for slider"
+msgstr "Images for slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_qty_page"
+msgid "Slider item quantity"
+msgstr "Slider item quantity"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_slider_test"
+msgid "Show slider for images"
+msgstr "Show slider for images"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_limit_test"
+msgid "Images for slider"
+msgstr "Images for slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_qty_test"
+msgid "Slider item quantity"
+msgstr "Slider item quantity"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_slider_vend"
+msgid "Show slider for images"
+msgstr "Show slider for images"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_limit_vend"
+msgid "Images for slider"
+msgstr "Images for slider"
+
+msgctxt "SettingsOptions::cp_power_reviews::image_slider_qty_vend"
+msgid "Slider item quantity"
+msgstr "Slider item quantity"
+
+msgctxt "SettingsOptions::cp_power_reviews::sitemap_settings"
+msgid "Reviews settings (for CP: Extended Sitemap XML)"
+msgstr "Reviews settings (for CP: Extended Sitemap XML)"
+
+msgctxt "SettingsOptions::cp_power_reviews::with_reviews"
+msgid "With reviews only"
+msgstr "With reviews only"
+
+msgctxt "SettingsOptions::cp_power_reviews::objects_for_sitemap"
+msgid "Objects for sitemap"
+msgstr "Objects for sitemap"
+
+msgctxt "Languages::cp_pr_page_txt"
+msgid "page"
+msgstr "page"
+
+msgctxt "Languages::cp_pr_blogs_text"
+msgid "Articles"
+msgstr "Articles"
+
+msgctxt "Languages::cp_pr_article_txt"
+msgid "article"
+msgstr "article"
+
+msgctxt "Languages::cp_pr_vendor_txt"
+msgid "vendor"
+msgstr "vendor"
+
+msgctxt "Languages::cp_pr_product_txt"
+msgid "product"
+msgstr "product"
+
+msgctxt "Languages::cp_pr_category_txt"
+msgid "category"
+msgstr "category"
+
+msgctxt "Languages::cp_pr_all_reviews_about"
+msgid "Reviews about [object]"
+msgstr "Reviews about [object]"
+
+msgctxt "Languages::cp_pr_all_reviews_block"
+msgid "CP: All reviews"
+msgstr "CP: All reviews"
+
+msgctxt "Languages::cp_pr_object_reviews_block"
+msgid "CP: Object reviews page"
+msgstr "CP: Object reviews page"
+
+msgctxt "Languages::cp_pr_reviews_txt"
+msgid "Reviews"
+msgstr "Reviews"
+
+msgctxt "Languages::cp_pr_get_youtube_preview"
+msgid "Get YouTube preview image"
+msgstr "Get YouTube preview image"
+
+msgctxt "Languages::cp_pr_upload_preview_text"
+msgid "With the selected setting, after clicking the 'Save' button, the downloaded preview from the youtube server will be downloaded. There may be no preview for the current video, in which case an error notification will be displayed"
+msgstr "With the selected setting, after clicking the 'Save' button, the downloaded preview from the youtube server will be downloaded. There may be no preview for the current video, in which case an error notification will be displayed"
+
+msgctxt "Languages::cp_pr_preview_txt"
+msgid "Preview"
+msgstr "Preview"
+
+msgctxt "Languages::cp_pr_add_video"
+msgid "Add video"
+msgstr "Add video"
+
+msgctxt "Languages::cp_pr_youtube_id"
+msgid "YouTube ID"
+msgstr "YouTube ID"
+
+msgctxt "Languages::cp_pr_youtube_id_tooltip"
+msgid "<strong>How to get a YouTube video ID from a youtube.com page URL</strong><br/>The video ID will be in the URL of the page, right after the v=.<br/>For example: <span style=\"word-break: break-word;\">https://www.youtube.com/watch?v=abcdefg</span>. Therefore, the ID of the video is <strong>abcdefg</strong>.<br/><strong>How to get a YouTube video ID from a youtu.be short URL</strong><br/>In this case, the URL of the video is: https://youtu.be/<strong>abcdefg</strong>. Therefore, the ID of the video is <strong>abcdefg</strong>"
+msgstr "<strong>How to get a YouTube video ID from a youtube.com page URL</strong><br/>The video ID will be in the URL of the page, right after the v=.<br/>For example: <span style=\"word-break: break-word;\">https://www.youtube.com/watch?v=abcdefg</span>. Therefore, the ID of the video is <strong>abcdefg</strong>.<br/><strong>How to get a YouTube video ID from a youtu.be short URL</strong><br/>In this case, the URL of the video is: https://youtu.be/<strong>abcdefg</strong>. Therefore, the ID of the video is <strong>abcdefg</strong>"
+
+msgctxt "Languages::cp_pr_vendor_products"
+msgid "Products reviews from the current vendor"
+msgstr "Products reviews from the current vendor"
+
+msgctxt "Languages::cp_pr_set_purchase_status"
+msgid "Check reviews for verified purchase status"
+msgstr "Check reviews for verified purchase status"
+
+msgctxt "Languages::cp_pr_message_height"
+msgid "Message height"
+msgstr "Message height"
+
+msgctxt "Languages::cp_pr_comment_txt"
+msgid "Comment"
+msgstr "Comment"
+
+msgctxt "Languages::cp_pr_out_of"
+msgid "out of"
+msgstr "out of"
+
+msgctxt "Languages::cp_pr_show_msg_title"
+msgid "Show message title"
+msgstr "Show message title"
+
+msgctxt "Languages::cp_pr_show_adv"
+msgid "Show advantages and disadvantages"
+msgstr "Show advantages and disadvantages"
+
+msgctxt "Languages::cp_pr_verified_purchase"
+msgid "Verified purchase"
+msgstr "Verified purchase"
+
+msgctxt "Languages::cp_pr_not_verified_purchase"
+msgid "Not verified purchase"
+msgstr "Not verified purchase"
+
+msgctxt "Languages::cp_pr_title_label"
+msgid "Post title"
+msgstr "Post title"
+
+msgctxt "Languages::ttc_cp_pr_title_label"
+msgid "Short title of your post"
+msgstr "Short title of your post"
+
+msgctxt "Languages::cp_pr_advantages"
+msgid "Advantages"
+msgstr "Advantages"
+
+msgctxt "Languages::cp_pr_disadvantages"
+msgid "Disadvantages"
+msgstr "Disadvantages"
+
+msgctxt "Languages::cp_pr_remove_from_selected"
+msgid "Remove from selected"
+msgstr "Remove from selected"
+
+msgctxt "Languages::add_reviews_and_close"
+msgid "Add reiews and close"
+msgstr "Add reiews and close"
+
+msgctxt "Languages::cp_take_from_sub_cat"
+msgid "Consider subcategories"
+msgstr "Consider subcategories"
+
+msgctxt "Languages::cp_pr_apply_action"
+msgid "Apply action"
+msgstr "Apply action"
+
+msgctxt "Languages::cp_pr_usual"
+msgid "Apply to selected"
+msgstr "Apply to selected"
+
+msgctxt "Languages::cp_pr_add_to_all"
+msgid "Apply to all"
+msgstr "Apply to all"
+
+msgctxt "Languages::cp_pr_remove_from_all"
+msgid "Delete from all"
+msgstr "Delete from all"
+
+msgctxt "Languages::cp_take_from_cur_cat"
+msgid "Take product reviews from current category"
+msgstr "Take product reviews from current category"
+
+msgctxt "Languages::cp_pr_about"
+msgid "about"
+msgstr "about"
+
+msgctxt "Languages::cp_take_from_vendors"
+msgid "Take posts from vendors products"
+msgstr "Take posts from vendors products"
+
+msgctxt "Languages::cp_pr_for_smarty"
+msgid "For smarty block"
+msgstr "For smarty block"
+
+msgctxt "Languages::cp_pr_site_link"
+msgid "Link on page"
+msgstr "Link on page"
+
+msgctxt "Languages::cp_use_link_in_menu"
+msgid "To use link in menu (dispatch)"
+msgstr "To use link in menu (dispatch)"
+
+msgctxt "Languages::cp_about_product"
+msgid "product"
+msgstr "product"
+
+msgctxt "Languages::cp_about_vendor"
+msgid "vendor"
+msgstr "vendor"
+
+msgctxt "SettingsOptions::cp_power_reviews::all_reviews_link"
+msgid "Link to all reviews page"
+msgstr "Link to all reviews page"
+
+msgctxt "Languages::cp_new_testimonial_post"
+msgid "New testimonial"
+msgstr "New testimonial"
+
+msgctxt "SettingsOptions::cp_power_reviews::msg_word_limit_ap"
+msgid "Word limit in message for \"Show more\""
+msgstr "Word limit in message for \"Show more\""
+
+msgctxt "Languages::cp_pr_all_reviews"
+msgid "All reviews"
+msgstr "All reviews"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_ap::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_ap::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_ap::most_h"
+msgid "Most positive"
+msgstr "Most positive"
+
+msgctxt "SettingsOptions::cp_power_reviews::general_cat"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsOptions::cp_power_reviews::general_page"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsOptions::cp_power_reviews::general_vend"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsOptions::cp_power_reviews::general_test"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsOptions::cp_power_reviews::general_ap"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_cat"
+msgid "Likes/dislikes for reviews"
+msgstr "Likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_page"
+msgid "Likes/dislikes for reviews"
+msgstr "Likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_vend"
+msgid "Likes/dislikes for reviews"
+msgstr "Likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_test"
+msgid "Likes/dislikes for reviews"
+msgstr "Likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes_ap"
+msgid "Likes/dislikes for reviews"
+msgstr "Likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images_cat"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images_page"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images_vend"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images_test"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images_ap"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::recom_block_cat"
+msgid "Block \"Recommendation for purchase\""
+msgstr "Block \"Recommendation for purchase\""
+
+msgctxt "SettingsOptions::cp_power_reviews::recom_block_page"
+msgid "Block \"Recommendation for purchase\""
+msgstr "Block \"Recommendation for purchase\""
+
+msgctxt "SettingsOptions::cp_power_reviews::recom_block_vend"
+msgid "Block \"Recommendation for purchase\""
+msgstr "Block \"Recommendation for purchase\""
+
+msgctxt "SettingsOptions::cp_power_reviews::recom_block_test"
+msgid "Block \"Recommendation for purchase\""
+msgstr "Block \"Recommendation for purchase\""
+
+msgctxt "SettingsOptions::cp_power_reviews::recom_block_ap"
+msgid "Block \"Recommendation for purchase\""
+msgstr "Block \"Recommendation for purchase\""
+
+msgctxt "SettingsOptions::cp_power_reviews::mosts_block_cat"
+msgid "Block \"Most positive/Most critical\""
+msgstr "Block \"Most positive/Most critical\""
+
+msgctxt "SettingsOptions::cp_power_reviews::mosts_block_page"
+msgid "Block \"Most positive/Most critical\""
+msgstr "Block \"Most positive/Most critical\""
+
+msgctxt "SettingsOptions::cp_power_reviews::mosts_block_vend"
+msgid "Block \"Most positive/Most critical\""
+msgstr "Block \"Most positive/Most critical\""
+
+msgctxt "SettingsOptions::cp_power_reviews::mosts_block_test"
+msgid "Block \"Most positive/Most critical\""
+msgstr "Block \"Most positive/Most critical\""
+
+msgctxt "SettingsOptions::cp_power_reviews::mosts_block_ap"
+msgid "Block \"Most positive/Most critical\""
+msgstr "Block \"Most positive/Most critical\""
+
+msgctxt "SettingsOptions::cp_power_reviews::barrier_for_positive_ap"
+msgid "Barrier for positive reviews"
+msgstr "Barrier for positive reviews"
+
+msgctxt "SettingsTooltips::cp_power_reviews::barrier_for_positive_ap"
+msgid "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+msgstr "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_most_posts_ap"
+msgid "View"
+msgstr "View"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_most_bl_ap"
+msgid "Show block"
+msgstr "Show block"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post_ap"
+msgid "Show images in posts"
+msgstr "Show images in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_most_help_block_ap"
+msgid "Show most helpful block"
+msgstr "Show most helpful block"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_ld_ap"
+msgid "Allow likes/dislikes for reviews"
+msgstr "Allow likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_ap_message_answer"
+msgid "Show answer to post"
+msgstr "Show answer to post"
+
+msgctxt "SettingsSections::cp_power_reviews::all_reviews"
+msgid "All reviews"
+msgstr "All reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::objects_for_all"
+msgid "Objects"
+msgstr "Objects"
+
+msgctxt "SettingsVariants::cp_power_reviews::objects_for_all::all"
+msgid "All"
+msgstr "All"
+
+msgctxt "SettingsVariants::cp_power_reviews::objects_for_all::p"
+msgid "Products"
+msgstr "Products"
+
+msgctxt "SettingsVariants::cp_power_reviews::objects_for_all::c"
+msgid "Categories"
+msgstr "Categories"
+
+msgctxt "SettingsVariants::cp_power_reviews::objects_for_all::a"
+msgid "Pages"
+msgstr "Pages"
+
+msgctxt "SettingsVariants::cp_power_reviews::objects_for_all::e"
+msgid "Testimonials"
+msgstr "Testimonials"
+
+msgctxt "SettingsVariants::cp_power_reviews::objects_for_all::m"
+msgid "Vendors"
+msgstr "Vendors"
+
+msgctxt "Languages::cp_filter_by_vendors"
+msgid "Filter by vendors"
+msgstr "Filter by vendors"
+
+msgctxt "Languages::cp_last_days"
+msgid "Last days"
+msgstr "Last days"
+
+msgctxt "Languages::cp_pr_categories"
+msgid "Categories reviews"
+msgstr "Categories reviews"
+
+msgctxt "Languages::cp_pr_vendors"
+msgid "Vendors reviews"
+msgstr "Vendors reviews"
+
+msgctxt "Languages::cp_pr_reviews"
+msgid "Products reviews (manually)"
+msgstr "Products reviews (manually)"
+
+msgctxt "Languages::cp_pr_pages"
+msgid "Pages reviews"
+msgstr "Pages reviews"
+
+msgctxt "Languages::cp_pr_testimonials"
+msgid "Testimonials"
+msgstr "Testimonials"
+
+msgctxt "Languages::cp_sort_newest"
+msgid "Newest first"
+msgstr "Newest first"
+
+msgctxt "Languages::show_review_attrs"
+msgid "Show reviews attributes"
+msgstr "Show reviews attributes"
+
+msgctxt "Languages::block_cp_prev_power_reviews_description"
+msgid "Show reviews on storefront"
+msgstr "Show reviews on storefront"
+
+msgctxt "Languages::cp_pr_power_rev_docs"
+msgid "Documentation"
+msgstr "Documentation"
+
+msgctxt "SettingsOptions::cp_power_reviews::reviews_design"
+msgid "Design of reviews"
+msgstr "Design of reviews"
+
+msgctxt "SettingsVariants::cp_power_reviews::reviews_design::classic"
+msgid "Classic"
+msgstr "Classic"
+
+msgctxt "SettingsVariants::cp_power_reviews::reviews_design::modern"
+msgid "Modern"
+msgstr "Modern"
+
+msgctxt "SettingsOptions::cp_power_reviews::appearance"
+msgid "Appearance"
+msgstr "Appearance"
+
+msgctxt "SettingsOptions::cp_power_reviews::general"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsOptions::cp_power_reviews::likes_dislikes"
+msgid "Likes/dislikes for reviews"
+msgstr "Likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::recom_block"
+msgid "Block \"Recommendation for purchase\""
+msgstr "Block \"Recommendation for purchase\""
+
+msgctxt "SettingsOptions::cp_power_reviews::mosts_block"
+msgid "Block \"Most positive/Most critical\""
+msgstr "Block \"Most positive/Most critical\""
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_ld"
+msgid "Allow likes/dislikes for reviews"
+msgstr "Allow likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_ld_test"
+msgid "Allow likes/dislikes for reviews"
+msgstr "Allow likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_ld_vend"
+msgid "Allow likes/dislikes for reviews"
+msgstr "Allow likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_ld_cat"
+msgid "Allow likes/dislikes for reviews"
+msgstr "Allow likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_ld_page"
+msgid "Allow likes/dislikes for reviews"
+msgstr "Allow likes/dislikes for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_recom"
+msgid "Allow to recommend product"
+msgstr "Allow to recommend product"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_recom_vend"
+msgid "Allow to recommend vendor"
+msgstr "Allow to recommend vendor"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_most_bl"
+msgid "Show block"
+msgstr "Show block"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_most_bl_cat"
+msgid "Show block"
+msgstr "Show block"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_most_bl_vend"
+msgid "Show block"
+msgstr "Show block"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_most_bl_page"
+msgid "Show block"
+msgstr "Show block"
+
+msgctxt "Languages::cp_pr_no_review_msg"
+msgid "No review"
+msgstr "No review"
+
+msgctxt "Languages::cp_pr_see_all_positive"
+msgid "See all [amount] positive reviews"
+msgstr "All [amount] positive reviews"
+
+msgctxt "Languages::cp_pr_see_all_critical"
+msgid "See all [amount] critical reviews"
+msgstr "All [amount] critical reviews"
+
+msgctxt "Languages::cp_pr_does_it_helps"
+msgid "Was this review helpful?"
+msgstr "Was this review helpful?"
+
+msgctxt "Languages::cp_pr_most_positive"
+msgid "Most positive"
+msgstr "Most positive"
+
+msgctxt "Languages::cp_pr_most_helpfull"
+msgid "Most helpful"
+msgstr "Most helpful"
+
+msgctxt "Languages::cp_pr_most_unhelpfull"
+msgid "Most critical"
+msgstr "Most critical"
+
+msgctxt "Languages::cp_pr_recomend_purch"
+msgid "Recommendation for purchase"
+msgstr "Recommendation for purchase"
+
+msgctxt "Languages::cp_pr_based_on"
+msgid "Based on [n] recommendation|Based on [n] recommendations|Based on [n] recommendations"
+msgstr "Based on [n] recommendation|Based on [n] recommendations|Based on [n] recommendations"
+
+msgctxt "Languages::cp_pr_you_must_log_to_recom"
+msgid "You must log in before you can recommend"
+msgstr "You must log in before you can recommend"
+
+msgctxt "Languages::cp_pr_do_you_recommend_this"
+msgid "Would you recommend this"
+msgstr "Would you recommend this"
+
+msgctxt "Languages::cp_pr_product_text"
+msgid "product"
+msgstr "product"
+
+msgctxt "Languages::cp_pr_vendor_text"
+msgid "vendor"
+msgstr "vendor"
+
+msgctxt "Languages::cp_pr_page_text"
+msgid "page"
+msgstr "page"
+
+msgctxt "Languages::cp_pr_blog_text"
+msgid "article"
+msgstr "article"
+
+msgctxt "Languages::cp_pr_yes_text"
+msgid "yes"
+msgstr "yes"
+
+msgctxt "Languages::cp_pr_no_text"
+msgid "no"
+msgstr "no"
+
+msgctxt "Languages::cp_you_already_recommend_this"
+msgid "You already recommend this"
+msgstr "You already recommend this"
+
+msgctxt "Languages::cp_pr_recommendation"
+msgid "Recommendation"
+msgstr "Recommendation"
+
+msgctxt "Languages::cp_pr_recommendation_low"
+msgid "recommendation"
+msgstr "recommendation"
+
+msgctxt "Languages::cp_pr_recommendations"
+msgid "Recommendations"
+msgstr "Recommendations"
+
+msgctxt "Languages::cp_pr_recommendations_low"
+msgid "recommendations"
+msgstr "recommendations"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_most_help_block"
+msgid "Show most helpful block"
+msgstr "Show most helpful block"
+
+msgctxt "SettingsOptions::cp_power_reviews::barrier_for_positive"
+msgid "Barrier for positive reviews"
+msgstr "Barrier for positive reviews"
+
+msgctxt "SettingsTooltips::cp_power_reviews::barrier_for_positive"
+msgid "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+msgstr "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_most_help_block_cat"
+msgid "Show most helpful block"
+msgstr "Show most helpful block"
+
+msgctxt "SettingsOptions::cp_power_reviews::barrier_for_positive_cat"
+msgid "Barrier for positive reviews"
+msgstr "Barrier for positive reviews"
+
+msgctxt "SettingsTooltips::cp_power_reviews::barrier_for_positive_cat"
+msgid "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+msgstr "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_most_help_block_page"
+msgid "Show most helpful block"
+msgstr "Show most helpful block"
+
+msgctxt "SettingsOptions::cp_power_reviews::barrier_for_positive_page"
+msgid "Barrier for positive reviews"
+msgstr "Barrier for positive reviews"
+
+msgctxt "SettingsTooltips::cp_power_reviews::barrier_for_positive_page"
+msgid "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+msgstr "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_most_help_block_vend"
+msgid "Show most helpful block"
+msgstr "Show most helpful block"
+
+msgctxt "SettingsOptions::cp_power_reviews::barrier_for_positive_vend"
+msgid "Barrier for positive reviews"
+msgstr "Barrier for positive reviews"
+
+msgctxt "SettingsTooltips::cp_power_reviews::barrier_for_positive_vend"
+msgid "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+msgstr "If the Average rating of the review is equal or above this value, then the review is considered positive, if less - negative"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_most_posts"
+msgid "View"
+msgstr "View"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts::most_h"
+msgid "Most positive"
+msgstr "Most positive"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts::most_u"
+msgid "Most critical"
+msgstr "Most critical"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_most_posts_cat"
+msgid "View"
+msgstr "View"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_cat::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_cat::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_cat::most_h"
+msgid "Most positive"
+msgstr "Most positive"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_cat::most_u"
+msgid "Most critical"
+msgstr "Most critical"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_most_posts_page"
+msgid "View"
+msgstr "View"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_page::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_page::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_page::most_h"
+msgid "Most positive"
+msgstr "Most positive"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_page::most_u"
+msgid "Most critical"
+msgstr "Most critical"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_most_posts_vend"
+msgid "View"
+msgstr "View"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_vend::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_vend::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_vend::most_h"
+msgid "Most positive"
+msgstr "Most positive"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_most_posts_vend::most_u"
+msgid "Most critical"
+msgstr "Most critical"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_recomend_btn"
+msgid "Who can recommend product"
+msgstr "Who can recommend product"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_btn::all"
+msgid "All"
+msgstr "All"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_btn::for_login"
+msgid "Authorised customers"
+msgstr "Authorised customers"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_recomend_btn_page"
+msgid "Who can recommend page"
+msgstr "Who can recommend page"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_btn_page::all"
+msgid "All"
+msgstr "All"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_btn_page::for_login"
+msgid "Authorised customers"
+msgstr "Authorised customers"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_recomend_btn_vend"
+msgid "Who can recommend vendor"
+msgstr "Who can recommend vendor"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_btn_vend::all"
+msgid "All"
+msgstr "All"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_btn_vend::for_login"
+msgid "Authorised customers"
+msgstr "Authorised customers"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_recomend_block"
+msgid "Type of recommendation block"
+msgstr "Type of recommendation block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block::for_all"
+msgid "For any customer"
+msgstr "For any customer"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block::for_login"
+msgid "For authorised customers"
+msgstr "For authorised customers"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_recomend_block_page"
+msgid "Type of recommendation block"
+msgstr "Type of recommendation block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block_page::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block_page::for_all"
+msgid "For any customer"
+msgstr "For any customer"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block_page::for_login"
+msgid "For authorised customers"
+msgstr "For authorised customers"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_recomend_block_vend"
+msgid "Type of recommendation block"
+msgstr "Type of recommendation block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block_vend::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block_vend::for_all"
+msgid "For any customer"
+msgstr "For any customer"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_recomend_block_vend::for_login"
+msgid "For authorised customers"
+msgstr "For authorised customers"
+
+msgctxt "Languages::cp_pr_click_to_expand"
+msgid "Click to expand"
+msgstr "Click to expand"
+
+msgctxt "SettingsSections::cp_power_reviews::categories"
+msgid "Categories"
+msgstr "Categories"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_category_page"
+msgid "Reviews appearance on category page"
+msgstr "Reviews appearance on category page"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_category_page::classic"
+msgid "Classic (slider)"
+msgstr "Classic (slider)"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_category_page::list"
+msgid "List"
+msgstr "List"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_category_page::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_average_rating_cat"
+msgid "Type of average rating for category reviews"
+msgstr "Type of average rating for category reviews"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_cat::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_cat::circle"
+msgid "Circle"
+msgstr "Circle"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_cat::stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsOptions::cp_power_reviews::ratings_type_cat"
+msgid "Style of rating"
+msgstr "Style of rating"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_cat::rate_stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_cat::bars"
+msgid "Progress bar"
+msgstr "Progress bar"
+
+msgctxt "SettingsOptions::cp_power_reviews::msg_word_limit_cat"
+msgid "Word limit in message for \"Show more\""
+msgstr "Word limit in message for \"Show more\""
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_uploader_cat"
+msgid "Allow to upload images for categories"
+msgstr "Allow to upload images for categories"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post_cat"
+msgid "Show images in posts"
+msgstr "Show images in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_rate_up_down_cat"
+msgid "Type of likes block"
+msgstr "Type of likes block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_cat::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_cat::only_up"
+msgid "Only like"
+msgstr "Only like"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_cat::only_down"
+msgid "Only dislike"
+msgstr "Only dislike"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_cat::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_border_cat"
+msgid "Show message border"
+msgstr "Show message border"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_date_cat"
+msgid "Show date of the message"
+msgstr "Show date of the message"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_answer_cat"
+msgid "Show answer to post"
+msgstr "Show answer to post"
+
+msgctxt "SettingsSections::cp_power_reviews::pages"
+msgid "Pages"
+msgstr "Pages"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_average_rating_page"
+msgid "Type of average rating for page reviews"
+msgstr "Type of average rating for page reviews"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_page::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_page::circle"
+msgid "Circle"
+msgstr "Circle"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_page::stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsOptions::cp_power_reviews::ratings_type_page"
+msgid "Style of rating"
+msgstr "Style of rating"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_page::rate_stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_page::bars"
+msgid "Progress bar"
+msgstr "Progress bar"
+
+msgctxt "SettingsOptions::cp_power_reviews::msg_word_limit_page"
+msgid "Word limit in message for \"Show more\""
+msgstr "Word limit in message for \"Show more\""
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_uploader_page"
+msgid "Allow to upload images for pages"
+msgstr "Allow to upload images for pages"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post_page"
+msgid "Show images in posts"
+msgstr "Show images in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_rate_up_down_page"
+msgid "Type of likes block"
+msgstr "Type of likes block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_page::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_page::only_up"
+msgid "Only like"
+msgstr "Only like"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_page::only_down"
+msgid "Only dislike"
+msgstr "Only dislike"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_page::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_border_page"
+msgid "Show message border"
+msgstr "Show message border"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_date_page"
+msgid "Show date of the message"
+msgstr "Show date of the message"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_answer_page"
+msgid "Show answer to post"
+msgstr "Show answer to post"
+
+msgctxt "Languages::cp_show_vend_name"
+msgid "Show company name"
+msgstr "Show company name"
+
+msgctxt "Languages::cp_pr_from_cat"
+msgid "From main category"
+msgstr "From main category"
+
+msgctxt "Languages::cp_vendor_attr_rating"
+msgid "Vendor attributes rating"
+msgstr "Vendor attributes rating"
+
+msgctxt "Languages::block_cp_vendor_attr_rating"
+msgid "Vendor attributes rating"
+msgstr "Vendor attributes rating"
+
+msgctxt "Languages::cp_visit_store"
+msgid "Visit store"
+msgstr "Visit store"
+
+msgctxt "Languages::cp_show_vend_rate"
+msgid "Show vendor rating"
+msgstr "Show vendor rating"
+
+msgctxt "Languages::cp_show_vend_btn"
+msgid "Show visit store button"
+msgstr "Show visit store button"
+
+msgctxt "Languages::cp_prod_vendor_logo_rating"
+msgid "PR: Product Vendor info"
+msgstr "PR: Product Vendor info"
+
+msgctxt "Languages::block_cp_prod_vendor_logo_rating"
+msgid "PR: Product Vendor info"
+msgstr "PR: Product Vendor info"
+
+msgctxt "Languages::cp_vendor_logo_rating"
+msgid "PR: Vendor Logo"
+msgstr "PR: Vendor Logo"
+
+msgctxt "Languages::block_cp_vendor_logo_rating"
+msgid "PR: Vendor Logo"
+msgstr "PR: Vendor Logo"
+
+msgctxt "Languages::cp_global_vend_attr"
+msgid "Global vendor attribute"
+msgstr "Global vendor attribute"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_vend_message_answer"
+msgid "Show answer to post"
+msgstr "Show answer to post"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_date_vend"
+msgid "Show date of the message"
+msgstr "Show date of the message"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_border_vend"
+msgid "Show message border"
+msgstr "Show message border"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_rate_up_down_vend"
+msgid "Type of likes block"
+msgstr "Type of likes block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_vend::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_vend::only_up"
+msgid "Only like"
+msgstr "Only like"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_vend::only_down"
+msgid "Only dislike"
+msgstr "Only dislike"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_vend::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_uploader_vend"
+msgid "Allow to upload images for vendors"
+msgstr "Allow to upload images for vendors"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post_vend"
+msgid "Show images in vendors"
+msgstr "Show images in vendors"
+
+msgctxt "SettingsOptions::cp_power_reviews::msg_word_limit_vend"
+msgid "Word limit in message for \"Show more\""
+msgstr "Word limit in message for \"Show more\""
+
+msgctxt "SettingsOptions::cp_power_reviews::ratings_type_vend"
+msgid "Style of rating"
+msgstr "Style of rating"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_vend::rate_stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_vend::bars"
+msgid "Progress bar"
+msgstr "Progress bar"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_average_rating_vend"
+msgid "Type of average rating for vendors"
+msgstr "Type of average rating for vendors"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_vend::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_vend::circle"
+msgid "Circle"
+msgstr "Circle"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_vend::stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsSections::cp_power_reviews::vendors"
+msgid "Vendors"
+msgstr "Vendors"
+
+msgctxt "Languages::cp_show_hide_answer"
+msgid "Show/hide answer"
+msgstr "Show/hide answer"
+
+msgctxt "Languages::cp_pr_apply_to_cats"
+msgid "Apply to categories"
+msgstr "Apply to categories"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_answer"
+msgid "Show answer to post"
+msgstr "Show answer to post"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_test_message_answer"
+msgid "Show answer to post"
+msgstr "Show answer to post"
+
+msgctxt "Languages::cp_dm_answered_by"
+msgid "Answered by"
+msgstr "Answered by"
+
+msgctxt "Languages::cp_order_reviews"
+msgid "Order review"
+msgstr "Order review"
+
+msgctxt "Languages::cp_pr_store_review"
+msgid "Store review"
+msgstr "Store review"
+
+msgctxt "Languages::cp_allow_rem_selected"
+msgid "Allow to send reminder to selected"
+msgstr "Allow to send reminder to selected"
+
+msgctxt "Languages::cp_allow_remaind"
+msgid "Allow send"
+msgstr "Allow send"
+
+msgctxt "Languages::cp_not_allow_rem_selected"
+msgid "Not allow to send reminder to selected"
+msgstr "Not allow to send reminder to selected"
+
+msgctxt "Languages::cp_rev_objects"
+msgid "Objects"
+msgstr "Objects"
+
+msgctxt "SettingsOptions::cp_power_reviews::add_test_to_reminder"
+msgid "Add testimonial form to reminder"
+msgstr "Add testimonial form to reminder"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_date"
+msgid "Show date of the message"
+msgstr "Show date of the message"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_date_test"
+msgid "Show date of the message"
+msgstr "Show date of the message"
+
+msgctxt "Languages::you_entered_an_empty_message"
+msgid "You entered an empty message"
+msgstr "You entered an empty message"
+
+msgctxt "Languages::cp_send_reminder"
+msgid "Send reminder"
+msgstr "Send reminder"
+
+msgctxt "Languages::cp_test_email"
+msgid "Test email"
+msgstr "Test email"
+
+msgctxt "Languages::cp_send_test_email"
+msgid "Send test email"
+msgstr "Send test email"
+
+msgctxt "Languages::filter_by_categories"
+msgid "Filter by categories"
+msgstr "Filter by categories"
+
+msgctxt "Languages::center"
+msgid "Center"
+msgstr "Center"
+
+msgctxt "Languages::middle"
+msgid "Middle"
+msgstr "Middle"
+
+msgctxt "Languages::add_reviews"
+msgid "Add reviews"
+msgstr "Add reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::single_review_product"
+msgid "Exclude product options"
+msgstr "Exclude product options"
+
+msgctxt "SettingsTooltips::cp_power_reviews::single_review_product"
+msgid "On orders feedback don't allow customers to add review for one product with different options"
+msgstr "On orders feedback don't allow customers to add review for one product with different options"
+
+msgctxt "Languages::cron_reminder_info_label"
+msgid "Cron info"
+msgstr "Cron info"
+
+msgctxt "Languages::cron_reminder_info"
+msgid "Enter <b>ONLY ONE</b> variant"
+msgstr "Enter <b>ONLY ONE</b> variant"
+
+msgctxt "Languages::cp_likes_position"
+msgid "Align of likes and dislikes"
+msgstr "Align of likes and dislikes"
+
+msgctxt "Languages::classic"
+msgid "Classic"
+msgstr "Classic"
+
+msgctxt "Languages::top"
+msgid "Top"
+msgstr "Top"
+
+msgctxt "Languages::style_of_msg_author"
+msgid "Style of message"
+msgstr "Style of message"
+
+msgctxt "Languages::transitionstyle"
+msgid "Transitionstyle"
+msgstr "Transitionstyle"
+
+msgctxt "Languages::skin"
+msgid "Skin"
+msgstr "Skin"
+
+msgctxt "Languages::pager"
+msgid "Pagination"
+msgstr "Pagination"
+
+msgctxt "Languages::fashionSkin"
+msgid "Fashion"
+msgstr "Fashion"
+
+msgctxt "Languages::iSkin"
+msgid "iSkin"
+msgstr "iSkin"
+
+msgctxt "Languages::airSkin"
+msgid "Air"
+msgstr "Air"
+
+msgctxt "Languages::gracefulSkin"
+msgid "Graceful"
+msgstr "Graceful"
+
+msgctxt "Languages::lightingSkin"
+msgid "Lighting"
+msgstr "Lighting"
+
+msgctxt "Languages::fallDown"
+msgid "fallDown"
+msgstr "fallDown"
+
+msgctxt "Languages::fallRotate"
+msgid "backSlide"
+msgstr "backSlide"
+
+msgctxt "Languages::scaleRotate"
+msgid "scaleRotate"
+msgstr "scaleRotate"
+
+msgctxt "Languages::3dflip"
+msgid "3dflip"
+msgstr "3dflip"
+
+msgctxt "Languages::scaleIn"
+msgid "scaleIn"
+msgstr "scaleIn"
+
+msgctxt "Languages::flipCenter"
+msgid "flipCenter"
+msgstr "flipCenter"
+
+msgctxt "Languages::fade"
+msgid "fade"
+msgstr "fade"
+
+msgctxt "Languages::backslide"
+msgid "backSlide"
+msgstr "backSlide"
+
+msgctxt "Languages::godown"
+msgid "goDown"
+msgstr "goDown"
+
+msgctxt "Languages::scaleup"
+msgid "scaleUp"
+msgstr "scaleUp"
+
+msgctxt "Languages::bottom"
+msgid "Bottom"
+msgstr "Bottom"
+
+msgctxt "Languages::show_object_icon"
+msgid "Show object icon"
+msgstr "Show object icon"
+
+msgctxt "Languages::stop_on_hover"
+msgid "Stop on hover"
+msgstr "Stop on hover"
+
+msgctxt "Languages::progress_bar"
+msgid "Progress bar"
+msgstr "Progress bar"
+
+msgctxt "Languages::min_height"
+msgid "Min height"
+msgstr "Min height"
+
+msgctxt "Languages::cp_sort_oldest"
+msgid "Oldest first"
+msgstr "Oldest first"
+
+msgctxt "Languages::vertical_align"
+msgid "Vertical align"
+msgstr "Vertical align"
+
+msgctxt "Languages::align"
+msgid "Align"
+msgstr "Align"
+
+msgctxt "Languages::show_border"
+msgid "Show border"
+msgstr "Show border"
+
+msgctxt "Languages::name_show_last_truncated_words"
+msgid "Show last truncated words of name"
+msgstr "Show last truncated words of name"
+
+msgctxt "Languages::show_reviews_count"
+msgid "Show reviews count"
+msgstr "Show reviews count"
+
+msgctxt "Languages::slider"
+msgid "Slider"
+msgstr "Slider"
+
+msgctxt "Languages::static"
+msgid "Static"
+msgstr "Static"
+
+msgctxt "Languages::filter_by_products"
+msgid "Filter by products"
+msgstr "Filter by products"
+
+msgctxt "Languages::filter_by_pages"
+msgid "Filter by pages"
+msgstr "Filter by pages"
+
+msgctxt "Languages::show_object_name"
+msgid "Show object name"
+msgstr "Show object name"
+
+msgctxt "Languages::truncate_object_name"
+msgid "Truncate object name"
+msgstr "Truncate object name"
+
+msgctxt "Languages::show_message"
+msgid "Show message"
+msgstr "Show message"
+
+msgctxt "Languages::truncate_message"
+msgid "Truncate message"
+msgstr "Truncate message"
+
+msgctxt "Languages::review_by"
+msgid "By"
+msgstr "By"
+
+msgctxt "Languages::review_on"
+msgid "On"
+msgstr "On"
+
+msgctxt "Languages::newest_reviews"
+msgid "Newest reviews"
+msgstr "Newest reviews"
+
+msgctxt "Languages::from_current_object"
+msgid "From current object"
+msgstr "From current object"
+
+msgctxt "Languages::cp_add_reviews"
+msgid "Add review"
+msgstr "Add review"
+
+msgctxt "Languages::block_cp_prev_power_reviews"
+msgid "CP: Power reviews"
+msgstr "CP: Power reviews"
+
+msgctxt "Languages::you_already_rate_this_review"
+msgid "You already rated this review"
+msgstr "You already rated this review"
+
+msgctxt "Languages::cp_global_prod_attr"
+msgid "Global product attribute"
+msgstr "Global product attribute"
+
+msgctxt "Languages::cp_testimonails_glob_attr"
+msgid "Global testimonials attribute"
+msgstr "Global testimonials attribute"
+
+msgctxt "Languages::cp_add_images"
+msgid "Add images"
+msgstr "Add images"
+
+msgctxt "Languages::rating_show_type"
+msgid "Style of rating"
+msgstr "Style of rating"
+
+msgctxt "Languages::cp_bar"
+msgid "Bar"
+msgstr "Bar"
+
+msgctxt "Languages::cp_show_more"
+msgid "Show more"
+msgstr "Show more"
+
+msgctxt "Languages::cp_show_less"
+msgid "Show less"
+msgstr "Show less"
+
+msgctxt "Languages::not_display"
+msgid "Not display"
+msgstr "Not display"
+
+msgctxt "Languages::cp_circle_left"
+msgid "Circle left corner"
+msgstr "Circle left corner"
+
+msgctxt "Languages::cp_circle_right"
+msgid "Circle right corner"
+msgstr "Circle right corner"
+
+msgctxt "Languages::cp_stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "Languages::object_image_width"
+msgid "Object image width"
+msgstr "Object image width"
+
+msgctxt "Languages::object_image_height"
+msgid "Object image height"
+msgstr "Object image height"
+
+msgctxt "Languages::post_image_width"
+msgid "Post thumbnails width"
+msgstr "Post thumbnails width"
+
+msgctxt "Languages::post_image_height"
+msgid "Post thumbnails height"
+msgstr "Post thumbnails height"
+
+msgctxt "Languages::under_ob_icon"
+msgid "Under object"
+msgstr "Under object"
+
+msgctxt "Languages::under_msg"
+msgid "Under message"
+msgstr "Under message"
+
+msgctxt "Languages::cp_center"
+msgid "Center"
+msgstr "Center"
+
+msgctxt "Languages::cp_above_text"
+msgid "Above text"
+msgstr "Above text"
+
+msgctxt "Languages::cp_under_text"
+msgid "Under text"
+msgstr "Under text"
+
+msgctxt "Languages::autor_date_pos"
+msgid "Position for author and date"
+msgstr "Position for author and date"
+
+msgctxt "Languages::cp_align_center"
+msgid "Center"
+msgstr "Center"
+
+msgctxt "Languages::ratings_align"
+msgid "Align for ratings"
+msgstr "Align for ratings"
+
+msgctxt "Languages::images_align"
+msgid "Align for images"
+msgstr "Align for images"
+
+msgctxt "Languages::show_last_trunc_words"
+msgid "Show last words of the truncated message"
+msgstr "Show last words of the truncated message"
+
+msgctxt "Languages::cp_sort_attributes_only"
+msgid "Only with attributes"
+msgstr "Only with attributes"
+
+msgctxt "Languages::truncate_text_length"
+msgid "Truncate message"
+msgstr "Truncate message"
+
+msgctxt "Languages::min_image_block_height"
+msgid "Min height of image block"
+msgstr "Min height of image block"
+
+msgctxt "Languages::show_review_author"
+msgid "Display review author"
+msgstr "Display review author"
+
+msgctxt "Languages::show_review_ratings"
+msgid "Display review stars/attributes"
+msgstr "Display review stars/attributes"
+
+msgctxt "Languages::show_review_date"
+msgid "Show review date"
+msgstr "Show review date"
+
+msgctxt "Languages::cp_you_can_find_file_here"
+msgid "cp_reviews_xml/reviews_xml_for_ge.xml"
+msgstr "cp_reviews_xml/reviews_xml_for_ge.xml"
+
+msgctxt "Languages::ggogle_export_addon_should_be_active"
+msgid "Google export add-on should be active"
+msgstr "Google export add-on should be active"
+
+msgctxt "Languages::cp_show_likes"
+msgid "Display likes and dislikes"
+msgstr "Display likes and dislikes"
+
+msgctxt "Languages::skip_reviews_wtihout_img"
+msgid "Skip reviews without image"
+msgstr "Skip reviews without image"
+
+msgctxt "Languages::show_review_image"
+msgid "Display review image"
+msgstr "Display review image"
+
+msgctxt "Languages::show_post_avr_rate"
+msgid "Display post average rating"
+msgstr "Display post average rating"
+
+msgctxt "Languages::min_rating_limit"
+msgid "Min review rating"
+msgstr "Min review rating"
+
+msgctxt "Languages::max_rating_limit"
+msgid "Max review rating"
+msgstr "Max review rating"
+
+msgctxt "Languages::block_cp_power_reviews_block"
+msgid "Power reviews"
+msgstr "Power reviews"
+
+msgctxt "Languages::cp_fill_type"
+msgid "Sorting type (not for newest filling)"
+msgstr "Sorting type (not for newest filling)"
+
+msgctxt "Languages::cp_discussion_prod_reviews"
+msgid "Product reviews"
+msgstr "Product reviews"
+
+msgctxt "Languages::cp_review_image"
+msgid "Review image"
+msgstr "Review image"
+
+msgctxt "Languages::cp_avail_placeholders"
+msgid "Available placeholders"
+msgstr "Available placeholders"
+
+msgctxt "Languages::cp_all_paceholders"
+msgid "<b>%firstname%</b> - Customer firstname;<br /><b>%lastname%</b> - Customer lastname;<br /><b>%company_name%</b> - Company name;<br /><b>%company_address%</b> - Company address;<br /><b>%company_city%</b> - Company city;<br /><b>%company_country%</b> - Company country;<br /><b>%company_state%</b> - Company state;<br /><b>%company_zipcode%</b> - Company zipcode;<br />"
+msgstr "<b>%firstname%</b> - Customer firstname;<br /><b>%lastname%</b> - Customer lastname;<br /><b>%company_name%</b> - Company name;<br /><b>%company_address%</b> - Company address;<br /><b>%company_city%</b> - Company city;<br /><b>%company_country%</b> - Company country;<br /><b>%company_state%</b> - Company state;<br /><b>%company_zipcode%</b> - Company zipcode;<br />"
+
+msgctxt "Languages::cp_all_paceholders_2"
+msgid "<b>%company_phone%</b> - Company phone;<br /><b>%company_phone_2%</b> - Company phone 2;<br /><b>%company_fax%</b> - Company fax;<br /><b>%company_website%</b> - Company website;<br /><b>%company_start_year%</b> - Company start year;<br /><b>%company_users_department%</b> - Company users department;<br /><b>%company_site_administrator%</b> - Company site administrator;<br /><b>%company_orders_department%</b> - Company orders department;<br /><b>%company_support_department%</b> - Company support department;<br /><b>%company_newsletter_email%</b> - Company newsletter email;<br />"
+msgstr "<b>%company_phone%</b> - Company phone;<br /><b>%company_phone_2%</b> - Company phone 2;<br /><b>%company_fax%</b> - Company fax;<br /><b>%company_website%</b> - Company website;<br /><b>%company_start_year%</b> - Company start year;<br /><b>%company_users_department%</b> - Company users department;<br /><b>%company_site_administrator%</b> - Company site administrator;<br /><b>%company_orders_department%</b> - Company orders department;<br /><b>%company_support_department%</b> - Company support department;<br /><b>%company_newsletter_email%</b> - Company newsletter email;<br />"
+
+msgctxt "Languages::cp_send_review"
+msgid "Send review"
+msgstr "Send review"
+
+msgctxt "Languages::no_available_prods_for_review"
+msgid "No available products for review"
+msgstr "No available products for review"
+
+msgctxt "Languages::cp_prod_review_list"
+msgid "Products review"
+msgstr "Products review"
+
+msgctxt "Languages::cp_reviews_remainder"
+msgid "Reviews reminder"
+msgstr "Reviews reminder"
+
+msgctxt "Languages::cp_reviews_posted"
+msgid "Thank You for your posts"
+msgstr "Thank You for your posts"
+
+msgctxt "Languages::cp_error_already_posted"
+msgid "You have posted review for this product already"
+msgstr "You have posted review for this product already"
+
+msgctxt "Languages::cp_submit_reviews"
+msgid "Submit your reviews"
+msgstr "Submit your reviews"
+
+msgctxt "Languages::cp_msg_text_before"
+msgid "Notification text before"
+msgstr "Notification text before"
+
+msgctxt "Languages::cp_msg_text_after"
+msgid "Notification text after"
+msgstr "Notification text after"
+
+msgctxt "Languages::cp_you_can_rate_products_here"
+msgid "You can write reviews here"
+msgstr "You can write reviews here"
+
+msgctxt "Languages::cp_order_statuses"
+msgid "Order statuses"
+msgstr "Order statuses"
+
+msgctxt "Languages::cp_msg_title"
+msgid "Notification title"
+msgstr "Notification title"
+
+msgctxt "Languages::cp_msg_text"
+msgid "Notification text"
+msgstr "Notification text"
+
+msgctxt "Languages::cp_days_after"
+msgid "Days after"
+msgstr "Days after"
+
+msgctxt "Languages::cp_days_after_descr"
+msgid "Amount of days after changing status to send notification"
+msgstr "Amount of days after changing status to send notification"
+
+msgctxt "Languages::cp_time_send"
+msgid "Time to send notification"
+msgstr "Time to send notification"
+
+msgctxt "Languages::cp_status_exnpl"
+msgid "Example: A,C,P"
+msgstr "Example: A,C,P"
+
+msgctxt "Languages::cp_reviews_remainder_menu_description"
+msgid "Allow You to configure reminder date/time, order statuses to send notifications"
+msgstr "Allow You to configure reminder date/time, order statuses to send notifications"
+
+msgctxt "Languages::cp_sort_most_help"
+msgid "Most helpful"
+msgstr "Most helpful"
+
+msgctxt "Languages::cp_sort_hight_rate"
+msgid "Highest rating first"
+msgstr "Highest rating first"
+
+msgctxt "Languages::cp_sort_low_rate"
+msgid "Lowest rating first"
+msgstr "Lowest rating first"
+
+msgctxt "Languages::cp_sort_new"
+msgid "Newest first"
+msgstr "Newest first"
+
+msgctxt "Languages::cp_sort_old"
+msgid "Oldest first"
+msgstr "Oldest first"
+
+msgctxt "Languages::cp_extend_reviews"
+msgid "Extended reviews"
+msgstr "Extended reviews"
+
+msgctxt "Languages::cp_your_ratings"
+msgid "Your ratings"
+msgstr "Your ratings"
+
+msgctxt "Languages::cp_no_avalibale_gl_attr"
+msgid "No available global attributes"
+msgstr "No available global attributes"
+
+msgctxt "Languages::cp_attrs"
+msgid "Attributes"
+msgstr "Attributes"
+
+msgctxt "Languages::cp_apply_glob_attr"
+msgid "Apply global attributes"
+msgstr "Apply global attributes"
+
+msgctxt "Languages::no_attributes_selected"
+msgid "No attributes selected"
+msgstr "No attributes selected"
+
+msgctxt "Languages::cp_reviews_attrs"
+msgid "Review attributes"
+msgstr "Review attributes"
+
+msgctxt "Languages::cp_new_attr"
+msgid "New attribute"
+msgstr "New attribute"
+
+msgctxt "Languages::cp_object_type"
+msgid "Object type"
+msgstr "Object type"
+
+msgctxt "Languages::cp_attr_type"
+msgid "Attribute type"
+msgstr "Attribute type"
+
+msgctxt "Languages::editing_attr"
+msgid "Editing attribute"
+msgstr "Editing attribute"
+
+msgctxt "Languages::reviews_rating_attr"
+msgid "Rating attributes for reviews"
+msgstr "Rating attributes for reviews"
+
+msgctxt "Languages::reviews_rating_attr_menu_description"
+msgid "Manage review attributes"
+msgstr "Manage review attributes"
+
+msgctxt "Languages::cp_add_attr"
+msgid "Add attribute"
+msgstr "Add attribute"
+
+msgctxt "Languages::cp_delete_attr"
+msgid "Delete attribute"
+msgstr "Delete attribute"
+
+msgctxt "Languages::cp_global_attr"
+msgid "Global attribute"
+msgstr "Global attribute"
+
+msgctxt "Languages::cp_local_attr"
+msgid "Local attribute"
+msgstr "Local attribute"
+
+msgctxt "Languages::cp_product_attr"
+msgid "Product attribute"
+msgstr "Product attribute"
+
+msgctxt "Languages::cp_category_attr"
+msgid "Category attribute"
+msgstr "Category attribute"
+
+msgctxt "Languages::cp_generate_xml"
+msgid "Generate XML"
+msgstr "Generate XML"
+
+msgctxt "SettingsSections::cp_power_reviews::general"
+msgid "General"
+msgstr "General"
+
+msgctxt "SettingsSections::cp_power_reviews::products"
+msgid "Products"
+msgstr "Products"
+
+msgctxt "SettingsSections::cp_power_reviews::testimonials"
+msgid "Testimonials"
+msgstr "Testimonials"
+
+msgctxt "SettingsOptions::cp_power_reviews::item"
+msgid "Item"
+msgstr "Item"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_feat"
+msgid "ID of product feature - Google export features"
+msgstr "ID of product feature - Google export features"
+
+msgctxt "SettingsOptions::cp_power_reviews::cron_password"
+msgid "Cron access key"
+msgstr "Cron access key"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_avail"
+msgid "ID of product feature - Availability (Google Export)"
+msgstr "ID of product feature - Availability (Google Export)"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_brand"
+msgid "ID of product feature - BRAND (Google Export)"
+msgstr "ID of product feature - BRAND (Google Export)"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_condition"
+msgid "ID of product feature - Condition (Google Export)"
+msgstr "ID of product feature - Condition (Google Export)"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_category"
+msgid "ID of product feature - Google product category"
+msgstr "ID of product feature - Google product category"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_gtin"
+msgid "ID of product feature - GTIN (Google Export)"
+msgstr "ID of product feature - GTIN (Google Export)"
+
+msgctxt "SettingsOptions::cp_power_reviews::prod_feature_goog_exp_mpn"
+msgid "ID of product feature - MPN (Google Export)"
+msgstr "ID of product feature - MPN (Google Export)"
+
+msgctxt "SettingsOptions::cp_power_reviews::google_exp_info_cron"
+msgid "CRON info"
+msgstr "CRON info"
+
+msgctxt "SettingsOptions::cp_power_reviews::msg_word_limit"
+msgid "Word limit in message for \"Show more\""
+msgstr "Word limit in message for \"Show more\""
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_average_rating"
+msgid "Type of average rating for product reviews"
+msgstr "Type of average rating for product reviews"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating::circle"
+msgid "Circle"
+msgstr "Circle"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating::stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsOptions::cp_power_reviews::ratings_type"
+msgid "Style of rating"
+msgstr "Style of rating"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type::rate_stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type::bars"
+msgid "Progress bar"
+msgstr "Progress bar"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_uploader"
+msgid "Allow to upload images for review"
+msgstr "Allow to upload images for review"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post"
+msgid "Show images in posts"
+msgstr "Show images in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::google_exp_info_manual"
+msgid "Manually generate XML"
+msgstr "Manually generate XML"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_image_width"
+msgid "Review thumbnail width"
+msgstr "Review thumbnail width"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_image_height"
+msgid "Review thumbnail height"
+msgstr "Review thumbnail height"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_image_width_dv"
+msgid "Review thumbnail width on discussion view page"
+msgstr "Review thumbnail width on discussion view page"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_image_height_dv"
+msgid "Review thumbnail height on discussion view page"
+msgstr "Review thumbnail height on discussion view page"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_image_width_block"
+msgid "Review thumbnail width on other pages"
+msgstr "Review thumbnail width on other pages"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_image_height_block"
+msgid "Review thumbnail height on other pages"
+msgstr "Review thumbnail height on other pages"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_average_rating_test"
+msgid "Type of average rating for testimonials"
+msgstr "Type of average rating for testimonials"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_post_av_rate_circle_color"
+msgid "Post average rate color for \"Circle\" style"
+msgstr "Post average rate color for \"Circle\" style"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_rate_up_down"
+msgid "Type of likes block"
+msgstr "Type of likes block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down::only_up"
+msgid "Only like"
+msgstr "Only like"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down::only_down"
+msgid "Only dislike"
+msgstr "Only dislike"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsOptions::cp_power_reviews::type_of_rate_up_down_test"
+msgid "Type of likes block"
+msgstr "Type of likes block"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_test::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_test::only_up"
+msgid "Only like"
+msgstr "Only like"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_test::only_down"
+msgid "Only dislike"
+msgstr "Only dislike"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_rate_up_down_test::both"
+msgid "Both"
+msgstr "Both"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_border"
+msgid "Show message border"
+msgstr "Show message border"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_message_border_test"
+msgid "Show message border"
+msgstr "Show message border"
+
+msgctxt "SettingsOptions::cp_power_reviews::rev_post_stars_bars_color"
+msgid "Stars and bars color"
+msgstr "Stars and bars color"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_test::not_display"
+msgid "Don't show"
+msgstr "Don't show"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_test::circle"
+msgid "Circle"
+msgstr "Circle"
+
+msgctxt "SettingsVariants::cp_power_reviews::type_of_average_rating_test::stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsOptions::cp_power_reviews::ratings_type_test"
+msgid "Style of rating"
+msgstr "Style of rating"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_test::rate_stars"
+msgid "Stars"
+msgstr "Stars"
+
+msgctxt "SettingsVariants::cp_power_reviews::ratings_type_test::bars"
+msgid "Progress bar"
+msgstr "Progress bar"
+
+msgctxt "SettingsOptions::cp_power_reviews::msg_word_limit_test"
+msgid "Word limit in message for \"Show more\""
+msgstr "Word limit in message for \"Show more\""
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_uploader_test"
+msgid "Allow to upload images for testimonials"
+msgstr "Allow to upload images for testimonials"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post_test"
+msgid "Show images in testimonials"
+msgstr "Show images in testimonials"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_message_title"
+msgid "Allow post title"
+msgstr "Allow post title"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_message_title"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_message_title_cat"
+msgid "Allow post title"
+msgstr "Allow post title"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_message_title_cat"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_message_title_page"
+msgid "Allow post title"
+msgstr "Allow post title"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_message_title_page"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_message_title_test"
+msgid "Allow post title"
+msgstr "Allow post title"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_message_title_test"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_message_title_vend"
+msgid "Allow post title"
+msgstr "Allow post title"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_message_title_vend"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_message_title_all"
+msgid "Show post title"
+msgstr "Show post title"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_adv_disv"
+msgid "Allow advantages and disadvantages"
+msgstr "Allow advantages and disadvantages"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_adv_disv"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_adv_disv_cat"
+msgid "Allow advantages and disadvantages"
+msgstr "Allow advantages and disadvantages"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_adv_disv_cat"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_adv_disv_page"
+msgid "Allow advantages and disadvantages"
+msgstr "Allow advantages and disadvantages"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_adv_disv_page"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_adv_disv_test"
+msgid "Allow advantages and disadvantages"
+msgstr "Allow advantages and disadvantages"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_adv_disv_test"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_adv_disv_vend"
+msgid "Allow advantages and disadvantages"
+msgstr "Allow advantages and disadvantages"
+
+msgctxt "SettingsTooltips::cp_power_reviews::allow_adv_disv_vend"
+msgid "Works only for objects with allowed comments"
+msgstr "Works only for objects with allowed comments"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_adv_disv_all"
+msgid "Show advantages and disadvantages"
+msgstr "Allow advantages and disadvantages"
+
+msgctxt "SettingsOptions::cp_power_reviews::expand_review_attrs"
+msgid "Expand review attributes"
+msgstr "Expand review attributes"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_purchase_label"
+msgid "Show verified/not verified purchase"
+msgstr "Show verified/not verified purchase"
+
+msgctxt "SettingsOptions::cp_power_reviews::orders_for_purchase"
+msgid "Order statuses for verified purchase"
+msgstr "Order statuses for verified purchase"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_images_page"
+msgid "Images for reviews"
+msgstr "Images for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_uploader_page"
+msgid "Allow to upload images"
+msgstr "Allow to upload images"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_image_in_post_page"
+msgid "Show images in posts"
+msgstr "Show images in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_anon_post_vote"
+msgid "Allow anonymous vote for reviews"
+msgstr "Allow anonymous vote for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_anon_post_vote_cat"
+msgid "Allow anonymous vote for reviews"
+msgstr "Allow anonymous vote for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_anon_post_vote_page"
+msgid "Allow anonymous vote for reviews"
+msgstr "Allow anonymous vote for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_anon_post_vote_test"
+msgid "Allow anonymous vote for reviews"
+msgstr "Allow anonymous vote for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::allow_anon_post_vote_vend"
+msgid "Allow anonymous vote for reviews"
+msgstr "Allow anonymous vote for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_videos"
+msgid "Videos for reviews"
+msgstr "Videos for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_video_uploader"
+msgid "Allow to upload videos"
+msgstr "Allow to upload videos"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_videos_in_post"
+msgid "Show videos in posts"
+msgstr "Show videos in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_videos_page"
+msgid "Videos for reviews"
+msgstr "Videos for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_video_uploader_page"
+msgid "Allow to upload videos"
+msgstr "Allow to upload videos"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_videos_in_post_page"
+msgid "Show videos in posts"
+msgstr "Show videos in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_videos_test"
+msgid "Videos for reviews"
+msgstr "Videos for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_video_uploader_test"
+msgid "Allow to upload videos"
+msgstr "Allow to upload videos"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_videos_in_post_test"
+msgid "Show videos in posts"
+msgstr "Show videos in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_videos_vend"
+msgid "Videos for reviews"
+msgstr "Videos for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_video_uploader_vend"
+msgid "Allow to upload videos"
+msgstr "Allow to upload videos"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_videos_in_post_vend"
+msgid "Show videos in posts"
+msgstr "Show videos in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_videos_cat"
+msgid "Videos for reviews"
+msgstr "Videos for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_video_uploader_cat"
+msgid "Allow to upload videos"
+msgstr "Allow to upload videos"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_videos_in_post_cat"
+msgid "Show videos in posts"
+msgstr "Show videos in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::adit_videos_ap"
+msgid "Videos for reviews"
+msgstr "Videos for reviews"
+
+msgctxt "SettingsOptions::cp_power_reviews::show_videos_in_post_ap"
+msgid "Show videos in posts"
+msgstr "Show videos in posts"
+
+msgctxt "SettingsOptions::cp_power_reviews::licensekey"
+msgid "License key"
+msgstr "License key"
+
+msgctxt "Languages::cp_your_license_is_not_valid"
+msgid "You should enter valid License Key. Please, contact us (sales@cart-power.com), if you face any issues."
+msgstr "You should enter valid License Key. Please, contact us (sales@cart-power.com), if you face any issues."
+
+msgctxt "Languages::cp_reviews_or"
+msgid "Customer reviews"
+msgstr "Customer reviews"
+
+msgctxt "Languages::based_on"
+msgid "Average rating based on"
+msgstr "Average rating based on"
+

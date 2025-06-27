@@ -1,0 +1,1039 @@
+<?xml version="1.0"?>
+<addon scheme="3.0">
+    <id>cp_power_reviews</id>
+    <version>3.6</version>
+    <priority>5100</priority>
+    <position>130</position>
+    <default_language>en</default_language>
+    <status>disabled</status>
+    <has_icon>Y</has_icon>
+    <authors>
+        <author>
+            <name>Cart-Power</name>
+            <email>sales@cart-power.com</email>
+            <url>http://cart-power.com</url>
+        </author>
+    </authors>
+    <compatibility>
+        <dependencies>discussion,cp_addons_manager</dependencies>
+        <conflicts>product_reviews</conflicts>
+    </compatibility>
+    <supplier>Cart-Power</supplier>
+    <supplier_link>https://cart-power.com</supplier_link>
+    <settings edition_type="ROOT,ULT:VENDOR,STOREFRONT">
+        <sections>
+            <section id="general">
+                <items>
+                    <item id="licensekey" edition_type="ROOT">
+                        <type>input</type>
+                        <default_value></default_value>
+                    </item>
+                    <item id="allo_anonymous">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="split_storefronts" edition_type="MVE:ROOT">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="appearance">
+                        <type>header</type>
+                    </item>
+                    <item id="single_review_product">
+                        <type>hidden</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_total_posts">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="rev_image_width">
+                        <type>input</type>
+                        <default_value>60</default_value>
+                    </item>
+                    <item id="rev_post_stars_bars_color">
+                        <type>input</type>
+                        <default_value>#fbb507</default_value>
+                    </item>
+                    <item id="show_more">
+                        <type>selectbox</type>
+                        <default_value>btn</default_value>
+                        <variants>
+                            <item id="btn">
+                            </item>
+                            <item id="txt">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="editing">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_review_e">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="minutes_for_editing">
+                        <type>input</type>
+                        <default_value>60</default_value>
+                    </item>
+                    <item id="allow_review_d">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="sitemap_settings">
+                        <type>header</type>
+                    </item>
+                    <item id="objects_for_sitemap">
+                        <type>multiple select</type>
+                        <default_value><![CDATA[#M#P=Y]]></default_value>
+                    </item>
+                    <item id="with_reviews">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                </items>
+            </section>
+            <section id="products">
+                <items>
+                    <item id="general">
+                        <type>header</type>
+                    </item>
+                    <item id="purchase_info" edition_type="ROOT">
+                        <type>info</type>
+                        <handler>fn_cp_pr_import_from_pro_reviews_info</handler>
+                    </item>
+                    <item id="msg_word_limit">
+                        <type>input</type>
+                        <default_value>20</default_value>
+                    </item>
+                    <item id="common_for_variations">
+                        <type>selectbox</type>
+                        <default_value>N</default_value>
+                        <variants>
+                            <item id="N">
+                            </item>
+                            <item id="Y">
+                            </item>
+                            <item id="S">
+                            </item>
+                            <item id="NS">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="set_disc_to_vars">
+                        <type>info</type>
+                        <handler>fn_cp_power_reviews_set_disc_to_vars</handler>
+                    </item>
+                    <item id="show_message_answer">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_message_title">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="required_title">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_adv_disv">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adv_disv_required">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_usage">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_purchase_label">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="orders_for_purchase">
+                        <type>multiple select</type>
+                        <default_value></default_value>
+                    </item>
+                    <item id="purchase_info">
+                        <type>info</type>
+                        <handler>fn_cp_pr_generate_purchase_info</handler>
+                    </item>
+                    <item id="likes_dislikes">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_ld">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_most_help_block">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_anon_post_vote">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adit_images">
+                        <type>header</type>
+                    </item>
+                    <item id="show_image_uploader">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_image_in_post">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_image_slider">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="image_slider_limit">
+                        <type>input</type>
+                        <default_value>10</default_value>
+                    </item>
+                    <item id="image_slider_qty">
+                        <type>input</type>
+                        <default_value>5</default_value>
+                    </item>
+                    <item id="include_videos">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="slider_image_size">
+                        <type>input</type>
+                        <default_value>150</default_value>
+                    </item>
+                    <item id="adit_videos">
+                        <type>header</type>
+                    </item>
+                    <item id="show_video_uploader">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_videos_in_post">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="recom_block">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_recom">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_recomend_btn">
+                        <type>selectbox</type>
+                        <default_value>all</default_value>
+                        <variants>
+                            <item id="all">
+                            </item>
+                            <item id="for_login">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="mosts_block">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_most_bl">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_most_posts">
+                        <type>selectbox</type>
+                        <default_value>both</default_value>
+                        <variants>
+                            <item id="both">
+                            </item>
+                            <item id="most_h">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="barrier_for_positive">
+                        <type>input</type>
+                        <default_value>3</default_value>
+                    </item>
+                    <item id="product_sitemap_setting">
+                        <type>header</type>
+                    </item>
+                    <item id="include_product_reviews">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="product_reviews_change">
+                        <type>selectbox</type>
+                        <default_value>daily</default_value>
+                    </item>
+                    <item id="product_reviews_priority">
+                        <type>selectbox</type>
+                        <default_value>0.5</default_value>
+                    </item>
+                </items>
+            </section>
+            <section id="categories"> 
+                <items>
+                    <item id="general_cat">
+                        <type>header</type>
+                    </item>
+                    <item id="msg_word_limit_cat">
+                        <type>input</type>
+                        <default_value>20</default_value>
+                    </item>
+                    <item id="show_message_answer_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_message_title_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="required_title_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_adv_disv_cat">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adv_disv_required_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="likes_dislikes_cat">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_ld_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_most_help_block_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_anon_post_vote_cat">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adit_images_cat">
+                        <type>header</type>
+                    </item>
+                    <item id="show_image_uploader_cat">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_image_in_post_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_image_slider_cat">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="image_slider_limit_cat">
+                        <type>input</type>
+                        <default_value>10</default_value>
+                    </item>
+                    <item id="image_slider_qty_cat">
+                        <type>input</type>
+                        <default_value>5</default_value>
+                    </item>
+                    <item id="include_videos_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="slider_image_size_cat">
+                        <type>input</type>
+                        <default_value>150</default_value>
+                    </item>
+                    <item id="adit_videos_cat">
+                        <type>header</type>
+                    </item>
+                    <item id="show_video_uploader_cat">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_videos_in_post_cat">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="mosts_block_cat">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_most_bl_cat">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_most_posts_cat">
+                        <type>selectbox</type>
+                        <default_value>both</default_value>
+                        <variants>
+                            <item id="both">
+                            </item>
+                            <item id="most_h">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="barrier_for_positive_cat">
+                        <type>input</type>
+                        <default_value>3</default_value>
+                    </item>
+                </items>
+            </section>
+            <section id="pages">
+                <items>
+                    <item id="general_page">
+                        <type>header</type>
+                    </item>
+                    <item id="msg_word_limit_page">
+                        <type>input</type>
+                        <default_value>20</default_value>
+                    </item>
+                    <item id="show_message_answer_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_message_title_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="required_title_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_adv_disv_page">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adv_disv_required_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="likes_dislikes_page">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_ld_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_most_help_block_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_anon_post_vote_page">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adit_images_page">
+                        <type>header</type>
+                    </item>
+                    <item id="show_image_uploader_page">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_image_in_post_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_image_slider_page">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="image_slider_limit_page">
+                        <type>input</type>
+                        <default_value>10</default_value>
+                    </item>
+                    <item id="image_slider_qty_page">
+                        <type>input</type>
+                        <default_value>5</default_value>
+                    </item>
+                    <item id="include_videos_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="slider_image_size_page">
+                        <type>input</type>
+                        <default_value>150</default_value>
+                    </item>
+                    <item id="adit_videos_page">
+                        <type>header</type>
+                    </item>
+                    <item id="show_video_uploader_page">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_videos_in_post_page">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="mosts_block_page">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_most_bl_page">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_most_posts_page">
+                        <type>selectbox</type>
+                        <default_value>both</default_value>
+                        <variants>
+                            <item id="both">
+                            </item>
+                            <item id="most_h">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="barrier_for_positive_page">
+                        <type>input</type>
+                        <default_value>3</default_value>
+                    </item>
+                </items>
+            </section>
+            <section id="testimonials">
+                <items>
+                    <item id="general_test">
+                        <type>header</type>
+                    </item>
+                    <item id="msg_word_limit_test">
+                        <type>input</type>
+                        <default_value>20</default_value>
+                    </item>
+                    <item id="show_test_message_answer">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_message_title_test">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="required_title_test">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_adv_disv_test">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adv_disv_required_test">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="likes_dislikes_test">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_ld_test">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_anon_post_vote_test">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adit_images_test">
+                        <type>header</type>
+                    </item>
+                    <item id="show_image_uploader_test">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_image_in_post_test">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_image_slider_test">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="image_slider_limit_test">
+                        <type>input</type>
+                        <default_value>10</default_value>
+                    </item>
+                    <item id="include_videos_test">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="image_slider_qty_test">
+                        <type>input</type>
+                        <default_value>5</default_value>
+                    </item>
+                    <item id="slider_image_size_test">
+                        <type>input</type>
+                        <default_value>150</default_value>
+                    </item>
+                    <item id="adit_videos_test">
+                        <type>header</type>
+                    </item>
+                    <item id="show_video_uploader_test">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_videos_in_post_test">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="test_sitemap_setting">
+                        <type>header</type>
+                    </item>
+                    <item id="include_test_reviews">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="test_reviews_change">
+                        <type>selectbox</type>
+                        <default_value>daily</default_value>
+                    </item>
+                    <item id="test_reviews_priority">
+                        <type>selectbox</type>
+                        <default_value>0.5</default_value>
+                    </item>
+                </items>
+            </section>
+            <section id="vendors" edition_type="MVE:ROOT">
+                <items>
+                    <item id="general_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="msg_word_limit_vend">
+                        <type>input</type>
+                        <default_value>20</default_value>
+                    </item>
+                    <item id="show_vend_message_answer">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_message_title_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="required_title_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_adv_disv_vend">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adv_disv_required_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="likes_dislikes_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_ld_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_most_help_block_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_anon_post_vote_vend">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="adit_images_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="show_image_uploader_vend">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_image_in_post_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_image_slider_vend">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="image_slider_limit_vend">
+                        <type>input</type>
+                        <default_value>10</default_value>
+                    </item>
+                    <item id="image_slider_qty_vend">
+                        <type>input</type>
+                        <default_value>5</default_value>
+                    </item>
+                    <item id="include_videos_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="slider_image_size_vend">
+                        <type>input</type>
+                        <default_value>150</default_value>
+                    </item>
+                    <item id="adit_videos_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="show_video_uploader_vend">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="show_videos_in_post_vend">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="recom_block_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_recom_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_recomend_btn_vend">
+                        <type>selectbox</type>
+                        <default_value>all</default_value>
+                        <variants>
+                            <item id="all">
+                            </item>
+                            <item id="for_login">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="mosts_block_vend">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_most_bl_vend">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_most_posts_vend">
+                        <type>selectbox</type>
+                        <default_value>both</default_value>
+                        <variants>
+                            <item id="both">
+                            </item>
+                            <item id="most_h">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="barrier_for_positive_vend">
+                        <type>input</type>
+                        <default_value>3</default_value>
+                    </item>
+                </items>
+            </section>
+            <section id="all_reviews">
+                <items>
+                    <item id="all_reviews_link">
+                        <type>info</type>
+                        <handler>fn_cp_power_reviews_all_review_info</handler>
+                    </item>
+                    <item id="general_ap">
+                        <type>header</type>
+                    </item>
+                    <item id="objects_for_all">
+                        <type>multiple select</type>
+                        <default_value></default_value>
+                    </item>
+                    <item id="msg_word_limit_ap">
+                        <type>input</type>
+                        <default_value>20</default_value>
+                    </item>
+                    <item id="show_ap_message_answer">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_message_title_all">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="allow_adv_disv_all">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="likes_dislikes_ap">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_ld_ap">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="show_most_help_block_ap">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="adit_images_ap">
+                        <type>header</type>
+                    </item>
+                    <item id="show_image_in_post_ap">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="adit_videos_ap">
+                        <type>header</type>
+                    </item>
+                    <item id="show_videos_in_post_ap">
+                        <type>checkbox</type>
+                        <default_value>N</default_value>
+                    </item>
+                    <item id="mosts_block_ap">
+                        <type>header</type>
+                    </item>
+                    <item id="allow_most_bl_ap">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="type_of_most_posts_ap">
+                        <type>selectbox</type>
+                        <default_value>both</default_value>
+                        <variants>
+                            <item id="both">
+                            </item>
+                            <item id="most_h">
+                            </item>
+                        </variants>
+                    </item>
+                    <item id="barrier_for_positive_ap">
+                        <type>input</type>
+                        <default_value>3</default_value>
+                    </item>
+                    <item id="all_sitemap_setting">
+                        <type>header</type>
+                    </item>
+                    <item id="include_all_reviews">
+                        <type>checkbox</type>
+                        <default_value>Y</default_value>
+                    </item>
+                    <item id="all_reviews_change">
+                        <type>selectbox</type>
+                        <default_value>daily</default_value>
+                    </item>
+                    <item id="all_reviews_priority">
+                        <type>selectbox</type>
+                        <default_value>0.5</default_value>
+                    </item>
+                </items>
+            </section>
+        </sections>
+    </settings>
+    <queries>
+        <item>DROP TABLE IF EXISTS ?:cp_power_ext_reviews;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_power_rev_products;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_power_rev_cats;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pow_attr_descr;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pow_attr_ratings;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pow_attr_likes_users;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_review_images;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pow_recomends;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_video_links;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_reaviews_seo;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_reaviews_seo_descr;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_for_seo;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_attr_names;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_attr_name_descriptions;</item>
+        <item>DROP TABLE IF EXISTS ?:cp_pr_reviews_storefronts;</item>
+        <item>
+            CREATE TABLE `?:cp_power_ext_reviews` (
+                `cp_attr_id` mediumint(8) unsigned NOT NULL auto_increment,
+                `object_id` mediumint(8) unsigned NOT NULL,
+                `object_type` char(1) NOT NULL default '',
+                `status` char(1) NOT NULL default 'A',
+                `company_id` mediumint(8) unsigned NOT NULL,
+                PRIMARY KEY  (`cp_attr_id`),
+                KEY `object_id` (`object_id`),
+                KEY `object_type` (`object_type`),
+                KEY `status` (`status`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_power_rev_products` (
+                `cp_attr_id` mediumint(8) unsigned NOT NULL,
+                `attr_pos` int(11) unsigned NOT NULL default '1',
+                `product_id` int(11) unsigned NOT NULL,
+                UNIQUE KEY `cp_attr_id` (`cp_attr_id`,`product_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_power_rev_cats` (
+                `cp_attr_id` mediumint(8) unsigned NOT NULL,
+                `attr_pos` int(11) unsigned NOT NULL default '1',
+                `category_id` int(11) unsigned NOT NULL,
+                UNIQUE KEY `cp_attr_id` (`cp_attr_id`,`category_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_pow_attr_descr` (
+                `cp_attr_id` mediumint(8) unsigned NOT NULL,
+                `cp_attr_name` varchar(255) NOT NULL,
+                `lang_code` char(2) NOT NULL,
+                UNIQUE KEY `cp_attr_id` (`cp_attr_id`,`lang_code`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_pow_attr_ratings` (
+                `cp_attr_id` mediumint(8) unsigned NOT NULL,
+                `post_id` mediumint(8) unsigned NOT NULL,
+                `rating` tinyint(4) unsigned NOT NULL default '0',
+                `post_status` char(1) NOT NULL default 'D',
+                UNIQUE KEY `cp_attr_id` (`cp_attr_id`,`post_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_pow_attr_likes_users` (
+                `post_id` mediumint(8) unsigned NOT NULL,
+                `user_id` mediumint(8) unsigned NOT NULL,
+                `rate_type` char(1) NOT NULL default 'N',
+                UNIQUE KEY `post_id` (`post_id`,`user_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_review_images` (
+                `post_image_id` int(11) unsigned NOT NULL,
+                `status` char(1) NOT NULL default 'A',
+                `post_id` int(11) unsigned NOT NULL,
+                PRIMARY KEY  (`post_image_id`),
+                UNIQUE KEY  `post_image_id` (`post_image_id`,`post_id`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item>
+            CREATE TABLE `?:cp_pow_recomends` (
+                `thread_id` mediumint(8) unsigned NOT NULL default '0',
+                `ip_address` varbinary(40) NOT NULL default '',
+                `type` char(1) NOT NULL default 'U',
+                `timestamp` int(11) unsigned NOT NULL default '0',
+                UNIQUE KEY `thread_id` (`thread_id`,`ip_address`)
+            ) Engine=MyISAM DEFAULT CHARSET UTF8;
+        </item>
+        <item version="2.9">
+            CREATE TABLE `?:cp_pr_video_links` (
+                `video_id` int(11) unsigned NOT NULL auto_increment,
+                `youtube_id` VARCHAR(128) NOT NULL DEFAULT '',
+                `status` char(1) NOT NULL default 'A',
+                `post_id` int(11) unsigned NOT NULL default '0',
+                PRIMARY KEY (`video_id`),
+                KEY `youtube_id` (`youtube_id`),
+                KEY `post_id` (`post_id`)
+            ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+        </item>
+        <item version="2.9">
+            CREATE TABLE `?:cp_pr_for_seo` (
+                `thread_id` int(11) unsigned NOT NULL default '0',
+                `name` varchar(255) NOT NULL,
+                `meta_keywords` varchar(255) NOT NULL DEFAULT '',
+                `meta_description` varchar(255) NOT NULL DEFAULT '',
+                `page_title` varchar(255) NOT NULL DEFAULT '',
+                `lang_code` char(2) NOT NULL,
+                UNIQUE KEY `thread_id_lang` (`thread_id`,`lang_code`),
+                KEY `thread_id` (`thread_id`)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
+        <item version="3.0">
+            CREATE TABLE `?:cp_pr_attr_names` (
+                `name_id` int(11) unsigned NOT NULL auto_increment,
+                `type` varchar(2) NOT NULL default 'L',
+                `cp_attr_id` mediumint(8) unsigned NOT NULL,
+                PRIMARY KEY (`name_id`),
+                KEY `type` (`type`),
+                KEY `cp_attr_id` (`cp_attr_id`)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
+        <item version="3.0">
+            CREATE TABLE `?:cp_pr_attr_name_descriptions` (
+                `name_id` int(11) unsigned NOT NULL default '0',
+                `name` varchar(255) NOT NULL,
+                `lang_code` char(2) NOT NULL,
+                UNIQUE KEY `id_lang` (`name_id`,`lang_code`)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
+        <item version="3.1">
+            CREATE TABLE IF NOT EXISTS `?:cp_pr_reviews_seo` (
+                `id` int(11) unsigned NOT NULL auto_increment,
+                `company_id` mediumint(8) unsigned NOT NULL default '0',
+                PRIMARY KEY (`id`)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
+        <item version="3.1">
+            CREATE TABLE IF NOT EXISTS `?:cp_pr_reviews_seo_descr` (
+                `id` int(11) unsigned NOT NULL default '0',
+                `name` varchar(255) NOT NULL,
+                `lang_code` char(2) NOT NULL,
+                UNIQUE KEY `id_lang` (`id`,`lang_code`)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
+        <item version="3.3">
+            CREATE TABLE IF NOT EXISTS ?:cp_pr_reviews_storefronts (
+                post_id int(11) unsigned NOT NULL default '0',
+                storefront_id int(11) unsigned NOT NULL DEFAULT '0',
+                PRIMARY KEY  (post_id),
+                KEY storefront_id (storefront_id)
+            ) Engine=InnoDB DEFAULT CHARSET UTF8;
+        </item>
+        
+        <item>ALTER TABLE `?:discussion_posts` ADD `cp_pos_post` mediumint(8) unsigned NOT NULL DEFAULT 0;</item>
+        <item>ALTER TABLE `?:discussion_posts` ADD `cp_neg_post` mediumint(8) unsigned NOT NULL DEFAULT 0;</item>
+        <item>ALTER TABLE `?:discussion_posts` ADD `cp_admin_answ` mediumtext;</item>
+        <item>ALTER TABLE `?:discussion_posts` ADD `cp_admin_answ_time` int(11) unsigned NOT NULL DEFAULT 0;</item>
+        <item>ALTER TABLE `?:discussion_posts` ADD `cp_admin_id` varchar(128) NOT NULL DEFAULT '';</item>
+        <item>ALTER TABLE `?:discussion_rating` ADD `cp_sred_rate` DECIMAL(5,1) unsigned NOT NULL DEFAULT 0;</item>
+
+        <item for="install" version="2.6">ALTER TABLE `?:discussion_posts` ADD `cp_pr_verified_purchase` char(1) NOT NULL DEFAULT 'N';</item>
+        <item for="install" version="2.6">ALTER TABLE `?:discussion_messages` ADD `cp_pr_title` varchar(255) NOT NULL DEFAULT '';</item>
+        <item for="install" version="2.6">ALTER TABLE `?:discussion_messages` ADD `cp_pr_advantages` text NOT NULL DEFAULT '';</item>
+        <item for="install" version="2.6">ALTER TABLE `?:discussion_messages` ADD `cp_pr_disadvantages` text NOT NULL DEFAULT '';</item>
+        
+        <item for="install" version="3.0">ALTER TABLE `?:cp_power_ext_reviews` ADD `view_type` char(1) NOT NULL DEFAULT 'D';</item>
+        <item for="install" version="3.0">ALTER TABLE `?:cp_power_ext_reviews` ADD `position` smallint(5) unsigned NOT NULL default '0';</item>
+        <item for="install" version="3.0">ALTER TABLE `?:cp_power_ext_reviews` ADD `required` char(1) NOT NULL DEFAULT 'Y';</item>
+        
+        <item for="install" version="3.0">ALTER TABLE `?:cp_pr_for_seo` ADD `h1` varchar(255) NOT NULL DEFAULT '';</item>
+        
+        <item for="install" version="3.0">ALTER TABLE `?:discussion_posts` ADD `cp_pr_exp` char(1) NOT NULL DEFAULT 'C';</item>
+        <item for="install" version="3.0">ALTER TABLE `?:discussion_posts` ADD `cp_pr_user_delete` char(1) NOT NULL DEFAULT 'N';</item>
+        <item for="install" version="3.0">ALTER TABLE `?:discussion_posts` ADD `cp_pr_can_edit` char(1) NOT NULL DEFAULT 'Y';</item>
+        
+        <item for="install" version="3.0">DROP TABLE IF EXISTS ?:cp_pr_reaviews_seo;</item>
+        <item for="install" version="3.0">DROP TABLE IF EXISTS ?:cp_pr_reaviews_seo_descr;</item>
+        
+        <item for="install" version="3.3">ALTER TABLE ?:discussion_posts ADD cp_product_review_id int(11) unsigned NOT NULL DEFAULT 0;</item>
+        <item for="install" version="3.3">ALTER TABLE ?:cp_pr_for_seo ADD cp_st_custom_bc varchar(100) NOT NULL DEFAULT '';</item>
+        
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_power_ext_reviews;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_power_rev_products;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_power_rev_cats;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pow_attr_descr;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pow_attr_ratings;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pow_attr_likes_users;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_review_images;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pow_recomends;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_video_links;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_reaviews_seo;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_reaviews_seo_descr;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_for_seo;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_attr_names;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_attr_name_descriptions;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_reviews_seo;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_reviews_seo_descr;</item>
+        <item for="uninstall">DROP TABLE IF EXISTS ?:cp_pr_reviews_storefronts;</item>
+        
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pos_post;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_neg_post;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_admin_answ;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_admin_answ_time;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_admin_id;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_verified_purchase;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_exp;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_user_delete;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_pr_can_edit;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_posts DROP COLUMN cp_product_review_id;</item>
+        
+        <item for="uninstall">ALTER TABLE ?:discussion_messages DROP COLUMN cp_pr_title;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_messages DROP COLUMN cp_pr_advantages;</item>
+        <item for="uninstall">ALTER TABLE ?:discussion_messages DROP COLUMN cp_pr_disadvantages;</item>
+        
+        <item for="uninstall">ALTER TABLE ?:discussion_rating DROP COLUMN cp_sred_rate;</item>
+    </queries>
+    <functions>
+        <item for="install">fn_cp_power_reviews_install_func</item>
+        <item for="uninstall">fn_cp_power_reviews_uninstall_func</item>
+    </functions>
+    <scripts>
+        <item version="3.0">upgrades/3.0/scripts/post_script.php</item>
+        <item version="3.1">upgrades/3.1/scripts/post_script.php</item>
+        <item version="3.4">upgrades/3.4/scripts/post_script.php</item>
+        <item version="3.5">upgrades/3.5/scripts/post_script.php</item>
+        <item version="3.6">upgrades/3.6/scripts/post_script.php</item>
+    </scripts>
+</addon>

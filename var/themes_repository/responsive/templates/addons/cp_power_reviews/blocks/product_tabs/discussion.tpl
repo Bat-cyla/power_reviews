@@ -1,0 +1,2 @@
+{** block-description:cp_extend_reviews **}
+	{include file="addons/cp_power_reviews/views/cp_power_reviews/rew_views.tpl" object_id=$product.product_id object_type="P" title=__("discussion_title_product") quicklink="disussion_link" container_id="content_discussion_block"}

@@ -1,0 +1,1 @@
+{include file="addons/cp_power_reviews/views/cp_pow_rev/view.tpl"}
